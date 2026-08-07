@@ -9,55 +9,91 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .article-container {
-      max-width: 800px;
+    body {
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .detail-wrapper {
+      max-width: 860px;
       margin: 120px auto 60px;
-      padding: 0 24px;
+      padding: 0 20px;
     }
-    .article-badge {
-      display: inline-block;
-      padding: 6px 14px;
-      background: var(--blue-soft);
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 12px;
-      border-radius: 6px;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-    .article-title {
-      font-size: clamp(28px, 4vw, 42px);
-      color: var(--primary);
-      margin-bottom: 12px;
-      line-height: 1.25;
-    }
-    .article-date {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 24px;
-      display: block;
-    }
-    .article-cover {
-      width: 100%;
-      max-height: 450px;
-      object-fit: cover;
-      border-radius: 16px;
-      margin-bottom: 32px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-    }
-    .article-content {
-      font-size: 17px;
-      line-height: 1.8;
-      color: var(--text);
-      white-space: pre-line;
-    }
+
     .back-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       font-weight: 700;
+      font-size: 14px;
       color: var(--primary);
+      transition: color 0.2s ease;
+    }
+
+    .back-btn:hover {
+      color: var(--secondary);
+    }
+
+    .article-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: clamp(24px, 4vw, 40px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .article-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      background: var(--blue-soft);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .article-title {
+      font-size: clamp(26px, 3.8vw, 38px);
+      color: var(--primary);
+      margin-bottom: 10px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    .article-date {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .article-cover {
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 28px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    .article-content {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text);
+      white-space: pre-line;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
     }
   </style>
 </head>
@@ -82,11 +118,13 @@
     </div>
   </header>
 
-  <main class="article-container">
-    <a href="berita.html" class="back-btn">← Kembali ke Daftar Berita</a>
-    
-    <div id="articleDetail">
-      <p style="text-align: center;">Memuat detail berita...</p>
+  <main>
+    <div class="detail-wrapper">
+      <a href="berita.html" class="back-btn">← Kembali ke Daftar Berita</a>
+      
+      <div class="article-card" id="articleDetail">
+        <p style="text-align: center; color: var(--muted);">Memuat isi berita...</p>
+      </div>
     </div>
   </main>
 
@@ -99,10 +137,12 @@
 
   <script src="script.js"></script>
 
+  <!-- FIREBASE READ DETAIL SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+    // GANTI DENGAN FIREBASE CONFIG ASLI KAMU
     const firebaseConfig = {
   apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
   authDomain: "bahrul-ulum-web.firebaseapp.com",
@@ -124,12 +164,11 @@
     async function loadDetail() {
       const container = document.getElementById('articleDetail');
       
-      // Ambil ID dari URL parameter (?id=xxxxx)
       const urlParams = new URLSearchParams(window.location.search);
       const newsId = urlParams.get('id');
 
       if (!newsId) {
-        container.innerHTML = "<p>Berita tidak ditemukan.</p>";
+        container.innerHTML = "<p style='text-align:center;'>Berita tidak ditemukan.</p>";
         return;
       }
 
@@ -139,23 +178,26 @@
 
         if (docSnap.exists()) {
           const d = docSnap.data();
+          
+          const imgHTML = d.gambar_url ? `<img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" class="article-cover" onerror="this.style.display='none'">` : '';
+
           container.innerHTML = `
             <span class="article-badge">${escapeHTML(d.kategori)}</span>
             <h1 class="article-title">${escapeHTML(d.judul)}</h1>
             <span class="article-date">Diterbitkan: ${escapeHTML(d.tanggal)}</span>
             
-            <img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" class="article-cover" onerror="this.style.display='none'">
+            ${imgHTML}
             
             <div class="article-content">
               ${escapeHTML(d.ringkasan)}
             </div>
           `;
         } else {
-          container.innerHTML = "<p>Berita tidak ditemukan atau telah dihapus.</p>";
+          container.innerHTML = "<p style='text-align:center;'>Berita tidak ditemukan atau telah dihapus.</p>";
         }
       } catch (e) {
         console.error("Error:", e);
-        container.innerHTML = "<p>Gagal memuat isi berita.</p>";
+        container.innerHTML = "<p style='text-align:center;'>Gagal memuat isi berita.</p>";
       }
     }
 
