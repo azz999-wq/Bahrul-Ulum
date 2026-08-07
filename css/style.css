@@ -749,14 +749,33 @@ footer {
 
   .menu-btn {
     display: block;
+    cursor: pointer;
   }
 
   .nav-inner {
     min-height: 70px;
   }
 
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    padding: 20px;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    display: none; 
+  }
+
   .nav-links > a:not(.nav-cta) {
-    display: none;
+    display: block;
+  }
+
+  .nav-links.active {
+    display: flex;
   }
 
   .nav-cta {
