@@ -408,13 +408,13 @@
     </main>
   </div>
 
-  <!-- FIREBASE LOGIC SCRIPT -->
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // SESUAIKAN DENGAN FIREBASE CONFIG ASLI KAMU
+
     const firebaseConfig = {
   apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
   authDomain: "bahrul-ulum-web.firebaseapp.com",
@@ -478,52 +478,61 @@
       }
     });
 
-    // Fetch News List for Table Management
-    async function fetchAdminNews() {
+async function fetchAdminNews() {
+  try {
+    const q = query(collection(db, "berita"), orderBy("tanggal_created", "desc"));
+    const snapshot = await getDocs(q);
+    
+    document.getElementById("totalNewsCount").textContent = snapshot.size;
+
+    if (snapshot.empty) {
+      newsTableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Belum ada berita.</td></tr>";
+      return;
+    }
+
+    newsTableBody.innerHTML = "";
+    snapshot.forEach((documentSnap) => {
+      const data = documentSnap.data();
+      const docId = documentSnap.id;
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><strong>${escapeHTML(data.judul || '-')}</strong></td>
+        <td><span style="background: var(--blue-soft); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight:800;">${escapeHTML(data.kategori)}</span></td>
+        <td>${escapeHTML(data.tanggal || '-')}</td>
+        <td>
+          <button type="button" class="btn-delete" data-id="${docId}">Hapus</button>
+        </td>
+      `;
+      newsTableBody.appendChild(row);
+    });
+
+  } catch (err) {
+    console.error("Error fetching news:", err);
+  }
+}
+
+// Gunakan Event Delegation pada Tabel untuk Menangani Klik Tombol Hapus
+newsTableBody.addEventListener("click", async (e) => {
+  if (e.target && e.target.classList.contains("btn-delete")) {
+    const docId = e.target.getAttribute("data-id");
+    
+    if (confirm("Apakah Anda yakin ingin menghapus berita ini?")) {
       try {
-        const q = query(collection(db, "berita"), orderBy("tanggal_created", "desc"));
-        const snapshot = await getDocs(q);
-        
-        document.getElementById("totalNewsCount").textContent = snapshot.size;
+        e.target.innerText = "Menghapus...";
+        e.target.disabled = true;
 
-        if (snapshot.empty) {
-          newsTableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Belum ada berita.</td></tr>";
-          return;
-        }
-
-        newsTableBody.innerHTML = "";
-        snapshot.forEach((documentSnap) => {
-          const data = documentSnap.data();
-          const docId = documentSnap.id;
-
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td><strong>${data.judul || '-'}</strong></td>
-            <td><span style="background: var(--blue-soft); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight:800;">${data.kategori}</span></td>
-            <td>${data.tanggal || '-'}</td>
-            <td>
-              <button class="btn-delete" data-id="${docId}">Hapus</button>
-            </td>
-          `;
-          newsTableBody.appendChild(row);
-        });
-
-        // Add Delete Event Listener
-        document.querySelectorAll(".btn-delete").forEach(btn => {
-          btn.addEventListener("click", async (e) => {
-            const id = e.target.getAttribute("data-id");
-            if (confirm("Apakah Anda yakin ingin menghapus berita ini?")) {
-              await deleteDoc(doc(db, "berita", id));
-              alert("Berita dihapus.");
-              fetchAdminNews();
-            }
-          });
-        });
-
+        await deleteDoc(doc(db, "berita", docId));
+        alert("Berita berhasil dihapus!");
+        fetchAdminNews(); // Refresh tabel
       } catch (err) {
-        console.error("Error:", err);
+        alert("Gagal menghapus berita: " + err.message);
+        e.target.innerText = "Hapus";
+        e.target.disabled = false;
       }
     }
+  }
+});
   </script>
 </body>
 </html>
