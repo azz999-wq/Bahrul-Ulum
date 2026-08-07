@@ -138,12 +138,12 @@
   <script src="script.js"></script>
 
   <!-- FIREBASE READ DETAIL SCRIPT -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // GANTI DENGAN FIREBASE CONFIG ASLI KAMU
-    const firebaseConfig = {
+  // GANTI DENGAN FIREBASE CONFIG ASLI KAMU
+  const firebaseConfig = {
   apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
   authDomain: "bahrul-ulum-web.firebaseapp.com",
   projectId: "bahrul-ulum-web",
@@ -151,57 +151,79 @@
   messagingSenderId: "378515606416",
   appId: "1:378515606416:web:95f56f222bd566aef6c115",
   measurementId: "G-9G8T5RR5W6"
-    };
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    function escapeHTML(str) {
-      if(!str) return '';
-      return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+  function escapeHTML(str) {
+    if(!str) return '';
+    return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+  }
+
+  // FUNGSI KONVERSI LINK YOUTUBE KE FORMAT EMBED PLAYER
+  function getYouTubeEmbedURL(url) {
+    if (!url) return '';
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : '';
+  }
+
+  async function loadDetail() {
+    const container = document.getElementById('articleDetail');
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const newsId = urlParams.get('id');
+
+    if (!newsId) {
+      container.innerHTML = "<p style='text-align:center;'>Berita tidak ditemukan.</p>";
+      return;
     }
 
-    async function loadDetail() {
-      const container = document.getElementById('articleDetail');
-      
-      const urlParams = new URLSearchParams(window.location.search);
-      const newsId = urlParams.get('id');
+    try {
+      const docRef = doc(db, "berita", newsId);
+      const docSnap = await getDoc(docRef);
 
-      if (!newsId) {
-        container.innerHTML = "<p style='text-align:center;'>Berita tidak ditemukan.</p>";
-        return;
-      }
+      if (docSnap.exists()) {
+        const d = docSnap.data();
+        
+        // Deteksi Embed YouTube
+        const embedUrl = getYouTubeEmbedURL(d.video_url);
 
-      try {
-        const docRef = doc(db, "berita", newsId);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const d = docSnap.data();
-          
-          const imgHTML = d.gambar_url ? `<img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" class="article-cover" onerror="this.style.display='none'">` : '';
-
-          container.innerHTML = `
-            <span class="article-badge">${escapeHTML(d.kategori)}</span>
-            <h1 class="article-title">${escapeHTML(d.judul)}</h1>
-            <span class="article-date">Diterbitkan: ${escapeHTML(d.tanggal)}</span>
-            
-            ${imgHTML}
-            
-            <div class="article-content">
-              ${escapeHTML(d.ringkasan)}
+        // Jika ada link Video YouTube, tampilkan Player Video
+        let mediaHTML = '';
+        if (embedUrl) {
+          mediaHTML = `
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin-bottom: 28px; background: #000;">
+              <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen></iframe>
             </div>
           `;
-        } else {
-          container.innerHTML = "<p style='text-align:center;'>Berita tidak ditemukan atau telah dihapus.</p>";
+        } else if (d.gambar_url) {
+          // Jika tidak ada video, tampilkan Foto Cover
+          mediaHTML = `<img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" class="article-cover" onerror="this.style.display='none'">`;
         }
-      } catch (e) {
-        console.error("Error:", e);
-        container.innerHTML = "<p style='text-align:center;'>Gagal memuat isi berita.</p>";
-      }
-    }
 
-    document.addEventListener("DOMContentLoaded", loadDetail);
-  </script>
+        container.innerHTML = `
+          <span class="article-badge">${escapeHTML(d.kategori)}</span>
+          <h1 class="article-title">${escapeHTML(d.judul)}</h1>
+          <span class="article-date">Diterbitkan: ${escapeHTML(d.tanggal)}</span>
+          
+          ${mediaHTML}
+          
+          <div class="article-content">
+            ${escapeHTML(d.ringkasan)}
+          </div>
+        `;
+      } else {
+        container.innerHTML = "<p style='text-align:center;'>Berita tidak ditemukan atau telah dihapus.</p>";
+      }
+    } catch (e) {
+      console.error("Error:", e);
+      container.innerHTML = "<p style='text-align:center;'>Gagal memuat isi berita.</p>";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", loadDetail);
+</script>
 </body>
 </html>
