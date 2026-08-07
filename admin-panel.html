@@ -26,7 +26,6 @@
       flex-direction: column;
     }
 
-    /* LOGIN SCREEN MODERN */
     .login-wrapper {
       min-height: 100vh;
       display: flex;
@@ -57,7 +56,6 @@
       height: 42px;
     }
 
-    /* DASHBOARD LAYOUT */
     .dashboard-layout {
       display: flex;
       min-height: 100vh;
@@ -123,7 +121,6 @@
       margin-bottom: 32px;
     }
 
-    /* STATS WIDGETS */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -155,7 +152,6 @@
       margin-top: 4px;
     }
 
-    /* FORM & TABLE CARDS */
     .admin-card {
       background: white;
       border-radius: 20px;
@@ -213,7 +209,6 @@
       box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
     }
 
-    /* TABLE BERITA MODERN */
     .table-responsive {
       width: 100%;
       overflow-x: auto;
@@ -242,6 +237,21 @@
       vertical-align: middle;
     }
 
+    .btn-edit {
+      background: var(--blue-soft);
+      color: var(--primary);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .btn-edit:hover {
+      background: #dbeafe;
+    }
+
     .btn-delete {
       background: #fee2e2;
       color: var(--admin-danger);
@@ -254,6 +264,30 @@
 
     .btn-delete:hover {
       background: #fca5a5;
+    }
+
+    /* MODAL EDIT BERITA */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 20px;
+      max-width: 650px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .hidden {
@@ -269,7 +303,7 @@
 </head>
 <body>
 
-  <!-- 1. FORM LOGIN ADMIN -->
+  <!-- LOGIN FORM -->
   <div id="loginBox" class="login-wrapper">
     <div class="login-card">
       <div class="logo">
@@ -293,9 +327,8 @@
     </div>
   </div>
 
-  <!-- 2. DASHBOARD ADMIN SYSTEM -->
+  <!-- DASHBOARD SYSTEM -->
   <div id="dashboardBox" class="dashboard-layout hidden">
-    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div>
         <div class="sidebar-brand">
@@ -313,7 +346,6 @@
       <button id="logoutBtn" class="btn ghost" style="width:100%; background: rgba(255,255,255,0.1); color:white; border:none;">Logout</button>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="main-content">
       <div class="top-header">
         <div>
@@ -325,7 +357,6 @@
         </div>
       </div>
 
-      <!-- WIDGET STATISTIK RINGKAS -->
       <div class="stats-grid">
         <div class="stat-card">
           <div>
@@ -343,7 +374,7 @@
         </div>
       </div>
 
-      <!-- FORM TAMBAH BERITA -->
+      <!-- FORM PUBLISH -->
       <div class="admin-card">
         <div class="admin-card-header">
           <h3 style="font-size: 18px; color: var(--primary);">+ Publish Berita Baru</h3>
@@ -359,7 +390,7 @@
               <label>Kategori</label>
               <select id="kategori" class="form-control">
                 <option value="KEGIATAN">KEGIATAN</option>
-                <option value="PENDIDIKAN">PENDIDIKAN</option>
+                <option value="BERITA">BERITA</option>
                 <option value="PENGUMUMAN">PENGUMUMAN</option>
                 <option value="EKSTRAKURIKULER">EKSTRAKURIKULER</option>
               </select>
@@ -369,8 +400,12 @@
               <input type="text" id="tanggal" class="form-control" placeholder="Contoh: 08 AGUSTUS 2026" required>
             </div>
             <div class="form-group full">
-              <label>Path / URL Foto</label>
+              <label>Path / URL Foto Cover</label>
               <input type="text" id="gambarUrl" class="form-control" placeholder="Contoh: assets/berita-1.jpg" required>
+            </div>
+            <div class="form-group full">
+              <label>Link Video YouTube (Opsional)</label>
+              <input type="text" id="videoUrl" class="form-control" placeholder="Contoh: https://www.youtube.com/watch?v=dQw4w9WgXcQ">
             </div>
             <div class="form-group full">
               <label>Isi / Ringkasan Berita</label>
@@ -381,7 +416,7 @@
         </form>
       </div>
 
-      <!-- TABEL DAFTAR BERITA AKSI (DELETE/VIEW) -->
+      <!-- TABEL DAFTAR BERITA -->
       <div class="admin-card">
         <div class="admin-card-header">
           <h3 style="font-size: 18px; color: var(--primary);">Daftar Berita Diterbitkan</h3>
@@ -408,15 +443,59 @@
     </main>
   </div>
 
+  <!-- MODAL EDIT BERITA -->
+  <div id="editModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="admin-card-header">
+        <h3 style="font-size: 18px; color: var(--primary);">✏️ Edit Berita</h3>
+        <button type="button" id="closeModalBtn" class="btn ghost" style="padding: 4px 12px;">✕ Tutup</button>
+      </div>
+      <form id="editNewsForm">
+        <input type="hidden" id="editDocId">
+        <div class="form-grid-2">
+          <div class="form-group full">
+            <label>Judul Berita</label>
+            <input type="text" id="editJudul" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Kategori</label>
+            <select id="editKategori" class="form-control">
+              <option value="KEGIATAN">KEGIATAN</option>
+              <option value="BERITA">BERITA</option>
+              <option value="PENGUMUMAN">PENGUMUMAN</option>
+              <option value="EKSTRAKURIKULER">EKSTRAKURIKULER</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tanggal Tampil</label>
+            <input type="text" id="editTanggal" class="form-control" required>
+          </div>
+          <div class="form-group full">
+            <label>Path / URL Foto Cover</label>
+            <input type="text" id="editGambarUrl" class="form-control" required>
+          </div>
+          <div class="form-group full">
+            <label>Link Video YouTube (Opsional)</label>
+            <input type="text" id="editVideoUrl" class="form-control">
+          </div>
+          <div class="form-group full">
+            <label>Isi / Ringkasan Berita</label>
+            <textarea id="editRingkasan" class="form-control" rows="5" required></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn primary" style="padding: 12px 30px; width: 100%;">Simpan Perubahan</button>
+      </form>
+    </div>
+  </div>
 
-  <!-- FIREBASE LOGIC SCRIPT (LENGKAP) -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  <!-- FIREBASE SCRIPT -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // SESUAIKAN DENGAN FIREBASE CONFIG ASLI KAMU
-  const firebaseConfig = {
+    // SESUAIKAN DENGAN FIREBASE CONFIG ASLI KAMU
+    const firebaseConfig = {
   apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
   authDomain: "bahrul-ulum-web.firebaseapp.com",
   projectId: "bahrul-ulum-web",
@@ -424,124 +503,176 @@
   messagingSenderId: "378515606416",
   appId: "1:378515606416:web:95f56f222bd566aef6c115",
   measurementId: "G-9G8T5RR5W6"
-  };
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-  const loginBox = document.getElementById("loginBox");
-  const dashboardBox = document.getElementById("dashboardBox");
-  const newsTableBody = document.getElementById("newsTableBody");
+    const loginBox = document.getElementById("loginBox");
+    const dashboardBox = document.getElementById("dashboardBox");
+    const newsTableBody = document.getElementById("newsTableBody");
+    const editModal = document.getElementById("editModal");
 
-  // FUNGSI PEMBERSIH TEKS (PENTING AGAR TIDAK ERROR)
-  function escapeHTML(str) {
-    if(!str) return '';
-    return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
-  }
+    // Cache Data Berita untuk Modal Edit
+    let globalNewsData = {};
 
-  // Monitor Status Auth Admin
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      loginBox.classList.add("hidden");
-      dashboardBox.classList.remove("hidden");
-      fetchAdminNews();
-    } else {
-      loginBox.classList.remove("hidden");
-      dashboardBox.classList.add("hidden");
+    function escapeHTML(str) {
+      if(!str) return '';
+      return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
     }
-  });
 
-  // Login Action
-  document.getElementById("loginForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("password").value);
-    } catch (err) {
-      alert("Login Gagal: " + err.message);
-    }
-  });
-
-  // Logout Action
-  document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth));
-
-  // Create / Publish News
-  document.getElementById("newsForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    try {
-      await addDoc(collection(db, "berita"), {
-        judul: document.getElementById("judul").value,
-        kategori: document.getElementById("kategori").value,
-        tanggal: document.getElementById("tanggal").value,
-        gambar_url: document.getElementById("gambarUrl").value,
-        ringkasan: document.getElementById("ringkasan").value,
-        tanggal_created: serverTimestamp()
-      });
-      alert("Berita Berhasil Di-publish!");
-      document.getElementById("newsForm").reset();
-      fetchAdminNews();
-    } catch (err) {
-      alert("Gagal Publish: " + err.message);
-    }
-  });
-
-  // Fetch News List & Management
-  async function fetchAdminNews() {
-    try {
-      const q = query(collection(db, "berita"), orderBy("tanggal_created", "desc"));
-      const snapshot = await getDocs(q);
-      
-      document.getElementById("totalNewsCount").textContent = snapshot.size;
-
-      if (snapshot.empty) {
-        newsTableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Belum ada berita yang diterbitkan.</td></tr>";
-        return;
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loginBox.classList.add("hidden");
+        dashboardBox.classList.remove("hidden");
+        fetchAdminNews();
+      } else {
+        loginBox.classList.remove("hidden");
+        dashboardBox.classList.add("hidden");
       }
+    });
 
-      newsTableBody.innerHTML = "";
-      snapshot.forEach((documentSnap) => {
-        const data = documentSnap.data();
-        const docId = documentSnap.id;
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        await signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("password").value);
+      } catch (err) {
+        alert("Login Gagal: " + err.message);
+      }
+    });
 
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td><strong>${escapeHTML(data.judul || '-')}</strong></td>
-          <td><span style="background: var(--blue-soft); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight:800;">${escapeHTML(data.kategori)}</span></td>
-          <td>${escapeHTML(data.tanggal || '-')}</td>
-          <td>
-            <button type="button" class="btn-delete" data-id="${docId}">Hapus</button>
-          </td>
-        `;
-        newsTableBody.appendChild(row);
-      });
+    document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth));
 
-    } catch (err) {
-      console.error("Error fetching news:", err);
-      newsTableBody.innerHTML = "<tr><td colspan='4' style='text-align:center; color:red;'>Gagal memuat data berita. Hak akses ditolak atau koneksi terputus.</td></tr>";
+    // PUBLISH BERITA
+    document.getElementById("newsForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        await addDoc(collection(db, "berita"), {
+          judul: document.getElementById("judul").value,
+          kategori: document.getElementById("kategori").value,
+          tanggal: document.getElementById("tanggal").value,
+          gambar_url: document.getElementById("gambarUrl").value,
+          video_url: document.getElementById("videoUrl").value || '',
+          ringkasan: document.getElementById("ringkasan").value,
+          tanggal_created: serverTimestamp()
+        });
+        alert("Berita Berhasil Di-publish!");
+        document.getElementById("newsForm").reset();
+        fetchAdminNews();
+      } catch (err) {
+        alert("Gagal Publish: " + err.message);
+      }
+    });
+
+    // FETCH BERITA
+    async function fetchAdminNews() {
+      try {
+        const q = query(collection(db, "berita"), orderBy("tanggal_created", "desc"));
+        const snapshot = await getDocs(q);
+        
+        document.getElementById("totalNewsCount").textContent = snapshot.size;
+
+        if (snapshot.empty) {
+          newsTableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Belum ada berita.</td></tr>";
+          return;
+        }
+
+        newsTableBody.innerHTML = "";
+        globalNewsData = {}; // Reset Cache
+
+        snapshot.forEach((documentSnap) => {
+          const data = documentSnap.data();
+          const docId = documentSnap.id;
+
+          globalNewsData[docId] = data; // Simpan ke Cache
+
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td><strong>${escapeHTML(data.judul || '-')}</strong></td>
+            <td><span style="background: var(--blue-soft); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight:800;">${escapeHTML(data.kategori)}</span></td>
+            <td>${escapeHTML(data.tanggal || '-')}</td>
+            <td>
+              <button type="button" class="btn-edit" data-id="${docId}">Edit</button>
+              <button type="button" class="btn-delete" data-id="${docId}">Hapus</button>
+            </td>
+          `;
+          newsTableBody.appendChild(row);
+        });
+
+      } catch (err) {
+        console.error("Error fetching news:", err);
+      }
     }
-  }
 
-  // Event Listener Tombol Hapus (Event Delegation)
-  newsTableBody.addEventListener("click", async (e) => {
-    if (e.target && e.target.classList.contains("btn-delete")) {
+    // EVENT DELEGATION (EDIT & HAPUS)
+    newsTableBody.addEventListener("click", async (e) => {
       const docId = e.target.getAttribute("data-id");
-      
-      if (confirm("Apakah Anda yakin ingin menghapus berita ini?")) {
-        try {
-          e.target.innerText = "Menghapus...";
-          e.target.disabled = true;
+      if (!docId) return;
 
-          await deleteDoc(doc(db, "berita", docId));
-          alert("Berita berhasil dihapus!");
-          fetchAdminNews();
-        } catch (err) {
-          alert("Gagal menghapus berita: " + err.message);
-          e.target.innerText = "Hapus";
-          e.target.disabled = false;
+      // KLIK TOMBOL EDIT
+      if (e.target.classList.contains("btn-edit")) {
+        const data = globalNewsData[docId];
+        if (data) {
+          document.getElementById("editDocId").value = docId;
+          document.getElementById("editJudul").value = data.judul || '';
+          document.getElementById("editKategori").value = data.kategori || 'BERITA';
+          document.getElementById("editTanggal").value = data.tanggal || '';
+          document.getElementById("editGambarUrl").value = data.gambar_url || '';
+          document.getElementById("editVideoUrl").value = data.video_url || '';
+          document.getElementById("editRingkasan").value = data.ringkasan || '';
+
+          editModal.classList.remove("hidden");
         }
       }
-    }
-  });
-</script>
+
+      // KLIK TOMBOL HAPUS
+      if (e.target.classList.contains("btn-delete")) {
+        if (confirm("Apakah Anda yakin ingin menghapus berita ini?")) {
+          try {
+            e.target.innerText = "Menghapus...";
+            e.target.disabled = true;
+
+            await deleteDoc(doc(db, "berita", docId));
+            alert("Berita berhasil dihapus!");
+            fetchAdminNews();
+          } catch (err) {
+            alert("Gagal menghapus berita: " + err.message);
+            e.target.innerText = "Hapus";
+            e.target.disabled = false;
+          }
+        }
+      }
+    });
+
+    // SIMPAN PERUBAHAN EDIT
+    document.getElementById("editNewsForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const docId = document.getElementById("editDocId").value;
+
+      try {
+        const docRef = doc(db, "berita", docId);
+        await updateDoc(docRef, {
+          judul: document.getElementById("editJudul").value,
+          kategori: document.getElementById("editKategori").value,
+          tanggal: document.getElementById("editTanggal").value,
+          gambar_url: document.getElementById("editGambarUrl").value,
+          video_url: document.getElementById("editVideoUrl").value || '',
+          ringkasan: document.getElementById("editRingkasan").value
+        });
+
+        alert("Perubahan berita berhasil disimpan!");
+        editModal.classList.add("hidden");
+        fetchAdminNews();
+      } catch (err) {
+        alert("Gagal memperbarui berita: " + err.message);
+      }
+    });
+
+    // CLOSE MODAL
+    document.getElementById("closeModalBtn").addEventListener("click", () => {
+      editModal.classList.add("hidden");
+    });
+  </script>
 </body>
 </html>
