@@ -13,7 +13,7 @@
 <body>
   <header class="navbar">
     <div class="container nav-inner">
-      <a class="brand" href="#">
+      <a class="brand" href="index.html">
         <img src="assets/BU.png" alt="Logo Bahrul Ulum" class="logo-img">
         <div>
           <strong>Bahrul Ulum</strong>
@@ -25,7 +25,7 @@
         <a href="#beranda">Beranda</a>
         <a href="#profil">Profil</a>
         <a href="#pendidikan">Pendidikan</a>
-        <a href="#berita">Berita</a>
+        <a href="berita.html">Berita</a>
         <a href="#kontak" class="nav-cta">PPDB</a>
       </nav>
     </div>
@@ -41,7 +41,7 @@
           <p>Membangun generasi yang berilmu, berakhlakul karimah, mandiri, dan siap berkhidmah kepada umat.</p>
           <div class="hero-actions">
             <a class="btn primary" href="#profil">Kenal Lebih Dekat →</a>
-            <a class="btn ghost" href="#berita">Lihat Kegiatan</a>
+            <a class="btn ghost" href="berita.html">Lihat Kegiatan</a>
           </div>
           <div class="hero-stats">
             <div><strong>01</strong><span>Pendidikan<br>Terpadu</span></div>
@@ -51,8 +51,7 @@
         </div>
         <div class="hero-card">
           <div class="photo-placeholder">
-            <img src="assets/Hero.jpg" alt="Pondok Pesantren Bahrul Ulum Singaparna">
-
+            <img src="assets/hero-pesantren.jpg" alt="Pondok Pesantren Bahrul Ulum Singaparna" onerror="this.style.display='none'">
             <div class="photo-overlay">
               <span>BAHRUL ULUM</span>
               <strong>Singaparna</strong>
@@ -91,59 +90,19 @@
       </div>
     </section>
 
+    <!-- BERITA HOME (TERHUBUNG FIREBASE - MAX 3 BERITA) -->
     <section id="berita" class="section">
-  <div class="container">
-    <div class="section-head">
-      <div><span class="eyebrow">KABAR PESANTREN</span><h2>Berita & Kegiatan</h2></div>
-      <!-- Tautan ke Halaman Lengkap Berita -->
-      <a class="text-link" href="berita.html">Lihat semua →</a>
-    </div>
-    
-    <div class="news-grid">
-      <!-- Card 1 -->
-      <article class="news">
-        <div class="news-image">
-          <img src="assets/berita-1.jpg" alt="Kegiatan Terbaru" onerror="this.style.display='none'">
-          <span>KEGIATAN</span>
+      <div class="container">
+        <div class="section-head">
+          <div><span class="eyebrow">KABAR PESANTREN</span><h2>Berita & Kegiatan</h2></div>
+          <a class="text-link" href="berita.html">Lihat semua →</a>
         </div>
-        <div class="news-body">
-          <small>30 JULI 2026</small>
-          <h3>Agenda dan kegiatan terbaru Bahrul Ulum</h3>
-          <p>Tempat untuk menampilkan berita, dokumentasi kegiatan, dan pengumuman pesantren.</p>
-          <a class="text-link" href="berita.html">Baca Selengkapnya →</a>
-        </div>
-      </article>
 
-      <!-- Card 2 -->
-      <article class="news">
-        <div class="news-image alt">
-          <img src="assets/berita-2.jpg" alt="Pendidikan" onerror="this.style.display='none'">
-          <span>PENDIDIKAN</span>
+        <div class="news-grid" id="homeNewsGrid">
+          <p style="grid-column: 1/-1; text-align:center;">Memuat berita terbaru...</p>
         </div>
-        <div class="news-body">
-          <small>29 JULI 2026</small>
-          <h3>Belajar, berkhidmah, dan tumbuh bersama</h3>
-          <p>Bagikan cerita dan capaian santri kepada orang tua serta masyarakat.</p>
-          <a class="text-link" href="berita.html">Baca Selengkapnya →</a>
-        </div>
-      </article>
-
-      <!-- Card 3 -->
-      <article class="news">
-        <div class="news-image third">
-          <img src="assets/berita-3.jpg" alt="Pengumuman" onerror="this.style.display='none'">
-          <span>PENGUMUMAN</span>
-        </div>
-        <div class="news-body">
-          <small>28 JULI 2026</small>
-          <h3>Informasi resmi untuk santri dan wali santri</h3>
-          <p>Gunakan bagian ini untuk jadwal, ketentuan, dan informasi penting lainnya.</p>
-          <a class="text-link" href="berita.html">Baca Selengkapnya →</a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
+      </div>
+    </section>
 
     <section id="galeri" class="section soft">
       <div class="container">
@@ -166,7 +125,7 @@
         </div>
 
         <div class="social-box">
-          <a href="https://wa.me/6282118482175?text=Assalamu'alaikum%20Admin%20Bahrul%20Ulum,%20saya%20ingin%20bertanya%20tentang%20pesantren" target="_blank" rel="noopener noreferrer" class="social-item whatsapp">
+          <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Bahrul%20Ulum,%20saya%20ingin%20bertanya%20informasi%20pesantren" target="_blank" rel="noopener noreferrer" class="social-item whatsapp">
             <div>
               <span>WhatsApp Admin</span>
               <strong>Hubungi Admin Pesantren</strong>
@@ -180,7 +139,7 @@
             </div>
             <b>→</b>
           </a>
-          <a href="https://www.facebook.com/pesantren.ulum3" target="_blank" rel="noopener noreferrer" class="social-item facebook">
+          <a href="https://www.facebook.com/bahrululumsingaparna" target="_blank" rel="noopener noreferrer" class="social-item facebook">
             <div>
               <span>Facebook</span>
               <strong>Bahrul Ulum Singaparna</strong>
@@ -207,5 +166,67 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <!-- FIREBASE INTEGRATION (BERANDA) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+    apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
+    authDomain: "bahrul-ulum-web.firebaseapp.com",
+    projectId: "bahrul-ulum-web",
+    storageBucket: "bahrul-ulum-web.firebasestorage.app",
+    messagingSenderId: "378515606416",
+    appId: "1:378515606416:web:95f56f222bd566aef6c115",
+    measurementId: "G-9G8T5RR5W6"
+
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function escapeHTML(str) {
+      if(!str) return '';
+      return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+    }
+
+    async function loadHomeNews() {
+      const grid = document.getElementById('homeNewsGrid');
+      try {
+        const q = query(collection(db, "berita"), orderBy("tanggal_created", "desc"), limit(3));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+          grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Belum ada berita terbaru.</p>";
+          return;
+        }
+
+        grid.innerHTML = "";
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          grid.innerHTML += `
+            <article class="news">
+              <div class="news-image">
+                <img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" onerror="this.style.display='none'">
+                <span>${escapeHTML(d.kategori)}</span>
+              </div>
+              <div class="news-body">
+                <small>${escapeHTML(d.tanggal)}</small>
+                <h3>${escapeHTML(d.judul)}</h3>
+                <p>${escapeHTML(d.ringkasan)}</p>
+                <a class="text-link" href="berita.html">Lihat Selengkapnya →</a>
+              </div>
+            </article>
+          `;
+        });
+      } catch (e) {
+        console.error("Error loading home news:", e);
+        grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Gagal memuat berita.</p>";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadHomeNews);
+  </script>
 </body>
 </html>

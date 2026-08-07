@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Bahrul Ulum</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-box { max-width: 500px; margin: 80px auto; padding: 30px; border: 1px solid var(--border); border-radius: 12px; background: white; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 14px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div id="loginBox" class="admin-box">
+      <h2>Login Admin</h2>
+      <p style="color: var(--muted); margin-bottom: 20px; font-size: 14px;">Masuk untuk mengelola berita pesantren.</p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Email Admin</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="password" required>
+        </div>
+        <button type="submit" class="btn primary" style="width:100%">Masuk</button>
+      </form>
+    </div>
+
+    <div id="dashboardBox" class="admin-box hidden" style="max-width: 650px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2>Tambah Berita Baru</h2>
+        <button id="logoutBtn" class="btn ghost" type="button">Logout</button>
+      </div>
+
+      <form id="newsForm">
+        <div class="form-group">
+          <label>Judul Berita</label>
+          <input type="text" id="judul" required>
+        </div>
+        <div class="form-group">
+          <label>Kategori</label>
+          <select id="kategori">
+            <option value="KEGIATAN">KEGIATAN</option>
+            <option value="PENDIDIKAN">PENDIDIKAN</option>
+            <option value="PENGUMUMAN">PENGUMUMAN</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tanggal Tampil (Contoh: 08 AGUSTUS 2026)</label>
+          <input type="text" id="tanggal" placeholder="08 AGUSTUS 2026" required>
+        </div>
+        <div class="form-group">
+          <label>Path Foto (Contoh: assets/berita-1.jpg)</label>
+          <input type="text" id="gambarUrl" placeholder="assets/berita-1.jpg" required>
+        </div>
+        <div class="form-group">
+          <label>Ringkasan Berita</label>
+          <textarea id="ringkasan" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn primary" style="width:100%">Publish Berita</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+    apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
+    authDomain: "bahrul-ulum-web.firebaseapp.com",
+    projectId: "bahrul-ulum-web",
+    storageBucket: "bahrul-ulum-web.firebasestorage.app",
+    messagingSenderId: "378515606416",
+    appId: "1:378515606416:web:95f56f222bd566aef6c115",
+    measurementId: "G-9G8T5RR5W6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const loginBox = document.getElementById("loginBox");
+    const dashboardBox = document.getElementById("dashboardBox");
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loginBox.classList.add("hidden");
+        dashboardBox.classList.remove("hidden");
+      } else {
+        loginBox.classList.remove("hidden");
+        dashboardBox.classList.add("hidden");
+      }
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        await signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("password").value);
+        alert("Login Berhasil!");
+      } catch (err) {
+        alert("Login Gagal: " + err.message);
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth));
+
+    document.getElementById("newsForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        await addDoc(collection(db, "berita"), {
+          judul: document.getElementById("judul").value,
+          kategori: document.getElementById("kategori").value,
+          tanggal: document.getElementById("tanggal").value,
+          gambar_url: document.getElementById("gambarUrl").value,
+          ringkasan: document.getElementById("ringkasan").value,
+          tanggal_created: serverTimestamp()
+        });
+        alert("Berita berhasil di-publish!");
+        document.getElementById("newsForm").reset();
+      } catch (err) {
+        alert("Gagal menyimpan berita: " + err.message);
+      }
+    });
+  </script>
+</body>
+</html>

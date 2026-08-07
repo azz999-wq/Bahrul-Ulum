@@ -32,7 +32,6 @@
   </header>
 
   <main>
-  
     <section class="page-header">
       <div class="container">
         <span class="eyebrow">KABAR PESANTREN</span>
@@ -41,90 +40,11 @@
       </div>
     </section>
 
-  
+    <!-- LIST BERITA GRID (TERHUBUNG FIREBASE - SEMUA BERITA) -->
     <section class="section">
       <div class="container">
-        <div class="news-grid">
-          
-        
-          <article class="news">
-            <div class="news-image">
-              <img src="assets/kegiatan-1.jpg" alt="Kegiatan Santri" onerror="this.style.display='none'">
-              <span>KEGIATAN</span>
-            </div>
-            <div class="news-body">
-              <small>08 AGUSTUS 2026</small>
-              <h3>Peringatan Hari Besar Islam & Doa Bersama Santri</h3>
-              <p>Rangkaian kegiatan pembacaan rotib, istighosah, dan tausiyah bersama jajaran pengasuh pesantren.</p>
-              <a href="#" class="text-link">Baca Selengkapnya →</a>
-            </div>
-          </article>
-
-          <article class="news">
-            <div class="news-image alt">
-              <img src="assets/kegiatan-2.jpg" alt="Pendidikan Formal" onerror="this.style.display='none'">
-              <span>PENDIDIKAN</span>
-            </div>
-            <div class="news-body">
-              <small>01 AGUSTUS 2026</small>
-              <h3>Pelaksanaan Ujian Tahfizh Al-Qur'an Gelombang I</h3>
-              <p>Santri dan santriwati mengikuti evaluasi hafalan harian dan pekanan bersama tim penguji mutqin.</p>
-              <a href="#" class="text-link">Baca Selengkapnya →</a>
-            </div>
-          </article>
-
-          <article class="news">
-            <div class="news-image third">
-              <img src="assets/kegiatan-3.jpg" alt="Pengumuman Resmi" onerror="this.style.display='none'">
-              <span>PENGUMUMAN</span>
-            </div>
-            <div class="news-body">
-              <small>25 JULI 2026</small>
-              <h3>Jadwal Kedatangan Santri Baru & Ketentuan Wali Santri</h3>
-              <p>Informasi alur pendaftaran ulang, barang bawaan wajib, serta tata tertib berkunjung wali santri.</p>
-              <a href="#" class="text-link">Baca Selengkapnya →</a>
-            </div>
-          </article>
-
-          <article class="news">
-            <div class="news-image">
-              <img src="assets/kegiatan-4.jpg" alt="Ekstrakurikuler" onerror="this.style.display='none'">
-              <span>EKSTRAKURIKULER</span>
-            </div>
-            <div class="news-body">
-              <small>18 JULI 2026</small>
-              <h3>Latihan Muhadhoroh & Public Speaking Bahasa Arab</h3>
-              <p>Pelatihan seni pidato tiga bahasa guna melatih keberanian serta kemampuan komunikasi santri.</p>
-              <a href="#" class="text-link">Baca Selengkapnya →</a>
-            </div>
-          </article>
-
-          <article class="news">
-            <div class="news-image alt">
-              <img src="assets/kegiatan-5.jpg" alt="Kajian Kitab" onerror="this.style.display='none'">
-              <span>KEGIATAN</span>
-            </div>
-            <div class="news-body">
-              <small>10 JULI 2026</small>
-              <h3>Pembukaan Majelis Pengajian Kitab Turats Bulanan</h3>
-              <p>Kajian rutin bersama alumni dan masyarakat umum bertempat di Masjid Utama Bahrul Ulum.</p>
-              <a href="#" class="text-link">Baca Selengkapnya →</a>
-            </div>
-          </article>
-
-          <article class="news">
-            <div class="news-image third">
-              <img src="assets/kegiatan-6.jpg" alt="Gotong Royong" onerror="this.style.display='none'">
-              <span>PENGUMUMAN</span>
-            </div>
-            <div class="news-body">
-              <small>02 JULI 2026</small>
-              <h3>Kerja Bakti Kebersihan Lingkungan Halaman Pesantren</h3>
-              <p>Aksi gotong royong santri dalam menjaga kebersihan, kerapian, dan keasrian asrama.</p>
-              <a href="#" class="text-link">Baca Selengkapnya →</a>
-            </div>
-          </article>
-
+        <div class="news-grid" id="allNewsGrid">
+          <p style="grid-column: 1/-1; text-align:center;">Memuat semua berita...</p>
         </div>
       </div>
     </section>
@@ -138,5 +58,67 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <!-- FIREBASE INTEGRATION (SEMUA BERITA) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // SESUAIKAN DENGAN KONFIGURASI FIREBASE ANDA
+    const firebaseConfig = {
+    apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
+    authDomain: "bahrul-ulum-web.firebaseapp.com",
+    projectId: "bahrul-ulum-web",
+    storageBucket: "bahrul-ulum-web.firebasestorage.app",
+    messagingSenderId: "378515606416",
+    appId: "1:378515606416:web:95f56f222bd566aef6c115",
+    measurementId: "G-9G8T5RR5W6"
+
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function escapeHTML(str) {
+      if(!str) return '';
+      return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+    }
+
+    async function loadAllNews() {
+      const grid = document.getElementById('allNewsGrid');
+      try {
+        const q = query(collection(db, "berita"), orderBy("tanggal_created", "desc"));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+          grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Belum ada berita yang diterbitkan.</p>";
+          return;
+        }
+
+        grid.innerHTML = "";
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          grid.innerHTML += `
+            <article class="news">
+              <div class="news-image">
+                <img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" onerror="this.style.display='none'">
+                <span>${escapeHTML(d.kategori)}</span>
+              </div>
+              <div class="news-body">
+                <small>${escapeHTML(d.tanggal)}</small>
+                <h3>${escapeHTML(d.judul)}</h3>
+                <p>${escapeHTML(d.ringkasan)}</p>
+              </div>
+            </article>
+          `;
+        });
+      } catch (e) {
+        console.error("Error loading all news:", e);
+        grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Gagal memuat berita.</p>";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadAllNews);
+  </script>
 </body>
 </html>
