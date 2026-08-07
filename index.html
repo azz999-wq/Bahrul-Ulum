@@ -166,65 +166,66 @@
 
   <script src="script.js"></script>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-    apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
-    authDomain: "bahrul-ulum-web.firebaseapp.com",
-    projectId: "bahrul-ulum-web",
-    storageBucket: "bahrul-ulum-web.firebasestorage.app",
-    messagingSenderId: "378515606416",
-    appId: "1:378515606416:web:95f56f222bd566aef6c115",
-    measurementId: "G-9G8T5RR5W6"
+  const firebaseConfig = {
+  apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
+  authDomain: "bahrul-ulum-web.firebaseapp.com",
+  projectId: "bahrul-ulum-web",
+  storageBucket: "bahrul-ulum-web.firebasestorage.app",
+  messagingSenderId: "378515606416",
+  appId: "1:378515606416:web:95f56f222bd566aef6c115",
+  measurementId: "G-9G8T5RR5W6"
+  };
 
-    };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  function escapeHTML(str) {
+    if(!str) return '';
+    return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+  }
 
-    function escapeHTML(str) {
-      if(!str) return '';
-      return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
-    }
+  async function loadHomeNews() {
+    const grid = document.getElementById('homeNewsGrid');
+    try {
+      const q = query(collection(db, "berita"), orderBy("tanggal_created", "desc"), limit(3));
+      const snapshot = await getDocs(q);
 
-    async function loadHomeNews() {
-      const grid = document.getElementById('homeNewsGrid');
-      try {
-        const q = query(collection(db, "berita"), orderBy("tanggal_created", "desc"), limit(3));
-        const snapshot = await getDocs(q);
-
-        if (snapshot.empty) {
-          grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Belum ada berita terbaru.</p>";
-          return;
-        }
-
-        grid.innerHTML = "";
-        snapshot.forEach(doc => {
-          const d = doc.data();
-          grid.innerHTML += `
-            <article class="news">
-              <div class="news-image">
-                <img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" onerror="this.style.display='none'">
-                <span>${escapeHTML(d.kategori)}</span>
-              </div>
-              <div class="news-body">
-                <small>${escapeHTML(d.tanggal)}</small>
-                <h3>${escapeHTML(d.judul)}</h3>
-                <p>${escapeHTML(d.ringkasan)}</p>
-                <a class="text-link" href="berita.html">Lihat Selengkapnya →</a>
-              </div>
-            </article>
-          `;
-        });
-      } catch (e) {
-        console.error("Error loading home news:", e);
-        grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Gagal memuat berita.</p>";
+      if (snapshot.empty) {
+        grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Belum ada berita terbaru.</p>";
+        return;
       }
-    }
 
-    document.addEventListener("DOMContentLoaded", loadHomeNews);
-  </script>
+      grid.innerHTML = "";
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        const newsId = doc.id;
+
+        grid.innerHTML += `
+          <article class="news">
+            <div class="news-image">
+              <img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" onerror="this.style.display='none'">
+              <span>${escapeHTML(d.kategori)}</span>
+            </div>
+            <div class="news-body">
+              <small>${escapeHTML(d.tanggal)}</small>
+              <h3>${escapeHTML(d.judul)}</h3>
+              <p>${escapeHTML(d.ringkasan)}</p>
+              <a class="text-link" href="detail-berita.html?id=${newsId}">Lihat Selengkapnya →</a>
+            </div>
+          </article>
+        `;
+      });
+    } catch (e) {
+      console.error("Error loading home news:", e);
+      grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Gagal memuat berita.</p>";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", loadHomeNews);
+</script>
 </body>
 </html>
