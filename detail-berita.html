@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Berita - Bahrul Ulum Singaparna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .article-container {
+      max-width: 800px;
+      margin: 120px auto 60px;
+      padding: 0 24px;
+    }
+    .article-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--blue-soft);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .article-title {
+      font-size: clamp(28px, 4vw, 42px);
+      color: var(--primary);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .article-date {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .article-cover {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+    .article-content {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--text);
+      white-space: pre-line;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/BU.png" alt="Logo Bahrul Ulum" class="logo-img">
+        <div>
+          <strong>Bahrul Ulum</strong>
+          <span>Singaparna</span>
+        </div>
+      </a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Buka menu">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html#beranda">Beranda</a>
+        <a href="index.html#profil">Profil</a>
+        <a href="index.html#pendidikan">Pendidikan</a>
+        <a href="berita.html" class="active">Berita</a>
+        <a href="index.html#kontak" class="nav-cta">PPDB</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <a href="berita.html" class="back-btn">← Kembali ke Daftar Berita</a>
+    
+    <div id="articleDetail">
+      <p style="text-align: center;">Memuat detail berita...</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div><strong>Bahrul Ulum Singaparna</strong><span>Ilmu • Akhlak • Khidmah</span></div>
+      <small>© 2026 Bahrul Ulum Singaparna. Semua hak dilindungi.</small>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+  apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
+  authDomain: "bahrul-ulum-web.firebaseapp.com",
+  projectId: "bahrul-ulum-web",
+  storageBucket: "bahrul-ulum-web.firebasestorage.app",
+  messagingSenderId: "378515606416",
+  appId: "1:378515606416:web:95f56f222bd566aef6c115",
+  measurementId: "G-9G8T5RR5W6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function escapeHTML(str) {
+      if(!str) return '';
+      return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+    }
+
+    async function loadDetail() {
+      const container = document.getElementById('articleDetail');
+      
+      // Ambil ID dari URL parameter (?id=xxxxx)
+      const urlParams = new URLSearchParams(window.location.search);
+      const newsId = urlParams.get('id');
+
+      if (!newsId) {
+        container.innerHTML = "<p>Berita tidak ditemukan.</p>";
+        return;
+      }
+
+      try {
+        const docRef = doc(db, "berita", newsId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const d = docSnap.data();
+          container.innerHTML = `
+            <span class="article-badge">${escapeHTML(d.kategori)}</span>
+            <h1 class="article-title">${escapeHTML(d.judul)}</h1>
+            <span class="article-date">Diterbitkan: ${escapeHTML(d.tanggal)}</span>
+            
+            <img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" class="article-cover" onerror="this.style.display='none'">
+            
+            <div class="article-content">
+              ${escapeHTML(d.ringkasan)}
+            </div>
+          `;
+        } else {
+          container.innerHTML = "<p>Berita tidak ditemukan atau telah dihapus.</p>";
+        }
+      } catch (e) {
+        console.error("Error:", e);
+        container.innerHTML = "<p>Gagal memuat isi berita.</p>";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadDetail);
+  </script>
+</body>
+</html>
