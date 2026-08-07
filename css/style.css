@@ -935,3 +935,23 @@ footer {
     transition-duration: 0.01ms !important;
   }
 }
+
+.page-header {
+  padding-top: 140px;
+  padding-bottom: 50px;
+  background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+.page-header h1 {
+  font-size: clamp(32px, 4.5vw, 56px);
+  color: var(--primary);
+  margin: 12px 0;
+  font-weight: 800;
+}
+
+.page-header p {
+  color: var(--muted);
+  max-width: 680px;
+  font-size: clamp(14px, 1.2vw, 16px);
+}
