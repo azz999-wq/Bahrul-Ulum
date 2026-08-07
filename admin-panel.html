@@ -409,130 +409,138 @@
   </div>
 
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  <!-- FIREBASE LOGIC SCRIPT (LENGKAP) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+  // SESUAIKAN DENGAN FIREBASE CONFIG ASLI KAMU
+  const firebaseConfig = {
+    apiKey: "API_KEY_KAMU",
+    authDomain: "PROJECT_ID.firebaseapp.com",
+    projectId: "PROJECT_ID",
+    storageBucket: "PROJECT_ID.appspot.com",
+    messagingSenderId: "SENDER_ID",
+    appId: "APP_ID"
+  };
 
-    const firebaseConfig = {
-  apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
-  authDomain: "bahrul-ulum-web.firebaseapp.com",
-  projectId: "bahrul-ulum-web",
-  storageBucket: "bahrul-ulum-web.firebasestorage.app",
-  messagingSenderId: "378515606416",
-  appId: "1:378515606416:web:95f56f222bd566aef6c115",
-  measurementId: "G-9G8T5RR5W6"
-    }
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+  const loginBox = document.getElementById("loginBox");
+  const dashboardBox = document.getElementById("dashboardBox");
+  const newsTableBody = document.getElementById("newsTableBody");
 
-    const loginBox = document.getElementById("loginBox");
-    const dashboardBox = document.getElementById("dashboardBox");
-    const newsTableBody = document.getElementById("newsTableBody");
-
-    // Monitor State Auth
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        loginBox.classList.add("hidden");
-        dashboardBox.classList.remove("hidden");
-        fetchAdminNews();
-      } else {
-        loginBox.classList.remove("hidden");
-        dashboardBox.classList.add("hidden");
-      }
-    });
-
-    // Login Action
-    document.getElementById("loginForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      try {
-        await signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("password").value);
-      } catch (err) {
-        alert("Login Gagal: " + err.message);
-      }
-    });
-
-    // Logout Action
-    document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth));
-
-    // Create News
-    document.getElementById("newsForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      try {
-        await addDoc(collection(db, "berita"), {
-          judul: document.getElementById("judul").value,
-          kategori: document.getElementById("kategori").value,
-          tanggal: document.getElementById("tanggal").value,
-          gambar_url: document.getElementById("gambarUrl").value,
-          ringkasan: document.getElementById("ringkasan").value,
-          tanggal_created: serverTimestamp()
-        });
-        alert("Berita Berhasil Di-publish!");
-        document.getElementById("newsForm").reset();
-        fetchAdminNews();
-      } catch (err) {
-        alert("Gagal Publish: " + err.message);
-      }
-    });
-
-async function fetchAdminNews() {
-  try {
-    const q = query(collection(db, "berita"), orderBy("tanggal_created", "desc"));
-    const snapshot = await getDocs(q);
-    
-    document.getElementById("totalNewsCount").textContent = snapshot.size;
-
-    if (snapshot.empty) {
-      newsTableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Belum ada berita.</td></tr>";
-      return;
-    }
-
-    newsTableBody.innerHTML = "";
-    snapshot.forEach((documentSnap) => {
-      const data = documentSnap.data();
-      const docId = documentSnap.id;
-
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td><strong>${escapeHTML(data.judul || '-')}</strong></td>
-        <td><span style="background: var(--blue-soft); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight:800;">${escapeHTML(data.kategori)}</span></td>
-        <td>${escapeHTML(data.tanggal || '-')}</td>
-        <td>
-          <button type="button" class="btn-delete" data-id="${docId}">Hapus</button>
-        </td>
-      `;
-      newsTableBody.appendChild(row);
-    });
-
-  } catch (err) {
-    console.error("Error fetching news:", err);
+  // FUNGSI PEMBERSIH TEKS (PENTING AGAR TIDAK ERROR)
+  function escapeHTML(str) {
+    if(!str) return '';
+    return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
   }
-}
 
-// Gunakan Event Delegation pada Tabel untuk Menangani Klik Tombol Hapus
-newsTableBody.addEventListener("click", async (e) => {
-  if (e.target && e.target.classList.contains("btn-delete")) {
-    const docId = e.target.getAttribute("data-id");
-    
-    if (confirm("Apakah Anda yakin ingin menghapus berita ini?")) {
-      try {
-        e.target.innerText = "Menghapus...";
-        e.target.disabled = true;
+  // Monitor Status Auth Admin
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loginBox.classList.add("hidden");
+      dashboardBox.classList.remove("hidden");
+      fetchAdminNews();
+    } else {
+      loginBox.classList.remove("hidden");
+      dashboardBox.classList.add("hidden");
+    }
+  });
 
-        await deleteDoc(doc(db, "berita", docId));
-        alert("Berita berhasil dihapus!");
-        fetchAdminNews(); // Refresh tabel
-      } catch (err) {
-        alert("Gagal menghapus berita: " + err.message);
-        e.target.innerText = "Hapus";
-        e.target.disabled = false;
+  // Login Action
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("password").value);
+    } catch (err) {
+      alert("Login Gagal: " + err.message);
+    }
+  });
+
+  // Logout Action
+  document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth));
+
+  // Create / Publish News
+  document.getElementById("newsForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try {
+      await addDoc(collection(db, "berita"), {
+        judul: document.getElementById("judul").value,
+        kategori: document.getElementById("kategori").value,
+        tanggal: document.getElementById("tanggal").value,
+        gambar_url: document.getElementById("gambarUrl").value,
+        ringkasan: document.getElementById("ringkasan").value,
+        tanggal_created: serverTimestamp()
+      });
+      alert("Berita Berhasil Di-publish!");
+      document.getElementById("newsForm").reset();
+      fetchAdminNews();
+    } catch (err) {
+      alert("Gagal Publish: " + err.message);
+    }
+  });
+
+  // Fetch News List & Management
+  async function fetchAdminNews() {
+    try {
+      const q = query(collection(db, "berita"), orderBy("tanggal_created", "desc"));
+      const snapshot = await getDocs(q);
+      
+      document.getElementById("totalNewsCount").textContent = snapshot.size;
+
+      if (snapshot.empty) {
+        newsTableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Belum ada berita yang diterbitkan.</td></tr>";
+        return;
       }
+
+      newsTableBody.innerHTML = "";
+      snapshot.forEach((documentSnap) => {
+        const data = documentSnap.data();
+        const docId = documentSnap.id;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><strong>${escapeHTML(data.judul || '-')}</strong></td>
+          <td><span style="background: var(--blue-soft); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight:800;">${escapeHTML(data.kategori)}</span></td>
+          <td>${escapeHTML(data.tanggal || '-')}</td>
+          <td>
+            <button type="button" class="btn-delete" data-id="${docId}">Hapus</button>
+          </td>
+        `;
+        newsTableBody.appendChild(row);
+      });
+
+    } catch (err) {
+      console.error("Error fetching news:", err);
+      newsTableBody.innerHTML = "<tr><td colspan='4' style='text-align:center; color:red;'>Gagal memuat data berita. Hak akses ditolak atau koneksi terputus.</td></tr>";
     }
   }
-});
-  </script>
+
+  // Event Listener Tombol Hapus (Event Delegation)
+  newsTableBody.addEventListener("click", async (e) => {
+    if (e.target && e.target.classList.contains("btn-delete")) {
+      const docId = e.target.getAttribute("data-id");
+      
+      if (confirm("Apakah Anda yakin ingin menghapus berita ini?")) {
+        try {
+          e.target.innerText = "Menghapus...";
+          e.target.disabled = true;
+
+          await deleteDoc(doc(db, "berita", docId));
+          alert("Berita berhasil dihapus!");
+          fetchAdminNews();
+        } catch (err) {
+          alert("Gagal menghapus berita: " + err.message);
+          e.target.innerText = "Hapus";
+          e.target.disabled = false;
+        }
+      }
+    }
+  });
+</script>
 </body>
 </html>
