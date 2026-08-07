@@ -34,8 +34,8 @@ a {
 }
 
 .container {
-  width: min(1120px, 90%);
-  margin: auto;
+  width: min(1400px, calc(100% - 48px));
+  margin-inline: auto;
 }
 
 .navbar {
@@ -153,8 +153,8 @@ a {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.05fr .95fr;
-  gap: 70px;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: clamp(30px, 5vw, 70px);
   align-items: center;
   position: relative;
 }
@@ -357,8 +357,8 @@ a {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
 }
 
 .card {
@@ -395,8 +395,8 @@ a {
 
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
 }
 
 .news {
@@ -641,9 +641,8 @@ footer {
   }
 
   .hero-copy h1 {
-    font-size: 39px;
-    letter-spacing: -1.8px;
-  }
+    font-size: clamp(2.7rem, 5vw, 4.7rem);
+}
 
   .hero-actions {
     flex-direction: column;
@@ -666,10 +665,11 @@ footer {
     padding: 70px 0;
   }
 
-  .gallery {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 180px 180px 180px;
-  }
+ .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
 
   .gallery-item.tall {
     grid-row: span 2;
