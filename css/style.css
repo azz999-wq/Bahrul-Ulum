@@ -575,6 +575,13 @@ section {
 .news-body p {
   color: var(--muted);
   font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
 }
 
 /* =========================
