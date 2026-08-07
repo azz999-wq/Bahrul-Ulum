@@ -761,7 +761,7 @@ footer {
     font-size: 28px;
     color: var(--primary);
     cursor: pointer;
-    z-index: 1001;
+    z-index: 1002;
   }
 
   .nav-links {
@@ -776,13 +776,9 @@ footer {
     gap: 16px;
     border-bottom: 2px solid var(--border);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
+    z-index: 1001;
 
-    display: flex;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
+    display: none;
   }
 
   .nav-links > a {
@@ -797,12 +793,12 @@ footer {
     padding-inline: 16px;
   }
 
+  /* CLASS AKTIF SAAT DITOGGLE JS */
   .nav-links.active {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
+    display: flex !important;
   }
 
+  /* SECTIONS LAYOUT */
   .hero {
     min-height: auto;
     padding-top: 115px;
