@@ -70,7 +70,6 @@
     messagingSenderId: "378515606416",
     appId: "1:378515606416:web:95f56f222bd566aef6c115",
     measurementId: "G-9G8T5RR5W6"
-
     };
 
     const app = initializeApp(firebaseConfig);
@@ -99,7 +98,7 @@
             <article class="news">
               <div class="news-image">
                 <img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" onerror="this.style.display='none'">
-                <span>${escapeHTML(d.kategori)}</span>
+                <span class="badge-tag">${escapeHTML(d.kategori)}</span>
               </div>
               <div class="news-body">
                 <small>${escapeHTML(d.tanggal)}</small>
@@ -110,7 +109,7 @@
           `;
         });
       } catch (e) {
-        console.error("Error loading all news:", e);
+        console.error("Error loading news:", e);
         grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Gagal memuat berita.</p>";
       }
     }
