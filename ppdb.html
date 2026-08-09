@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPDB - Pondok Pesantren Bahrul 'Ulum</title>
+  <link rel="icon" type="image/png" href="assets/BU.png">
+  <link rel="apple-touch-icon" href="assets/BU.png">
+  <link rel="stylesheet" href="css/ppdb.css">
+  
+  <style>
+    .ppdb-hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      color: #ffffff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .ppdb-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .ppdb-hero p {
+      font-size: 1.1rem;
+      max-width: 650px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+
+    .btn-brosur {
+      display: inline-block;
+      background-color: #ffffff;
+      color: #1e3a8a;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .btn-brosur:hover {
+      background-color: #f1f5f9;
+      transform: translateY(-2px);
+    }
+
+    .ppdb-container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      color: #1e293b;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+
+    .step-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 25px 20px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+
+    .step-badge {
+      width: 40px;
+      height: 40px;
+      background: #1e3a8a;
+      color: #ffffff;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      font-size: 1.1rem;
+    }
+
+    .step-card h3 {
+      font-size: 1rem;
+      color: #334155;
+      margin: 0;
+    }
+
+    .cta-bottom-box {
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .cta-bottom-box h3 {
+      font-size: 1.5rem;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    .cta-bottom-box p {
+      color: #64748b;
+      margin-bottom: 25px;
+    }
+
+    .btn-daftar {
+      display: inline-block;
+      background-color: #2563eb;
+      color: #ffffff;
+      padding: 14px 36px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-daftar:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="ppdb-hero">
+    <h1>Penerimaan Santri Baru (PPDB)</h1>
+    <p>Tahun Ajaran 2026/2027 Pondok Pesantren Bahrul 'Ulum. Mendidik generasi berakhlak mulia, berprestasi, dan berwawasan luas.</p>
+    
+    <a href="assets/brosur-ppdb.pdf" target="_blank" class="btn-brosur">
+      📄 Unduh Brosur (PDF)
+    </a>
+  </header>
+
+  <main class="ppdb-container">
+    
+    <section>
+      <div class="section-title">
+        <h2>Alur Pendaftaran Santri Baru</h2>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-badge">1</div>
+          <h3>Isi Formulir</h3>
+        </div>
+
+        <div class="step-card">
+          <div class="step-badge">2</div>
+          <h3>Pengumuman</h3>
+        </div>
+
+        <div class="step-card">
+          <div class="step-badge">3</div>
+          <h3>Kedatangan Santri ke Pesantren</h3>
+        </div>
+
+        <div class="step-card">
+          <div class="step-badge">4</div>
+          <h3>Pengetesan</h3>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-bottom-box">
+      <h3>Siap Menjadi Bagian Dari Kami?</h3>
+      <p>Klik tombol di bawah untuk mengisi formulir pendaftaran secara online via Google Form.</p>
+      
+      <a href="https://forms.google.com/" target="_blank" class="btn-daftar">
+        📝 Daftar Sekarang
+      </a>
+    </section>
+
+  </main>
+
+</body>
+</html>
