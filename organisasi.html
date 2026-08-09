@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Struktur Organisasi - Pondok Pesantren Bahrul Ulum</title>
+
   <link rel="icon" type="image/png" href="assets/BU.png">
   <link rel="apple-touch-icon" href="assets/BU.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +44,7 @@
       min-width: 220px;
     }
 
+    /* LEVEL 1: YAYASAN AN-NUUR */
     .tree-node.top-yayasan {
       background: var(--primary);
       color: var(--white);
@@ -81,6 +83,7 @@
       background: var(--primary);
     }
 
+    /* CONTAINER CABANG DINAMIS */
     .tree-branch-container {
       position: relative;
       width: 100%;
@@ -96,17 +99,85 @@
 
     .tree-branch {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       width: 100%;
-      gap: 20px;
+      gap: 25px 20px;
     }
 
     .tree-leaf {
       display: flex;
       flex-direction: column;
       align-items: center;
-      flex: 1;
-      max-width: 250px;
+      flex: 0 1 260px;
+    }
+
+    /* CARD DIVISI (MAX 10 PENGURUS) */
+    .divisi-card {
+      background: var(--white);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      width: 100%;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .divisi-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .divisi-header {
+      background: var(--primary);
+      color: var(--white);
+      padding: 12px 14px;
+      text-align: center;
+    }
+
+    .divisi-header h4 {
+      color: var(--white);
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    .divisi-header span {
+      color: var(--secondary);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .divisi-body {
+      padding: 10px 14px;
+    }
+
+    .divisi-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .divisi-body li {
+      font-size: 13px;
+      color: var(--black);
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .divisi-body li:last-child {
+      border-bottom: none;
+    }
+
+    .divisi-body li .role {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      background: var(--blue-soft);
+      padding: 2px 6px;
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -133,12 +204,12 @@
     </div>
   </header>
 
-
+  <!-- PAGE HEADER -->
   <header class="page-header-blue">
     <div class="container">
       <span class="eyebrow" style="color: var(--secondary);">BAGAN ORGANISASI</span>
       <h1>Struktur Kepengurusan</h1>
-      <p>Yayasan An-Nuur & Pondok Pesantren Bahrul Ulum Singaparna</p>
+      <p>Yayasan An-Nuur & Pondok Pesantren Bahrul 'Ulum Singaparna</p>
     </div>
   </header>
 
@@ -146,7 +217,7 @@
     <div class="container">
       <div class="tree-wrapper">
         <div class="tree">
-
+          
           <div class="tree-node top-yayasan">
             <span>Penyelenggara & Pengawas</span>
             <h3>Yayasan An-Nuur Bahrul Ulum</h3>
@@ -186,6 +257,7 @@
 
   <script src="script.js"></script>
 
+  <!-- INTEGRASI FIREBASE DATA PENGURUS -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -212,7 +284,7 @@
 
     function escapeHTML(str) {
       if(!str) return '';
-      return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&#34;' }[tag] || tag));
+      return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
     }
 
     async function loadPengurusTree() {
@@ -236,18 +308,54 @@
 
     function renderTreeNodes(dataList) {
       const container = document.getElementById('pengurusBranch');
-
       container.innerHTML = "";
+
+      // Grouping data berdasarkan Divisi/Jabatan
+      const groupedDivisi = {};
       dataList.forEach(item => {
-        container.innerHTML += `
-          <div class="tree-leaf">
-            <div class="line-v"></div>
-            <div class="tree-node">
-              <h4>${escapeHTML(item.nama)}</h4>
-              <span>${escapeHTML(item.jabatan)}</span>
+        const key = item.jabatan || "Pengurus";
+        if (!groupedDivisi[key]) groupedDivisi[key] = [];
+        groupedDivisi[key].push(item);
+      });
+
+      Object.keys(groupedDivisi).forEach(divisiName => {
+        const members = groupedDivisi[divisiName];
+        
+        const CHUNK_SIZE = 10; // Max 10 orang per box (1 Penanggung Jawab + 9 Anggota)
+        
+        for (let i = 0; i < members.length; i += CHUNK_SIZE) {
+          const chunk = members.slice(i, i + CHUNK_SIZE);
+          const ketua = chunk[0];
+          const anggotaList = chunk.slice(1);
+
+          let anggotaHTML = "";
+          anggotaList.forEach(ang => {
+            anggotaHTML += `
+              <li>
+                <span>${escapeHTML(ang.nama)}</span>
+                <span class="role">Anggota</span>
+              </li>
+            `;
+          });
+
+          const cardHTML = `
+            <div class="tree-leaf">
+              <div class="line-v"></div>
+              <div class="divisi-card">
+                <div class="divisi-header">
+                  <h4>${escapeHTML(ketua.nama)}</h4>
+                  <span>${escapeHTML(divisiName)} ${i > 0 ? `(Part ${Math.floor(i/CHUNK_SIZE)+1})` : ''}</span>
+                </div>
+                ${anggotaList.length > 0 ? `
+                  <div class="divisi-body">
+                    <ul>${anggotaHTML}</ul>
+                  </div>
+                ` : ''}
+              </div>
             </div>
-          </div>
-        `;
+          `;
+          container.innerHTML += cardHTML;
+        }
       });
 
       setTimeout(() => {
@@ -258,18 +366,25 @@
     function updateBranchLine() {
       const container = document.getElementById('pengurusBranch');
       const lineH = document.getElementById('lineHDynamic');
-      const leaves = container.querySelectorAll('.tree-leaf');
+      const leaves = Array.from(container.querySelectorAll('.tree-leaf'));
 
       if (leaves.length > 1) {
-        const firstLeaf = leaves[0];
-        const lastLeaf = leaves[leaves.length - 1];
+        const firstTop = leaves[0].offsetTop;
+        const firstRowLeaves = leaves.filter(leaf => leaf.offsetTop === firstTop);
 
-        const firstCenter = firstLeaf.offsetLeft + (firstLeaf.offsetWidth / 2);
-        const lastCenter = lastLeaf.offsetLeft + (lastLeaf.offsetWidth / 2);
+        if (firstRowLeaves.length > 1) {
+          const firstLeaf = firstRowLeaves[0];
+          const lastLeaf = firstRowLeaves[firstRowLeaves.length - 1];
 
-        lineH.style.display = 'block';
-        lineH.style.left = `${firstCenter}px`;
-        lineH.style.width = `${lastCenter - firstCenter}px`;
+          const firstCenter = firstLeaf.offsetLeft + (firstLeaf.offsetWidth / 2);
+          const lastCenter = lastLeaf.offsetLeft + (lastLeaf.offsetWidth / 2);
+
+          lineH.style.display = 'block';
+          lineH.style.left = `${firstCenter}px`;
+          lineH.style.width = `${lastCenter - firstCenter}px`;
+        } else {
+          lineH.style.display = 'none';
+        }
       } else {
         lineH.style.display = 'none';
       }
