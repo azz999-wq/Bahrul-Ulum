@@ -9,373 +9,233 @@
   <link rel="apple-touch-icon" href="assets/BU.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
   <link rel="stylesheet" href="css/style.css">
-  
+
   <style>
-    * {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
 
-    body {
-      background-color: #ffffff;
-      color: #1e293b;
-    }
-
-/* NAVBAR SAMAIN PERSIS DENGAN INDEX.HTML */
-.navbar {
-  background: #ffffff;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  border-bottom: 1px solid #f1f5f9;
-  padding: 12px 0; /* Menyesuaikan tinggi navbar */
-}
-
-.nav-container {
-  max-width: 1200px; /* Samain batas lebar kanan-kiri dengan beranda */
-  margin: 0 auto;
-  padding: 0 40px;   /* Jarak aman di layar lebar */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: #0f172a;
-  font-weight: 800;
-  font-size: 1.1rem;
-}
-
-.nav-logo img {
-  width: 38px;
-  height: 38px;
-  object-fit: contain;
-}
-
-.nav-logo-text small {
-  display: block;
-  font-size: 0.75rem;
-  color: #64748b;
-  font-weight: 500;
-  margin-top: -2px;
-}
-
-.nav-menu {
-  display: flex;
-  align-items: center;
-  gap: 32px; /* Jarak antar teks menu disamakan */
-  list-style: none;
-}
-
-.nav-link {
-  color: #334155;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: color 0.2s ease;
-}
-
-.nav-link:hover {
-  color: #1e3a8a;
-}
-
-.btn-nav-ppdb {
-  background: #1e3a8a;
-  color: #ffffff !important;
-  padding: 10px 24px;
-  border-radius: 10px; /* Kelengkungan tombol disamakan */
-  font-weight: 700;
-  transition: all 0.2s ease;
-}
-
-.btn-nav-ppdb:hover {
-  background: #1d4ed8;
-}
-
-    .ppdb-hero {
-      padding: 80px 20px 60px;
-      text-align: center;
-      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #e0f2fe;
-      color: #0284c7;
-      padding: 6px 18px;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 24px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .ppdb-hero h1 {
-      font-size: 2.8rem;
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 16px;
-      letter-spacing: -0.8px;
-      line-height: 1.2;
-    }
-
-    .ppdb-hero h1 span {
-      color: #2563eb;
-    }
-
-    .ppdb-hero p {
-      font-size: 1.05rem;
-      color: #64748b;
-      max-width: 620px;
-      margin: 0 auto 36px;
-      line-height: 1.6;
-    }
-
-    .btn-brosur {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: #ffffff;
-      color: #0f172a;
-      border: 1px solid #e2e8f0;
-      padding: 14px 28px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    }
-
-    .btn-brosur:hover {
-      border-color: #cbd5e1;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    /* CONTAINER CONTENT */
-    .ppdb-wrapper {
-      max-width: 1100px;
-      margin: 40px auto 100px;
-      padding: 0 24px;
-    }
-
-    .section-title-box {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-
-    .section-title-box h2 {
-      font-size: 1.85rem;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: -0.5px;
-    }
-
-    .steps-container {
+    .steps-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 24px;
-      margin-bottom: 60px;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+      gap: clamp(18px, 2vw, 26px);
     }
 
     .step-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 32px 24px;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+      padding: clamp(25px, 3vw, 32px);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       display: flex;
       flex-direction: column;
     }
 
     .step-card:hover {
-      border-color: #3b82f6;
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.08);
+      transform: translateY(-5px);
+      border-color: rgba(126, 164, 233, 0.55);
+      box-shadow: var(--shadow-md);
     }
 
     .step-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 100%;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .step-icon {
-      width: 48px;
-      height: 48px;
-      background: #eff6ff;
-      color: #2563eb;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
+      width: 44px;
+      height: 44px;
+      background: var(--blue-soft);
+      color: var(--primary);
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
     }
 
-    .step-number {
-      font-size: 1.4rem;
+    .step-num {
+      font-size: 22px;
       font-weight: 800;
-      color: #cbd5e1;
+      color: var(--secondary);
     }
 
     .step-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #0f172a;
+      font-size: 18px;
+      color: var(--primary);
       margin: 0;
-      line-height: 1.4;
     }
 
-    .cta-card {
-      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-      border-radius: 20px;
-      padding: 56px 32px;
+    .ppdb-cta-banner {
+      background: var(--primary);
+      color: var(--white);
+      border-radius: var(--radius-lg);
+      padding: clamp(35px, 5vw, 60px) clamp(20px, 4vw, 40px);
       text-align: center;
-      color: #ffffff;
-      box-shadow: 0 16px 32px -10px rgba(30, 58, 138, 0.25);
+      box-shadow: var(--shadow-md);
     }
 
-    .cta-card h3 {
-      font-size: 1.85rem;
-      font-weight: 800;
+    .ppdb-cta-banner h2 {
+      color: var(--white);
+      font-size: clamp(24px, 3.5vw, 38px);
       margin-bottom: 12px;
     }
 
-    .cta-card p {
-      color: #93c5fd;
-      max-width: 520px;
-      margin: 0 auto 32px;
-      font-size: 1rem;
-      line-height: 1.5;
+    .ppdb-cta-banner p {
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 580px;
+      margin: 0 auto 30px;
+      font-size: 15px;
     }
 
-    .btn-daftar {
+    .btn-gform {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: #2563eb;
-      color: #ffffff;
-      padding: 16px 36px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 1.05rem;
-      text-decoration: none;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      background: var(--secondary);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.25s ease, background 0.25s ease;
     }
 
-    .btn-daftar:hover {
-      background: #1d4ed8;
+    .btn-gform:hover {
+      background: #608cdb;
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
   </style>
 </head>
 <body>
 
   <nav class="navbar">
-    <div class="nav-container">
-      <a href="index.html" class="nav-logo">
-        <img src="assets/BU.png" alt="Logo Pesantren">
-        <div class="nav-logo-text">
-          Bahrul Ulum
-          <small>Singaparna</small>
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/BU.png" alt="Logo" class="logo-img">
+        <div>
+          <strong>Bahrul Ulum</strong>
+          <span>Singaparna</span>
         </div>
       </a>
-      <ul class="nav-menu">
-        <li><a href="index.html" class="nav-link">Beranda</a></li>
-        <li><a href="index.html#profil" class="nav-link">Profil</a></li>
-        <li><a href="index.html#kontak" class="nav-link">Kontak Kami</a></li>
-        <li><a href="berita.html" class="nav-link">Berita</a></li>
-        <li><a href="ppdb.html" class="nav-link btn-nav-ppdb">PPDB</a></li>
-      </ul>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle Navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Beranda</a>
+        <a href="index.html#profil">Profil</a>
+        <a href="index.html#kontak">Kontak Kami</a>
+        <a href="berita.html">Berita</a>
+        <a href="ppdb.html" class="nav-cta">PPDB</a>
+      </div>
     </div>
   </nav>
 
-  <header class="ppdb-hero">
-    <div class="hero-badge">
-      <i class="fa-solid fa-graduation-cap"></i> PPDB T.A. 2026/2027
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">PPDB T.A. 2026/2027</span>
+      <h1>Pendaftaran Santri Baru</h1>
+      <p>Membentuk generasi berakhlak mulia, berwawasan luas, dan siap berkontribusi positif bagi masyarakat.</p>
+
+      <div style="margin-top: 25px;">
+        <a href="assets/Brosur Bahrul Ulum.pdf" target="_blank" class="btn ghost">
+          <i class="fa-solid fa-file-pdf" style="color: #ef4444; margin-right: 8px;"></i> Unduh Brosur Resmi
+        </a>
+      </div>
     </div>
-    <h1>Pendaftaran Santri Baru <br><span>Bahrul Ulum</span></h1>
-    <p>Membentuk generasi berakhlak karimah, berwawasan luas, dan siap menjawab tantangan zaman.</p>
-    
-    <a href="assets/Brosur Bahrul Ulum.pdf" target="_blank" class="btn-brosur">
-      <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Unduh Brosur Resmi
-    </a>
   </header>
 
-  <main class="ppdb-wrapper">
-    
-    <section>
-      <div class="section-title-box">
-        <h2>Tahapan Pendaftaran</h2>
+  <main class="section">
+    <div class="container">
+
+      <div style="margin-bottom: 60px;">
+        <div class="section-head" style="margin-bottom: 30px;">
+          <div>
+            <span class="eyebrow">ALUR PENDAFTARAN</span>
+            <h2 style="margin-top: 5px;">Tahapan PPDB</h2>
+          </div>
+        </div>
+
+        <div class="steps-grid">
+          <!-- Step 1 -->
+          <div class="step-card">
+            <div class="step-head">
+              <div class="step-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+              <span class="step-num">01</span>
+            </div>
+            <h3>Isi Formulir</h3>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-card">
+            <div class="step-head">
+              <div class="step-icon"><i class="fa-solid fa-bullhorn"></i></div>
+              <span class="step-num">02</span>
+            </div>
+            <h3>Pengumuman</h3>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-card">
+            <div class="step-head">
+              <div class="step-icon"><i class="fa-solid fa-campground"></i></div>
+              <span class="step-num">03</span>
+            </div>
+            <h3>Kedatangan Santri ke Pesantren</h3>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step-card">
+            <div class="step-head">
+              <div class="step-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+              <span class="step-num">04</span>
+            </div>
+            <h3>Pengetesan</h3>
+          </div>
+        </div>
       </div>
 
-      <div class="steps-container">
-        <!-- Step 1 -->
-        <div class="step-card">
-          <div class="step-head">
-            <div class="step-icon"><i class="fa-solid fa-pen-to-square"></i></div>
-            <span class="step-number">01</span>
-          </div>
-          <h3>Isi Formulir</h3>
-        </div>
+      <div class="ppdb-cta-banner">
+        <h2>Siap Mendaftar Hari Ini?</h2>
+        <p>Klik tombol di bawah ini untuk pengisian formulir online secara langsung via Google Form.</p>
 
-        <!-- Step 2 -->
-        <div class="step-card">
-          <div class="step-head">
-            <div class="step-icon"><i class="fa-solid fa-bullhorn"></i></div>
-            <span class="step-number">02</span>
-          </div>
-          <h3>Pengumuman</h3>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="step-card">
-          <div class="step-head">
-            <div class="step-icon"><i class="fa-solid fa-campground"></i></div>
-            <span class="step-number">03</span>
-          </div>
-          <h3>Kedatangan Santri ke Pesantren</h3>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="step-card">
-          <div class="step-head">
-            <div class="step-icon"><i class="fa-solid fa-clipboard-check"></i></div>
-            <span class="step-number">04</span>
-          </div>
-          <h3>Pengetesan</h3>
-        </div>
+        <a href="https://forms.google.com/" target="_blank" class="btn-gform">
+          <i class="fa-solid fa-paper-plane"></i> Daftar Sekarang
+        </a>
       </div>
-    </section>
 
-    <section class="cta-card">
-      <h3>Siap Mendaftar Hari Ini?</h3>
-      <p>Klik tombol di bawah untuk pengisian formulir online secara langsung via Google Form.</p>
-      
-      <a href="https://forms.google.com/" target="_blank" class="btn-daftar">
-        <i class="fa-solid fa-paper-plane"></i> Daftar Sekarang
-      </a>
-    </section>
-
+    </div>
   </main>
 
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <strong>Pondok Pesantren Bahrul 'Ulum</strong>
+        <span>Singaparna, Tasikmalaya</span>
+      </div>
+      <div>
+        <p>&copy; 2026 Bahrul Ulum. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    if (menuBtn && navLinks) {
+      menuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    }
+  </script>
 </body>
 </html>
