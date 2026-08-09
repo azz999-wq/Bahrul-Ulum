@@ -3,19 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Struktur Organisasi - Pondok Pesantren Bahrul 'Ulum</title>
+  <title>Struktur Organisasi - Pondok Pesantren Bahrul Ulum</title>
 
-  <!-- FAVICON -->
   <link rel="icon" type="image/png" href="assets/BU.png">
   <link rel="apple-touch-icon" href="assets/BU.png">
 
-  <!-- FONT & ICONS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- CSS UTAMA -->
   <link rel="stylesheet" href="css/style.css">
 
   <style>
@@ -27,14 +22,6 @@
       text-align: center;
     }
 
-    .page-header-blue h1 {
-      font-size: clamp(32px, 4.5vw, 52px);
-      color: var(--white);
-      margin: 10px 0;
-      font-weight: 800;
-    }
-
-    /* CONTAINER BAGAN POHON */
     .tree-wrapper {
       padding: 40px 10px;
       overflow-x: auto;
@@ -44,10 +31,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 750px; /* Jaga susunan tetap rapi saat dibuka di HP */
+      min-width: 800px;
     }
 
-    /* KOTAK NODE / KARTU */
     .tree-node {
       background: var(--white);
       border: 2px solid var(--primary);
@@ -55,71 +41,66 @@
       padding: 16px 24px;
       text-align: center;
       box-shadow: var(--shadow-sm);
-      position: relative;
-      min-width: 200px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      min-width: 220px;
     }
 
-    .tree-node:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .tree-node.top {
+    .tree-node.top-yayasan {
       background: var(--primary);
       color: var(--white);
       border-color: var(--primary-dark);
       padding: 20px 30px;
     }
 
-    .tree-node.top h3 {
+    .tree-node.top-yayasan h3 {
       color: var(--white);
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 4px;
     }
 
-    .tree-node.top span {
+    .tree-node.top-yayasan span {
       color: var(--secondary);
       font-weight: 700;
-      font-size: 12px;
+      font-size: 13px;
       text-transform: uppercase;
     }
 
     .tree-node h4 {
-      font-size: 15px;
+      font-size: 16px;
       color: var(--primary);
       margin-bottom: 2px;
     }
 
     .tree-node span {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--muted);
       font-weight: 600;
     }
 
-    /* GARIS-GARIS POHON (CONNECTORS) */
     .line-v {
       width: 2px;
       height: 30px;
       background: var(--primary);
     }
 
+    .tree-branch-container {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .line-h-dynamic {
+      position: absolute;
+      top: 0;
+      height: 2px;
+      background: var(--primary);
+    }
+
     .tree-branch {
       display: flex;
       justify-content: center;
-      position: relative;
       width: 100%;
-    }
-
-    /* Garis Horizontal Cabang */
-    .tree-branch::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 15%;
-      right: 15%;
-      height: 2px;
-      background: var(--primary);
+      gap: 20px;
     }
 
     .tree-leaf {
@@ -127,12 +108,12 @@
       flex-direction: column;
       align-items: center;
       flex: 1;
+      max-width: 250px;
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <header class="navbar">
     <div class="container nav-inner">
       <a class="brand" href="index.html">
@@ -153,12 +134,11 @@
     </div>
   </header>
 
-  <!-- PAGE HEADER -->
   <header class="page-header-blue">
     <div class="container">
       <span class="eyebrow" style="color: var(--secondary);">BAGAN ORGANISASI</span>
       <h1>Struktur Kepengurusan</h1>
-      <p>Bahrul 'Ulum Singaparna di bawah naungan Yayasan An-Nuur</p>
+      <p>Yayasan An-Nuur & Pondok Pesantren Bahrul Ulum Singaparna</p>
     </div>
   </header>
 
@@ -167,67 +147,25 @@
       <div class="tree-wrapper">
         <div class="tree">
           
-          <!-- LEVEL 1: PIMPINAN UTAMA -->
-          <div class="tree-node top">
-            <span>Pimpinan Utama Pesantren</span>
-            <h3>KH. Yusuf Bahar & Hj. Iis Nadzra</h3>
+          <div class="tree-node top-yayasan">
+            <span>Penyelenggara & Pengawas</span>
+            <h3>Yayasan An-Nuur Bahrul Ulum</h3>
           </div>
 
-          <!-- GARIS KANAN UTAMA -->
           <div class="line-v"></div>
 
-          <!-- LEVEL 2: YAYASAN -->
           <div class="tree-node" style="border-color: var(--secondary);">
-            <h4>Yayasan An-Nuur Bahrul Ulum</h4>
-            <span style="color: var(--primary);">Pengawas & Penyelenggara</span>
+            <h4>KH. Yusuf Bahar & Hj. Iis Nadzra</h4>
+            <span>Pimpinan Utama Pesantren</span>
           </div>
 
-          <!-- GARIS KANAN YAYASAN -->
           <div class="line-v"></div>
 
-          <!-- LEVEL 3: CABANG UNIT KEPENGURUSAN (PENGURUS / HEADS) -->
-          <div class="tree-branch">
-            
-            <!-- CABANG 1: PESANTREN -->
-            <div class="tree-leaf">
-              <div class="line-v"></div>
-              <div class="tree-node">
-                <i class="fa-solid fa-mosque" style="color: var(--primary); margin-bottom: 5px;"></i>
-                <h4>Ust. Robi M. Aldi</h4>
-                <span>Pesantren & SMA</span>
-              </div>
+          <div class="tree-branch-container">
+            <div class="line-h-dynamic" id="lineHDynamic"></div>
+            <div class="tree-branch" id="pengurusBranch">
+              <p style="text-align: center; color: var(--muted);">Memuat data pengurus...</p>
             </div>
-
-            <!-- CABANG 2: PENGASUH PUTRI -->
-            <div class="tree-leaf">
-              <div class="line-v"></div>
-              <div class="tree-node">
-                <i class="fa-solid fa-hands-praying" style="color: var(--primary); margin-bottom: 5px;"></i>
-                <h4>Ustdz. Risma Febriyani</h4>
-                <span>Pengasuh Pesantren</span>
-              </div>
-            </div>
-
-            <!-- CABANG 3: SMP -->
-            <div class="tree-leaf">
-              <div class="line-v"></div>
-              <div class="tree-node">
-                <i class="fa-solid fa-school" style="color: var(--primary); margin-bottom: 5px;"></i>
-                <h4>Ust. Muhammad Ilham</h4>
-                <span>SMP Plus An-Nuur</span>
-              </div>
-            </div>
-
-            <!-- CABANG 4: SMK -->
-            <div class="tree-leaf">
-              <div class="line-v"></div>
-              <div class="tree-node">
-                <i class="fa-solid fa-graduation-cap" style="color: var(--primary); margin-bottom: 5px;"></i>
-                <h4>Ust. Fathurrohman, S.Pd.I.</h4>
-                <span>SMK Plus An-Nuur</span>
-              </div>
-            </div>
-
           </div>
 
         </div>
@@ -235,7 +173,6 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer style="background: var(--primary-dark); padding-block: 35px; width: 100%;">
     <div class="container footer-inner">
       <div>
@@ -247,5 +184,101 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
+      authDomain: "bahrul-ulum-web.firebaseapp.com",
+      projectId: "bahrul-ulum-web",
+      storageBucket: "bahrul-ulum-web.firebasestorage.app",
+      messagingSenderId: "378515606416",
+      appId: "1:378515606416:web:95f56f222bd566aef6c115",
+      measurementId: "G-9G8T5RR5W6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const defaultPengurus = [
+      { nama: "Ust. Robi M. Aldi", jabatan: "Pesantren & SMA" },
+      { nama: "Ustdz. Risma Febriyani", jabatan: "Pengasuh Pesantren" },
+      { nama: "Ust. Muhammad Ilham", jabatan: "SMP Plus An-Nuur" },
+      { nama: "Ust. Fathurrohman, S.Pd.I.", jabatan: "SMK Plus An-Nuur" }
+    ];
+
+    function escapeHTML(str) {
+      if(!str) return '';
+      return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+    }
+
+    async function loadPengurusTree() {
+      const container = document.getElementById('pengurusBranch');
+      const lineH = document.getElementById('lineHDynamic');
+
+      try {
+        const q = query(collection(db, "pengurus"), orderBy("urutan", "asc"));
+        const snapshot = await getDocs(q);
+
+        let dataList = [];
+        if (snapshot.empty) {
+          dataList = defaultPengurus;
+        } else {
+          snapshot.forEach(doc => dataList.push(doc.data()));
+        }
+
+        container.innerHTML = "";
+        dataList.forEach(item => {
+          container.innerHTML += `
+            <div class="tree-leaf">
+              <div class="line-v"></div>
+              <div class="tree-node">
+                <h4>${escapeHTML(item.nama)}</h4>
+                <span>${escapeHTML(item.jabatan)}</span>
+              </div>
+            </div>
+          `;
+        });
+
+        const leaves = container.querySelectorAll('.tree-leaf');
+        if (leaves.length > 1) {
+          const firstLeaf = leaves[0];
+          const lastLeaf = leaves[leaves.length - 1];
+          
+          const offsetLeft = firstLeaf.offsetLeft + (firstLeaf.offsetWidth / 2);
+          const offsetRight = container.offsetWidth - (lastLeaf.offsetLeft + (lastLeaf.offsetWidth / 2));
+
+          lineH.style.left = `${offsetLeft}px`;
+          lineH.style.right = `${offsetRight}px`;
+        } else {
+          lineH.style.display = 'none';
+        }
+
+      } catch (e) {
+        console.error("Error loading pengurus:", e);
+        renderFallback();
+      }
+    }
+
+    function renderFallback() {
+      const container = document.getElementById('pengurusBranch');
+      container.innerHTML = "";
+      defaultPengurus.forEach(item => {
+        container.innerHTML += `
+          <div class="tree-leaf">
+            <div class="line-v"></div>
+            <div class="tree-node">
+              <h4>${escapeHTML(item.nama)}</h4>
+              <span>${escapeHTML(item.jabatan)}</span>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", loadPengurusTree);
+  </script>
 </body>
 </html>
