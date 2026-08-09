@@ -26,66 +26,80 @@
       color: #1e293b;
     }
 
-    .navbar {
-      background: #ffffff;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid #f1f5f9;
-      padding: 18px 0;
-    }
+/* NAVBAR SAMAIN PERSIS DENGAN INDEX.HTML */
+.navbar {
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #f1f5f9;
+  padding: 12px 0; /* Menyesuaikan tinggi navbar */
+}
 
-    .nav-container {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.nav-container {
+  max-width: 1200px; /* Samain batas lebar kanan-kiri dengan beranda */
+  margin: 0 auto;
+  padding: 0 40px;   /* Jarak aman di layar lebar */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: #0f172a;
-      font-weight: 800;
-      font-size: 1.15rem;
-    }
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
 
-    .nav-logo img {
-      width: 36px;
-      height: 36px;
-      object-fit: contain;
-    }
+.nav-logo img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
 
-    .nav-logo-text small {
-      display: block;
-      font-size: 0.75rem;
-      color: #64748b;
-      font-weight: 600;
-      margin-top: -2px;
-    }
+.nav-logo-text small {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-top: -2px;
+}
 
-    .nav-menu {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      list-style: none;
-    }
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 32px; /* Jarak antar teks menu disamakan */
+  list-style: none;
+}
 
-    .nav-link {
-      color: #475569;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: color 0.2s ease;
-    }
+.nav-link {
+  color: #334155;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
 
-    .nav-link:hover {
-      color: #1e3a8a;
-    }
+.nav-link:hover {
+  color: #1e3a8a;
+}
+
+.btn-nav-ppdb {
+  background: #1e3a8a;
+  color: #ffffff !important;
+  padding: 10px 24px;
+  border-radius: 10px; /* Kelengkungan tombol disamakan */
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-nav-ppdb:hover {
+  background: #1d4ed8;
+}
 
     .btn-nav-ppdb {
       background: #1e3a8a;
