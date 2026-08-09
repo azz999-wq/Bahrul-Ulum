@@ -11,12 +11,57 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-
   <link rel="stylesheet" href="css/style.css">
 
   <style>
+    .page-header-blue {
+      padding-top: 140px;
+      padding-bottom: 60px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--white);
+    }
 
+    .page-header-blue .eyebrow {
+      color: var(--secondary);
+    }
+
+    .page-header-blue .eyebrow::before {
+      background: var(--secondary);
+    }
+
+    .page-header-blue h1 {
+      font-size: clamp(32px, 4.5vw, 56px);
+      color: var(--white);
+      margin: 12px 0;
+      font-weight: 800;
+    }
+
+    .page-header-blue p {
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 680px;
+      font-size: clamp(14px, 1.2vw, 16px);
+    }
+
+    .btn-brosur-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      color: var(--primary);
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 800;
+      font-size: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .btn-brosur-white:hover {
+      background: #f8fafc;
+      transform: translateY(-2px);
+    }
+
+    /* GRID TAHAPAN PPDB */
     .steps-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
@@ -136,15 +181,15 @@
     </div>
   </nav>
 
-  <header class="page-header">
+  <header class="page-header-blue">
     <div class="container">
       <span class="eyebrow">PPDB T.A. 2026/2027</span>
       <h1>Pendaftaran Santri Baru</h1>
       <p>Membentuk generasi berakhlak mulia, berwawasan luas, dan siap berkontribusi positif bagi masyarakat.</p>
 
       <div style="margin-top: 25px;">
-        <a href="assets/Brosur Bahrul Ulum.pdf" target="_blank" class="btn ghost">
-          <i class="fa-solid fa-file-pdf" style="color: #ef4444; margin-right: 8px;"></i> Unduh Brosur Resmi
+        <a href="assets/Brosur Bahrul Ulum.pdf" target="_blank" class="btn-brosur-white">
+          <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Unduh Brosur Resmi
         </a>
       </div>
     </div>
@@ -195,7 +240,7 @@
               <div class="step-icon"><i class="fa-solid fa-clipboard-check"></i></div>
               <span class="step-num">04</span>
             </div>
-            <h3>Penentuan Kelas Pengajian</h3>
+            <h3>Pengetesan & Penentuan Kelas Mengaji</h3>
           </div>
         </div>
       </div>
