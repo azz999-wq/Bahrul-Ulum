@@ -3,13 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Struktur Organisasi - Pondok Pesantren Bahrul 'Ulum</title>
+  <title>Struktur Organisasi - Pondok Pesantren Bahrul Ulum</title>
 
-  <!-- FAVICON -->
   <link rel="icon" type="image/png" href="assets/BU.png">
   <link rel="apple-touch-icon" href="assets/BU.png">
-
-  <!-- FONT & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -156,7 +153,6 @@
       flex: 0 1 260px;
     }
 
-    /* CARD DIVISI (MAX 10 PENGURUS) */
     .divisi-card {
       background: var(--white);
       border: 2px solid var(--primary);
@@ -227,7 +223,6 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <header class="navbar">
     <div class="container nav-inner">
       <a class="brand" href="index.html">
@@ -240,15 +235,12 @@
       <button class="menu-btn" id="menuBtn" type="button" aria-label="Buka menu">☰</button>
       <nav class="nav-links" id="navLinks">
         <a href="index.html">Beranda</a>
-        <a href="index.html#profil">Profil</a>
-        <a href="pengasuh.html" class="active">Struktur</a>
         <a href="berita.html">Berita</a>
         <a href="ppdb.html" class="nav-cta">PPDB</a>
       </nav>
     </div>
   </header>
 
-  <!-- PAGE HEADER -->
   <header class="page-header-blue">
     <div class="container">
       <span class="eyebrow" style="color: var(--secondary);">BAGAN ORGANISASI</span>
@@ -262,7 +254,6 @@
       <div class="tree-wrapper">
         <div class="tree">
           
-          <!-- LEVEL 1: YAYASAN AN-NUUR -->
           <div class="tree-node top-yayasan">
             <span>Penyelenggara & Pengawas</span>
             <h3>Yayasan An-Nuur Bahrul Ulum</h3>
@@ -270,7 +261,6 @@
 
           <div class="line-v"></div>
 
-          <!-- LEVEL 2: PIMPINAN UTAMA PESANTREN -->
           <div class="tree-node">
             <h4>KH. Yusuf Bahar & Hj. Iis Nadzra</h4>
             <span>Pimpinan Utama Pesantren</span>
@@ -278,30 +268,29 @@
 
           <div class="line-v"></div>
 
-          <!-- LEVEL 2.5: RO'IS 'AM & RO'ISAH (DIPISAH DUA BOX SEJAJAR) -->
+
           <div class="rois-container">
             <div class="line-h-rois"></div>
             
             <div class="tree-leaf">
               <div class="line-v"></div>
               <div class="tree-node rois-box">
-                <span>Kepala Pengurus Putra</span>
-                <h4>Ro'is 'Am</h4>
+                <span>Herdi Rosandi</span>
+                <h4>Rois 'Am</h4>
               </div>
             </div>
 
             <div class="tree-leaf">
               <div class="line-v"></div>
               <div class="tree-node rois-box">
-                <span>Kepala Pengurus Putri</span>
-                <h4>Ro'isah</h4>
+                <span>Hanifah</span>
+                <h4>Roisah</h4>
               </div>
             </div>
           </div>
 
           <div class="line-v"></div>
 
-          <!-- LEVEL 3: CABANG DIVISI & PENGURUS (DINAMIS FIREBASE) -->
           <div class="tree-branch-container">
             <div class="line-h-dynamic" id="lineHDynamic"></div>
             <div class="tree-branch" id="pengurusBranch">
@@ -314,7 +303,6 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer style="background: var(--primary-dark); padding-block: 35px; width: 100%;">
     <div class="container footer-inner">
       <div>
@@ -327,7 +315,6 @@
 
   <script src="script.js"></script>
 
-  <!-- INTEGRASI FIREBASE DATA PENGURUS -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
