@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Struktur Organisasi - Pondok Pesantren Bahrul Ulum</title>
-
   <link rel="icon" type="image/png" href="assets/BU.png">
   <link rel="apple-touch-icon" href="assets/BU.png">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -31,7 +29,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 800px;
+      min-width: 850px;
+      position: relative;
     }
 
     .tree-node {
@@ -85,8 +84,6 @@
     .tree-branch-container {
       position: relative;
       width: 100%;
-      display: flex;
-      justify-content: center;
     }
 
     .line-h-dynamic {
@@ -94,6 +91,7 @@
       top: 0;
       height: 2px;
       background: var(--primary);
+      display: none;
     }
 
     .tree-branch {
@@ -114,6 +112,7 @@
 </head>
 <body>
 
+  <!-- NAVBAR -->
   <header class="navbar">
     <div class="container nav-inner">
       <a class="brand" href="index.html">
@@ -134,6 +133,7 @@
     </div>
   </header>
 
+
   <header class="page-header-blue">
     <div class="container">
       <span class="eyebrow" style="color: var(--secondary);">BAGAN ORGANISASI</span>
@@ -146,7 +146,7 @@
     <div class="container">
       <div class="tree-wrapper">
         <div class="tree">
-          
+
           <div class="tree-node top-yayasan">
             <span>Penyelenggara & Pengawas</span>
             <h3>Yayasan An-Nuur Bahrul Ulum</h3>
@@ -173,6 +173,7 @@
     </div>
   </main>
 
+  <!-- FOOTER -->
   <footer style="background: var(--primary-dark); padding-block: 35px; width: 100%;">
     <div class="container footer-inner">
       <div>
@@ -211,13 +212,10 @@
 
     function escapeHTML(str) {
       if(!str) return '';
-      return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+      return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&#34;' }[tag] || tag));
     }
 
     async function loadPengurusTree() {
-      const container = document.getElementById('pengurusBranch');
-      const lineH = document.getElementById('lineHDynamic');
-
       try {
         const q = query(collection(db, "pengurus"), orderBy("urutan", "asc"));
         const snapshot = await getDocs(q);
@@ -229,43 +227,18 @@
           snapshot.forEach(doc => dataList.push(doc.data()));
         }
 
-        container.innerHTML = "";
-        dataList.forEach(item => {
-          container.innerHTML += `
-            <div class="tree-leaf">
-              <div class="line-v"></div>
-              <div class="tree-node">
-                <h4>${escapeHTML(item.nama)}</h4>
-                <span>${escapeHTML(item.jabatan)}</span>
-              </div>
-            </div>
-          `;
-        });
-
-        const leaves = container.querySelectorAll('.tree-leaf');
-        if (leaves.length > 1) {
-          const firstLeaf = leaves[0];
-          const lastLeaf = leaves[leaves.length - 1];
-          
-          const offsetLeft = firstLeaf.offsetLeft + (firstLeaf.offsetWidth / 2);
-          const offsetRight = container.offsetWidth - (lastLeaf.offsetLeft + (lastLeaf.offsetWidth / 2));
-
-          lineH.style.left = `${offsetLeft}px`;
-          lineH.style.right = `${offsetRight}px`;
-        } else {
-          lineH.style.display = 'none';
-        }
-
+        renderTreeNodes(dataList);
       } catch (e) {
         console.error("Error loading pengurus:", e);
-        renderFallback();
+        renderTreeNodes(defaultPengurus);
       }
     }
 
-    function renderFallback() {
+    function renderTreeNodes(dataList) {
       const container = document.getElementById('pengurusBranch');
+
       container.innerHTML = "";
-      defaultPengurus.forEach(item => {
+      dataList.forEach(item => {
         container.innerHTML += `
           <div class="tree-leaf">
             <div class="line-v"></div>
@@ -276,9 +249,34 @@
           </div>
         `;
       });
+
+      setTimeout(() => {
+        updateBranchLine();
+      }, 50);
+    }
+
+    function updateBranchLine() {
+      const container = document.getElementById('pengurusBranch');
+      const lineH = document.getElementById('lineHDynamic');
+      const leaves = container.querySelectorAll('.tree-leaf');
+
+      if (leaves.length > 1) {
+        const firstLeaf = leaves[0];
+        const lastLeaf = leaves[leaves.length - 1];
+
+        const firstCenter = firstLeaf.offsetLeft + (firstLeaf.offsetWidth / 2);
+        const lastCenter = lastLeaf.offsetLeft + (lastLeaf.offsetWidth / 2);
+
+        lineH.style.display = 'block';
+        lineH.style.left = `${firstCenter}px`;
+        lineH.style.width = `${lastCenter - firstCenter}px`;
+      } else {
+        lineH.style.display = 'none';
+      }
     }
 
     document.addEventListener("DOMContentLoaded", loadPengurusTree);
+    window.addEventListener("resize", updateBranchLine);
   </script>
 </body>
 </html>
