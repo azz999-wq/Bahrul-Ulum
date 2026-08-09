@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Struktur Organisasi - Pondok Pesantren Bahrul Ulum</title>
+  <title>Struktur Organisasi - Pondok Pesantren Bahrul 'Ulum</title>
+
+  <!-- FAVICON -->
   <link rel="icon" type="image/png" href="assets/BU.png">
   <link rel="apple-touch-icon" href="assets/BU.png">
+
+  <!-- FONT & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -41,7 +45,7 @@
       padding: 16px 24px;
       text-align: center;
       box-shadow: var(--shadow-sm);
-      min-width: 240px;
+      min-width: 220px;
     }
 
     /* LEVEL 1: YAYASAN AN-NUUR */
@@ -65,24 +69,32 @@
       text-transform: uppercase;
     }
 
-    /* LEVEL 2.5: RO'IS 'AM & RO'ISAH */
-    .tree-node.rois-box {
-      border-color: var(--secondary);
-      background: #f8fafc;
-      padding: 16px 28px;
+    /* LEVEL 2.5: RO'IS 'AM & RO'ISAH BOX PISAH */
+    .rois-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      position: relative;
     }
 
-    .tree-node.rois-box h4 {
-      font-size: 16px;
+    .rois-box {
+      border-color: var(--secondary);
+      background: #f8fafc;
+      padding: 14px 22px;
+      min-width: 200px;
+    }
+
+    .rois-box h4 {
+      font-size: 15px;
       color: var(--primary);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       font-weight: 800;
     }
 
-    .tree-node.rois-box span {
+    .rois-box span {
       color: var(--secondary);
       font-weight: 700;
-      font-size: 12px;
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -103,6 +115,16 @@
       width: 2px;
       height: 30px;
       background: var(--primary);
+    }
+
+    /* GARIS CABANG ROIS */
+    .line-h-rois {
+      position: absolute;
+      top: 0;
+      height: 2px;
+      background: var(--primary);
+      left: 25%;
+      right: 25%;
     }
 
     /* CONTAINER CABANG DINAMIS */
@@ -205,6 +227,7 @@
 </head>
 <body>
 
+  <!-- NAVBAR -->
   <header class="navbar">
     <div class="container nav-inner">
       <a class="brand" href="index.html">
@@ -225,6 +248,7 @@
     </div>
   </header>
 
+  <!-- PAGE HEADER -->
   <header class="page-header-blue">
     <div class="container">
       <span class="eyebrow" style="color: var(--secondary);">BAGAN ORGANISASI</span>
@@ -238,6 +262,7 @@
       <div class="tree-wrapper">
         <div class="tree">
           
+          <!-- LEVEL 1: YAYASAN AN-NUUR -->
           <div class="tree-node top-yayasan">
             <span>Penyelenggara & Pengawas</span>
             <h3>Yayasan An-Nuur Bahrul Ulum</h3>
@@ -245,6 +270,7 @@
 
           <div class="line-v"></div>
 
+          <!-- LEVEL 2: PIMPINAN UTAMA PESANTREN -->
           <div class="tree-node">
             <h4>KH. Yusuf Bahar & Hj. Iis Nadzra</h4>
             <span>Pimpinan Utama Pesantren</span>
@@ -252,13 +278,30 @@
 
           <div class="line-v"></div>
 
-          <div class="tree-node rois-box">
-            <span>Kepala Pengurus Pesantren</span>
-            <h4>Ro'is 'Am & Ro'isah</h4>
+          <!-- LEVEL 2.5: RO'IS 'AM & RO'ISAH (DIPISAH DUA BOX SEJAJAR) -->
+          <div class="rois-container">
+            <div class="line-h-rois"></div>
+            
+            <div class="tree-leaf">
+              <div class="line-v"></div>
+              <div class="tree-node rois-box">
+                <span>Kepala Pengurus Putra</span>
+                <h4>Ro'is 'Am</h4>
+              </div>
+            </div>
+
+            <div class="tree-leaf">
+              <div class="line-v"></div>
+              <div class="tree-node rois-box">
+                <span>Kepala Pengurus Putri</span>
+                <h4>Ro'isah</h4>
+              </div>
+            </div>
           </div>
 
           <div class="line-v"></div>
 
+          <!-- LEVEL 3: CABANG DIVISI & PENGURUS (DINAMIS FIREBASE) -->
           <div class="tree-branch-container">
             <div class="line-h-dynamic" id="lineHDynamic"></div>
             <div class="tree-branch" id="pengurusBranch">
@@ -271,6 +314,7 @@
     </div>
   </main>
 
+  <!-- FOOTER -->
   <footer style="background: var(--primary-dark); padding-block: 35px; width: 100%;">
     <div class="container footer-inner">
       <div>
@@ -283,6 +327,7 @@
 
   <script src="script.js"></script>
 
+  <!-- INTEGRASI FIREBASE DATA PENGURUS -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -333,7 +378,6 @@
       const container = document.getElementById('pengurusBranch');
       container.innerHTML = "";
 
-      // Grouping data berdasarkan Divisi/Jabatan
       const groupedDivisi = {};
       dataList.forEach(item => {
         const key = item.jabatan || "Pengurus";
