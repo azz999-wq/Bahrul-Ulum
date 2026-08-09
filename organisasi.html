@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Struktur Organisasi - Pondok Pesantren Bahrul Ulum</title>
 
+  <!-- FAVICON -->
   <link rel="icon" type="image/png" href="assets/BU.png">
   <link rel="apple-touch-icon" href="assets/BU.png">
+
+  <!-- FONT & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -66,12 +69,36 @@
       text-transform: uppercase;
     }
 
-    /* LEVEL 2.5: RO'IS 'AM & RO'ISAH BOX PISAH */
-    .rois-container {
+    /* LEVEL 2.5: RO'IS 'AM & RO'ISAH FIX CONNECTOR */
+    .rois-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      width: 100%;
+    }
+
+    .rois-branch {
       display: flex;
       justify-content: center;
       gap: 30px;
       position: relative;
+    }
+
+    .rois-branch::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 25%;
+      right: 25%;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .rois-leaf {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .rois-box {
@@ -79,6 +106,7 @@
       background: #f8fafc;
       padding: 14px 22px;
       min-width: 200px;
+      text-align: center;
     }
 
     .rois-box h4 {
@@ -114,16 +142,6 @@
       background: var(--primary);
     }
 
-    /* GARIS CABANG ROIS */
-    .line-h-rois {
-      position: absolute;
-      top: 0;
-      height: 2px;
-      background: var(--primary);
-      left: 25%;
-      right: 25%;
-    }
-
     /* CONTAINER CABANG DINAMIS */
     .tree-branch-container {
       position: relative;
@@ -153,6 +171,7 @@
       flex: 0 1 260px;
     }
 
+    /* CARD DIVISI (MAX 10 PENGURUS) */
     .divisi-card {
       background: var(--white);
       border: 2px solid var(--primary);
@@ -223,6 +242,7 @@
 </head>
 <body>
 
+  <!-- NAVBAR -->
   <header class="navbar">
     <div class="container nav-inner">
       <a class="brand" href="index.html">
@@ -235,17 +255,20 @@
       <button class="menu-btn" id="menuBtn" type="button" aria-label="Buka menu">☰</button>
       <nav class="nav-links" id="navLinks">
         <a href="index.html">Beranda</a>
+        <a href="index.html#profil">Profil</a>
+        <a href="pengasuh.html" class="active">Struktur</a>
         <a href="berita.html">Berita</a>
         <a href="ppdb.html" class="nav-cta">PPDB</a>
       </nav>
     </div>
   </header>
 
+  <!-- PAGE HEADER -->
   <header class="page-header-blue">
     <div class="container">
       <span class="eyebrow" style="color: var(--secondary);">BAGAN ORGANISASI</span>
       <h1>Struktur Kepengurusan</h1>
-      <p>Yayasan An-Nuur & Pondok Pesantren Bahrul 'Ulum Singaparna</p>
+      <p>Yayasan An-Nuur & Pondok Pesantren Bahrul Ulum Singaparna</p>
     </div>
   </header>
 
@@ -254,6 +277,7 @@
       <div class="tree-wrapper">
         <div class="tree">
           
+          <!-- LEVEL 1: YAYASAN AN-NUUR -->
           <div class="tree-node top-yayasan">
             <span>Penyelenggara & Pengawas</span>
             <h3>Yayasan An-Nuur Bahrul Ulum</h3>
@@ -261,6 +285,7 @@
 
           <div class="line-v"></div>
 
+          <!-- LEVEL 2: PIMPINAN UTAMA PESANTREN -->
           <div class="tree-node">
             <h4>KH. Yusuf Bahar & Hj. Iis Nadzra</h4>
             <span>Pimpinan Utama Pesantren</span>
@@ -268,29 +293,30 @@
 
           <div class="line-v"></div>
 
-
-          <div class="rois-container">
-            <div class="line-h-rois"></div>
-            
-            <div class="tree-leaf">
-              <div class="line-v"></div>
-              <div class="tree-node rois-box">
-                <span>Herdi Rosandi</span>
-                <h4>Rois 'Am</h4>
+          <!-- LEVEL 2.5: RO'IS 'AM & RO'ISAH -->
+          <div class="rois-wrapper">
+            <div class="rois-branch">
+              <div class="rois-leaf">
+                <div class="line-v"></div>
+                <div class="tree-node rois-box">
+                  <span>HERDI ROSANDI</span>
+                  <h4>Rois 'Am</h4>
+                </div>
               </div>
-            </div>
 
-            <div class="tree-leaf">
-              <div class="line-v"></div>
-              <div class="tree-node rois-box">
-                <span>Hanifah</span>
-                <h4>Roisah</h4>
+              <div class="rois-leaf">
+                <div class="line-v"></div>
+                <div class="tree-node rois-box">
+                  <span>HANIFAH</span>
+                  <h4>Roisah</h4>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="line-v"></div>
 
+          <!-- LEVEL 3: CABANG DIVISI & PENGURUS (DINAMIS FIREBASE) -->
           <div class="tree-branch-container">
             <div class="line-h-dynamic" id="lineHDynamic"></div>
             <div class="tree-branch" id="pengurusBranch">
@@ -303,6 +329,7 @@
     </div>
   </main>
 
+  <!-- FOOTER -->
   <footer style="background: var(--primary-dark); padding-block: 35px; width: 100%;">
     <div class="container footer-inner">
       <div>
@@ -315,6 +342,7 @@
 
   <script src="script.js"></script>
 
+  <!-- INTEGRASI FIREBASE DATA PENGURUS -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
