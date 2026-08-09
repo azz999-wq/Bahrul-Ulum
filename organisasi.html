@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Struktur Organisasi - Pondok Pesantren Bahrul Ulum</title>
-
   <link rel="icon" type="image/png" href="assets/BU.png">
   <link rel="apple-touch-icon" href="assets/BU.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +20,7 @@
       text-align: center;
     }
 
+    /* TREE STRUCTURAL LAYOUT */
     .tree-wrapper {
       padding: 40px 10px;
       overflow-x: auto;
@@ -41,7 +41,7 @@
       padding: 16px 24px;
       text-align: center;
       box-shadow: var(--shadow-sm);
-      min-width: 220px;
+      min-width: 240px;
     }
 
     /* LEVEL 1: YAYASAN AN-NUUR */
@@ -63,6 +63,28 @@
       font-weight: 700;
       font-size: 13px;
       text-transform: uppercase;
+    }
+
+    /* LEVEL 2.5: RO'IS 'AM & RO'ISAH */
+    .tree-node.rois-box {
+      border-color: var(--secondary);
+      background: #f8fafc;
+      padding: 16px 28px;
+    }
+
+    .tree-node.rois-box h4 {
+      font-size: 16px;
+      color: var(--primary);
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+
+    .tree-node.rois-box span {
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .tree-node h4 {
@@ -183,7 +205,6 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <header class="navbar">
     <div class="container nav-inner">
       <a class="brand" href="index.html">
@@ -204,7 +225,6 @@
     </div>
   </header>
 
-  <!-- PAGE HEADER -->
   <header class="page-header-blue">
     <div class="container">
       <span class="eyebrow" style="color: var(--secondary);">BAGAN ORGANISASI</span>
@@ -225,9 +245,16 @@
 
           <div class="line-v"></div>
 
-          <div class="tree-node" style="border-color: var(--secondary);">
+          <div class="tree-node">
             <h4>KH. Yusuf Bahar & Hj. Iis Nadzra</h4>
             <span>Pimpinan Utama Pesantren</span>
+          </div>
+
+          <div class="line-v"></div>
+
+          <div class="tree-node rois-box">
+            <span>Kepala Pengurus Pesantren</span>
+            <h4>Ro'is 'Am & Ro'isah</h4>
           </div>
 
           <div class="line-v"></div>
@@ -244,7 +271,6 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer style="background: var(--primary-dark); padding-block: 35px; width: 100%;">
     <div class="container footer-inner">
       <div>
@@ -257,7 +283,6 @@
 
   <script src="script.js"></script>
 
-  <!-- INTEGRASI FIREBASE DATA PENGURUS -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -276,10 +301,8 @@
     const db = getFirestore(app);
 
     const defaultPengurus = [
-      { nama: "Ust. Robi M. Aldi", jabatan: "Pesantren & SMA" },
-      { nama: "Ustdz. Risma Febriyani", jabatan: "Pengasuh Pesantren" },
-      { nama: "Ust. Muhammad Ilham", jabatan: "SMP Plus An-Nuur" },
-      { nama: "Ust. Fathurrohman, S.Pd.I.", jabatan: "SMK Plus An-Nuur" }
+      { nama: "Robi M. Aldi", jabatan: "BENDAHARA" },
+      { nama: "M. Azka Luthfiansyah", jabatan: "SEKRETARIS" }
     ];
 
     function escapeHTML(str) {
@@ -321,7 +344,7 @@
       Object.keys(groupedDivisi).forEach(divisiName => {
         const members = groupedDivisi[divisiName];
         
-        const CHUNK_SIZE = 10; // Max 10 orang per box (1 Penanggung Jawab + 9 Anggota)
+        const CHUNK_SIZE = 10;
         
         for (let i = 0; i < members.length; i += CHUNK_SIZE) {
           const chunk = members.slice(i, i + CHUNK_SIZE);
