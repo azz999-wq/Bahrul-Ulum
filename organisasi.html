@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Struktur Organisasi - Pondok Pesantren Bahrul 'Ulum</title>
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/png" href="assets/BU.png">
+  <link rel="apple-touch-icon" href="assets/BU.png">
+
+  <!-- FONT & ICONS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS UTAMA -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .page-header-blue {
+      padding-top: 140px;
+      padding-bottom: 60px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .page-header-blue h1 {
+      font-size: clamp(32px, 4.5vw, 52px);
+      color: var(--white);
+      margin: 10px 0;
+      font-weight: 800;
+    }
+
+    /* CONTAINER BAGAN POHON */
+    .tree-wrapper {
+      padding: 40px 10px;
+      overflow-x: auto;
+    }
+
+    .tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 750px; /* Jaga susunan tetap rapi saat dibuka di HP */
+    }
+
+    /* KOTAK NODE / KARTU */
+    .tree-node {
+      background: var(--white);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 16px 24px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      min-width: 200px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tree-node:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .tree-node.top {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary-dark);
+      padding: 20px 30px;
+    }
+
+    .tree-node.top h3 {
+      color: var(--white);
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .tree-node.top span {
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .tree-node h4 {
+      font-size: 15px;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .tree-node span {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* GARIS-GARIS POHON (CONNECTORS) */
+    .line-v {
+      width: 2px;
+      height: 30px;
+      background: var(--primary);
+    }
+
+    .tree-branch {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+    }
+
+    /* Garis Horizontal Cabang */
+    .tree-branch::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .tree-leaf {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/BU.png" alt="Logo Bahrul Ulum" class="logo-img">
+        <div>
+          <strong>Bahrul Ulum</strong>
+          <span>Singaparna</span>
+        </div>
+      </a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Buka menu">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Beranda</a>
+        <a href="index.html#profil">Profil</a>
+        <a href="pengasuh.html" class="active">Struktur</a>
+        <a href="berita.html">Berita</a>
+        <a href="ppdb.html" class="nav-cta">PPDB</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header-blue">
+    <div class="container">
+      <span class="eyebrow" style="color: var(--secondary);">BAGAN ORGANISASI</span>
+      <h1>Struktur Kepengurusan</h1>
+      <p>Bahrul 'Ulum Singaparna di bawah naungan Yayasan An-Nuur</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="tree-wrapper">
+        <div class="tree">
+          
+          <!-- LEVEL 1: PIMPINAN UTAMA -->
+          <div class="tree-node top">
+            <span>Pimpinan Utama Pesantren</span>
+            <h3>KH. Yusuf Bahar & Hj. Iis Nadzra</h3>
+          </div>
+
+          <!-- GARIS KANAN UTAMA -->
+          <div class="line-v"></div>
+
+          <!-- LEVEL 2: YAYASAN -->
+          <div class="tree-node" style="border-color: var(--secondary);">
+            <h4>Yayasan An-Nuur Bahrul Ulum</h4>
+            <span style="color: var(--primary);">Pengawas & Penyelenggara</span>
+          </div>
+
+          <!-- GARIS KANAN YAYASAN -->
+          <div class="line-v"></div>
+
+          <!-- LEVEL 3: CABANG UNIT KEPENGURUSAN (PENGURUS / HEADS) -->
+          <div class="tree-branch">
+            
+            <!-- CABANG 1: PESANTREN -->
+            <div class="tree-leaf">
+              <div class="line-v"></div>
+              <div class="tree-node">
+                <i class="fa-solid fa-mosque" style="color: var(--primary); margin-bottom: 5px;"></i>
+                <h4>Ust. Robi M. Aldi</h4>
+                <span>Pesantren & SMA</span>
+              </div>
+            </div>
+
+            <!-- CABANG 2: PENGASUH PUTRI -->
+            <div class="tree-leaf">
+              <div class="line-v"></div>
+              <div class="tree-node">
+                <i class="fa-solid fa-hands-praying" style="color: var(--primary); margin-bottom: 5px;"></i>
+                <h4>Ustdz. Risma Febriyani</h4>
+                <span>Pengasuh Pesantren</span>
+              </div>
+            </div>
+
+            <!-- CABANG 3: SMP -->
+            <div class="tree-leaf">
+              <div class="line-v"></div>
+              <div class="tree-node">
+                <i class="fa-solid fa-school" style="color: var(--primary); margin-bottom: 5px;"></i>
+                <h4>Ust. Muhammad Ilham</h4>
+                <span>SMP Plus An-Nuur</span>
+              </div>
+            </div>
+
+            <!-- CABANG 4: SMK -->
+            <div class="tree-leaf">
+              <div class="line-v"></div>
+              <div class="tree-node">
+                <i class="fa-solid fa-graduation-cap" style="color: var(--primary); margin-bottom: 5px;"></i>
+                <h4>Ust. Fathurrohman, S.Pd.I.</h4>
+                <span>SMK Plus An-Nuur</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="background: var(--primary-dark); padding-block: 35px; width: 100%;">
+    <div class="container footer-inner">
+      <div>
+        <strong>Pondok Pesantren Bahrul Ulum Singaparna</strong>
+        <span>Ilmiyah Amaliyah • Amaliyah Ilmiyah</span>
+      </div>
+      <small>© 2026 Bahrul Ulum Singaparna. All Rights Reserved.</small>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
