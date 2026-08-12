@@ -5,11 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Struktur Organisasi - Pondok Pesantren Bahrul Ulum</title>
 
-  <!-- FAVICON -->
   <link rel="icon" type="image/png" href="assets/BU.png">
   <link rel="apple-touch-icon" href="assets/BU.png">
-
-  <!-- FONT & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -69,7 +66,6 @@
       text-transform: uppercase;
     }
 
-    /* LEVEL 2.5: RO'IS 'AM & RO'ISAH FIX CONNECTOR */
     .rois-wrapper {
       display: flex;
       flex-direction: column;
@@ -142,7 +138,6 @@
       background: var(--primary);
     }
 
-    /* CONTAINER CABANG DINAMIS */
     .tree-branch-container {
       position: relative;
       width: 100%;
@@ -171,7 +166,6 @@
       flex: 0 1 260px;
     }
 
-    /* CARD DIVISI (MAX 10 PENGURUS) */
     .divisi-card {
       background: var(--white);
       border: 2px solid var(--primary);
@@ -260,12 +254,11 @@
     </div>
   </header>
 
-  <!-- PAGE HEADER -->
   <header class="page-header-blue">
     <div class="container">
       <span class="eyebrow" style="color: var(--secondary);">BAGAN ORGANISASI</span>
       <h1>Struktur Kepengurusan</h1>
-      <p>Yayasan An-Nuur & Pondok Pesantren Bahrul Ulum Singaparna</p>
+      <p>Pondok Pesantren Bahrul Ulum Singaparna</p>
     </div>
   </header>
 
@@ -274,7 +267,6 @@
       <div class="tree-wrapper">
         <div class="tree">
           
-          <!-- LEVEL 1: YAYASAN AN-NUUR -->
           <div class="tree-node top-yayasan">
             <span>Penyelenggara & Pengawas</span>
             <h3>Yayasan An-Nuur Bahrul Ulum</h3>
@@ -282,7 +274,6 @@
 
           <div class="line-v"></div>
 
-          <!-- LEVEL 2: PIMPINAN UTAMA PESANTREN -->
           <div class="tree-node">
             <h4>KH. Yusuf Bahar & Hj. Iis Nadzra</h4>
             <span>Pimpinan Utama Pesantren</span>
@@ -290,7 +281,6 @@
 
           <div class="line-v"></div>
 
-          <!-- LEVEL 2.5: RO'IS 'AM & RO'ISAH -->
           <div class="rois-wrapper">
             <div class="rois-branch">
               <div class="rois-leaf">
@@ -313,7 +303,6 @@
 
           <div class="line-v"></div>
 
-          <!-- LEVEL 3: CABANG DIVISI & PENGURUS (DINAMIS FIREBASE) -->
           <div class="tree-branch-container">
             <div class="line-h-dynamic" id="lineHDynamic"></div>
             <div class="tree-branch" id="pengurusBranch">
