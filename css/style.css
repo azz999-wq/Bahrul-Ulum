@@ -10,6 +10,7 @@
   --muted: #64748b;
   --border: #e5eaf2;
   --bg: #f7f9fc;
+
   --gold: #d5a93a;
 
   --radius-sm: 10px;
@@ -21,6 +22,10 @@
 
   --container: 1400px;
 }
+
+/* =========================
+   2. RESET
+   ========================= */
 
 * {
   margin: 0;
@@ -51,7 +56,10 @@ a {
   text-decoration: none;
 }
 
-button, input, textarea, select {
+button,
+input,
+textarea,
+select {
   font: inherit;
 }
 
@@ -60,14 +68,22 @@ button {
   cursor: pointer;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: var(--black);
   line-height: 1.2;
 }
+
+/* =========================
+   3. GLOBAL CONTAINER & LAYOUTS
+   ========================= */
 
 .container {
   width: min(var(--container), calc(100% - 48px));
@@ -80,6 +96,10 @@ h1, h2, h3, h4 {
   gap: clamp(30px, 5vw, 60px);
   align-items: center;
 }
+
+/* =========================
+   4. SECTION
+   ========================= */
 
 section {
   position: relative;
@@ -110,6 +130,10 @@ section {
   max-width: 520px;
   color: var(--muted);
 }
+
+/* =========================
+   5. EYEBROW & LINKS
+   ========================= */
 
 .eyebrow {
   display: inline-flex;
@@ -142,6 +166,10 @@ section {
 .text-link:hover {
   color: var(--secondary);
 }
+
+/* =========================
+   6. NAVBAR
+   ========================= */
 
 .navbar {
   position: fixed;
@@ -250,13 +278,19 @@ section {
   transform: translateY(-2px);
 }
 
+/* =========================
+   7. HERO
+   ========================= */
+
 .hero {
   min-height: 100svh;
   display: flex;
   align-items: center;
   padding-top: 120px;
   padding-bottom: 80px;
-  background: radial-gradient(circle at 85% 20%, rgba(126, 164, 233, 0.18), transparent 30%), linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+  background:
+    radial-gradient(circle at 85% 20%, rgba(126, 164, 233, 0.18), transparent 30%),
+    linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
 }
 
 .hero-grid {
@@ -355,6 +389,10 @@ section {
   box-shadow: var(--shadow-sm);
 }
 
+/* =========================
+   8. HERO IMAGE / PLACEHOLDER
+   ========================= */
+
 .photo-placeholder {
   position: relative;
   width: 100%;
@@ -400,6 +438,10 @@ section {
   font-size: 12px;
 }
 
+/* =========================
+   9. CARDS
+   ========================= */
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
@@ -439,6 +481,10 @@ section {
   color: var(--muted);
   font-size: 14px;
 }
+
+/* =========================
+   10. NEWS
+   ========================= */
 
 .news-grid {
   display: grid;
@@ -497,6 +543,9 @@ section {
   text-transform: uppercase;
   border-radius: 6px;
   z-index: 2;
+  margin: 0;
+  width: auto;
+  height: auto;
   backdrop-filter: blur(4px);
 }
 
@@ -528,10 +577,15 @@ section {
   line-height: 1.5;
   margin: 0;
   display: -webkit-box !important;
+  line-clamp: 3;
   -webkit-line-clamp: 3 !important;
   -webkit-box-orient: vertical !important;
   overflow: hidden !important;
 }
+
+/* =========================
+   11. GALLERY (DIBERSIHKAN: DUA DEFINISI DIGABUNG JADI SATU)
+   ========================= */
 
 .gallery {
   display: grid;
@@ -584,6 +638,10 @@ section {
   padding: 10px;
 }
 
+/* =========================
+   12. CONTACT / SOCIAL
+   ========================= */
+
 .contact {
   padding-block: clamp(70px, 8vw, 110px);
   background: var(--primary);
@@ -605,7 +663,7 @@ section {
 
 .contact p {
   max-width: 620px;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255,255,255,0.72);
 }
 
 .contact .eyebrow {
@@ -625,15 +683,15 @@ section {
   gap: 20px;
   padding: 17px 20px;
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 13px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255,255,255,0.06);
   transition: transform 0.25s ease, background 0.25s ease;
 }
 
 .social-item:hover {
   transform: translateX(5px);
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255,255,255,0.12);
 }
 
 .social-item span {
@@ -655,72 +713,75 @@ section {
   font-size: 20px;
 }
 
-.site-footer {
-  background: var(--primary-dark, #1b365d);
-  color: #ffffff;
-  padding: 40px 0 20px;
-  margin-top: 60px;
+/* =========================
+   13. FOOTER
+   ========================= */
+
+footer, .site-footer {
+  padding-block: 35px;
+  background: #102d55;
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
 }
 
 .footer-inner {
-  text-align: center;
-}
-
-.footer-brand {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.footer-tagline {
-  font-size: 13px;
-  color: #94a3b8;
-  margin-bottom: 20px;
-}
-
-.footer-links {
-  margin-bottom: 25px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
   gap: 20px;
-  flex-wrap: wrap;
 }
 
-.footer-links a {
-  color: #cbd5e1;
-  text-decoration: none;
-  font-size: 14px;
-  transition: color 0.2s;
-}
-
-.footer-links a:hover {
-  color: #ffffff;
-}
-
-.footer-separator {
-  color: #64748b;
-}
-
-.footer-copyright {
-  color: #64748b;
-  font-size: 12px;
+.footer-inner strong {
+  color: white;
+  font-size: 15px;
   display: block;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 15px;
 }
+
+.footer-inner span {
+  color: var(--secondary);
+  font-size: 12px;
+}
+
+/* =========================
+   14. MEDIA QUERIES
+   ========================= */
 
 @media (max-width: 1050px) {
-  .container { width: min(100% - 40px, var(--container)); }
-  .hero-grid { gap: 45px; }
-  .hero-copy h1 { font-size: clamp(40px, 6vw, 60px); }
-  .nav-links { gap: 18px; }
+  .container {
+    width: min(100% - 40px, var(--container));
+  }
+
+  .hero-grid {
+    gap: 45px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(40px, 6vw, 60px);
+  }
+
+  .nav-links {
+    gap: 18px;
+  }
 }
 
 @media (max-width: 800px) {
-  .container { width: min(100% - 32px, var(--container)); }
-  .two-col, .contact-inner { grid-template-columns: 1fr; }
-  .navbar { position: fixed; }
-  .nav-inner { position: relative; }
+  .container {
+    width: min(100% - 32px, var(--container));
+  }
+
+  .two-col,
+  .contact-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    position: fixed;
+  }
+
+  .nav-inner {
+    position: relative;
+  }
+
   .menu-btn {
     display: block !important;
     background: transparent;
@@ -729,6 +790,7 @@ section {
     cursor: pointer;
     z-index: 1002;
   }
+
   .nav-links {
     position: absolute;
     top: 100%;
@@ -744,36 +806,145 @@ section {
     z-index: 1001;
     display: none;
   }
+
   .nav-links > a {
     display: block !important;
     text-align: center;
     padding: 8px 0;
   }
-  .nav-cta { width: 100%; min-height: 40px; padding-inline: 16px; }
-  .nav-links.active { display: flex !important; }
-  .hero { min-height: auto; padding-top: 115px; padding-bottom: 70px; }
-  .hero-grid { grid-template-columns: 1fr; gap: 45px; }
-  .hero-copy h1 { max-width: 700px; font-size: clamp(40px, 10vw, 58px); letter-spacing: -1.8px; }
-  .photo-placeholder { max-width: 650px; margin-inline: auto; }
-  .section-head { flex-direction: column; align-items: flex-start; margin-bottom: 35px; }
+
+  .nav-cta {
+    width: 100%;
+    min-height: 40px;
+    padding-inline: 16px;
+  }
+
+  .nav-links.active {
+    display: flex !important;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 115px;
+    padding-bottom: 70px;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .hero-copy h1 {
+    max-width: 700px;
+    font-size: clamp(40px, 10vw, 58px);
+    letter-spacing: -1.8px;
+  }
+
+  .photo-placeholder {
+    max-width: 650px;
+    margin-inline: auto;
+  }
+
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 35px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 520px) {
-  .container { width: calc(100% - 28px); }
-  .brand { gap: 9px; }
-  .logo-img { width: 42px; height: 42px; }
-  .brand strong { font-size: 15px; }
-  .brand span { font-size: 10px; }
-  .nav-cta { min-height: 38px; padding-inline: 13px; font-size: 12px; }
-  .hero { padding-top: 105px; }
-  .hero-copy h1 { font-size: clamp(36px, 11vw, 48px); letter-spacing: -1.4px; }
-  .hero-actions { flex-direction: column; align-items: stretch; }
-  .btn { width: 100%; }
-  .photo-placeholder { border-radius: 18px; }
-  .card { padding: 24px; }
-  .news-body { padding: 20px; }
-  .social-item { padding: 15px; }
+  .container {
+    width: calc(100% - 28px);
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .logo-img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .brand strong {
+    font-size: 15px;
+  }
+
+  .brand span {
+    font-size: 10px;
+  }
+
+  .nav-cta {
+    min-height: 38px;
+    padding-inline: 13px;
+    font-size: 12px;
+  }
+
+  .hero {
+    padding-top: 105px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(36px, 11vw, 48px);
+    letter-spacing: -1.4px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .photo-placeholder {
+    border-radius: 18px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .news-body {
+    padding: 20px;
+  }
+
+  .social-item {
+    padding: 15px;
+  }
 }
+
+@media (max-width: 360px) {
+  .container {
+    width: calc(100% - 22px);
+  }
+
+  .brand strong {
+    font-size: 14px;
+  }
+
+  .brand span {
+    font-size: 9px;
+  }
+
+  .nav-cta {
+    padding-inline: 11px;
+  }
+
+  .hero-copy h1 {
+    font-size: 34px;
+  }
+}
+
+/* =========================
+   15. PAGE HEADER
+   ========================= */
 
 .page-header {
   padding-top: 140px;
@@ -795,9 +966,18 @@ section {
   font-size: clamp(14px, 1.2vw, 16px);
 }
 
+/* =========================
+   16. REDUCE MOTION
+   ========================= */
+
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
