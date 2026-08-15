@@ -533,7 +533,6 @@ section {
   overflow: hidden !important;
 }
 
-/* Consolidated Gallery Styles (Bugfix: Duplikasi Diperbaiki) */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
