@@ -4,244 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Struktur Organisasi - Pondok Pesantren Bahrul Ulum</title>
-
   <link rel="icon" type="image/png" href="assets/BU.png">
   <link rel="apple-touch-icon" href="assets/BU.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-
   <style>
-    .page-header-blue {
-      padding-top: 140px;
-      padding-bottom: 60px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: var(--white);
-      text-align: center;
-    }
-
-    .tree-wrapper {
-      padding: 40px 10px;
-      overflow-x: auto;
-    }
-
-    .tree {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 850px;
-      position: relative;
-    }
-
-    .tree-node {
-      background: var(--white);
-      border: 2px solid var(--primary);
-      border-radius: var(--radius-md);
-      padding: 16px 24px;
-      text-align: center;
-      box-shadow: var(--shadow-sm);
-      min-width: 220px;
-    }
-
-    .tree-node.top-yayasan {
-      background: var(--primary);
-      color: var(--white);
-      border-color: var(--primary-dark);
-      padding: 20px 30px;
-    }
-
-    .tree-node.top-yayasan h3 {
-      color: var(--white);
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-
-    .tree-node.top-yayasan span {
-      color: var(--secondary);
-      font-weight: 700;
-      font-size: 13px;
-      text-transform: uppercase;
-    }
-
-    .rois-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      width: 100%;
-    }
-
-    .rois-wrapper::before {
-      content: '';
-      width: 2px;
-      height: 20px;
-      background: var(--primary);
-    }
-
-    .rois-branch {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      position: relative;
-      width: 100%;
-    }
-
-    .rois-branch::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: calc(50% - 115px);
-      right: calc(50% - 115px);
-      height: 2px;
-      background: var(--primary);
-    }
-
-    .rois-leaf {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .rois-leaf .line-v {
-      height: 20px;
-    }
-
-    .rois-box {
-      border-color: var(--secondary);
-      background: #f8fafc;
-      padding: 14px 22px;
-      min-width: 200px;
-      text-align: center;
-    }
-
-    .rois-box h4 {
-      font-size: 15px;
-      color: var(--primary);
-      margin-bottom: 2px;
-      font-weight: 800;
-    }
-
-    .rois-box span {
-      color: var(--secondary);
-      font-weight: 700;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .tree-node h4 {
-      font-size: 16px;
-      color: var(--primary);
-      margin-bottom: 2px;
-    }
-
-    .tree-node span {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .line-v {
-      width: 2px;
-      height: 30px;
-      background: var(--primary);
-    }
-
-    .tree-branch-container {
-      position: relative;
-      width: 100%;
-    }
-
-    .line-h-dynamic {
-      position: absolute;
-      top: 0;
-      height: 2px;
-      background: var(--primary);
-      display: none;
-    }
-
-    .tree-branch {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
-      gap: 25px 20px;
-    }
-
-    .tree-leaf {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex: 0 1 260px;
-    }
-
-    .divisi-card {
-      background: var(--white);
-      border: 2px solid var(--primary);
-      border-radius: var(--radius-md);
-      width: 100%;
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-
-    .divisi-card:hover {
-      transform: translateY(-3px);
-    }
-
-    .divisi-header {
-      background: var(--primary);
-      color: var(--white);
-      padding: 12px 14px;
-      text-align: center;
-    }
-
-    .divisi-header h4 {
-      color: var(--white);
-      font-size: 15px;
-      margin-bottom: 2px;
-    }
-
-    .divisi-header span {
-      color: var(--secondary);
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .divisi-body {
-      padding: 10px 14px;
-    }
-
-    .divisi-body ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .divisi-body li {
-      font-size: 13px;
-      color: var(--black);
-      padding: 6px 0;
-      border-bottom: 1px dashed var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .divisi-body li:last-child {
-      border-bottom: none;
-    }
-
-    .divisi-body li .role {
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 700;
-      background: var(--blue-soft);
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
+    .page-header-blue { padding-top: 140px; padding-bottom: 60px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: var(--white); text-align: center; }
+    .tree-wrapper { padding: 40px 10px; overflow-x: auto; }
+    .tree { display: flex; flex-direction: column; align-items: center; min-width: 850px; position: relative; }
+    .tree-node { background: var(--white); border: 2px solid var(--primary); border-radius: var(--radius-md); padding: 16px 24px; text-align: center; box-shadow: var(--shadow-sm); min-width: 220px; }
+    .tree-node.top-yayasan { background: var(--primary); color: var(--white); border-color: var(--primary-dark); padding: 20px 30px; }
+    .tree-node.top-yayasan h3 { color: var(--white); font-size: 20px; margin-bottom: 4px; }
+    .tree-node.top-yayasan span { color: var(--secondary); font-weight: 700; font-size: 13px; text-transform: uppercase; }
+    .rois-wrapper { display: flex; flex-direction: column; align-items: center; position: relative; width: 100%; }
+    .rois-branch { display: flex; justify-content: center; gap: 30px; position: relative; }
+    .rois-branch::before { content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 2px; background: var(--primary); }
+    .rois-leaf { display: flex; flex-direction: column; align-items: center; }
+    .rois-box { border-color: var(--secondary); background: #f8fafc; padding: 14px 22px; min-width: 200px; text-align: center; }
+    .rois-box h4 { font-size: 15px; color: var(--primary); margin-bottom: 2px; font-weight: 800; }
+    .rois-box span { color: var(--secondary); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .tree-node h4 { font-size: 16px; color: var(--primary); margin-bottom: 2px; }
+    .tree-node span { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .line-v { width: 2px; height: 30px; background: var(--primary); }
+    .tree-branch-container { position: relative; width: 100%; }
+    .line-h-dynamic { position: absolute; top: 0; height: 2px; background: var(--primary); display: none; }
+    .tree-branch { display: flex; flex-wrap: wrap; justify-content: center; width: 100%; gap: 25px 20px; }
+    .tree-leaf { display: flex; flex-direction: column; align-items: center; flex: 0 1 260px; }
+    .divisi-card { background: var(--white); border: 2px solid var(--primary); border-radius: var(--radius-md); width: 100%; box-shadow: var(--shadow-sm); overflow: hidden; transition: transform 0.2s ease; }
+    .divisi-card:hover { transform: translateY(-3px); }
+    .divisi-header { background: var(--primary); color: var(--white); padding: 12px 14px; text-align: center; }
+    .divisi-header h4 { color: var(--white); font-size: 15px; margin-bottom: 2px; }
+    .divisi-header span { color: var(--secondary); font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .divisi-body { padding: 10px 14px; }
+    .divisi-body ul { list-style: none; padding: 0; margin: 0; }
+    .divisi-body li { font-size: 13px; color: var(--black); padding: 6px 0; border-bottom: 1px dashed var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .divisi-body li:last-child { border-bottom: none; }
+    .divisi-body li .role { font-size: 10px; color: var(--muted); font-weight: 700; background: var(--blue-soft); padding: 2px 6px; border-radius: 4px; }
   </style>
 </head>
 <body>
@@ -276,19 +76,16 @@
     <div class="container">
       <div class="tree-wrapper">
         <div class="tree">
-          
           <div class="tree-node top-yayasan">
             <span>Penyelenggara & Pengawas</span>
             <h3>Yayasan An-Nuur Bahrul Ulum</h3>
           </div>
-
           <div class="line-v"></div>
-
           <div class="tree-node">
             <h4>KH. Yusuf Bahar & Hj. Iis Nadzra</h4>
             <span>Pimpinan Utama Pesantren</span>
           </div>
-
+          <div class="line-v"></div>
           <div class="rois-wrapper">
             <div class="rois-branch">
               <div class="rois-leaf">
@@ -298,7 +95,6 @@
                   <h4>Rois 'Am</h4>
                 </div>
               </div>
-
               <div class="rois-leaf">
                 <div class="line-v"></div>
                 <div class="tree-node rois-box">
@@ -308,64 +104,42 @@
               </div>
             </div>
           </div>
-
           <div class="line-v"></div>
-
           <div class="tree-branch-container">
             <div class="line-h-dynamic" id="lineHDynamic"></div>
             <div class="tree-branch" id="pengurusBranch">
               <p style="text-align: center; color: var(--muted);">Memuat data pengurus...</p>
             </div>
           </div>
-
         </div>
       </div>
     </div>
   </main>
 
-  <footer style="background: var(--primary-dark, #1b365d); color: #ffffff; padding: 40px 0 20px; margin-top: 60px;">
-    <div class="container" style="text-align: center;">
-      <p style="font-size: 18px; font-weight: 700; margin-bottom: 5px;">Pondok Pesantren Bahrul Ulum Singaparna</p>
-      <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">Ilmiyah Amaliyah • Amaliyah Ilmiyah</p>
-      
-      <div style="margin-bottom: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-        <a href="privacy.html" style="color: #cbd5e1; text-decoration: none; font-size: 14px;">Privacy Policy</a>
-        <span style="color: #64748b;">•</span>
-        <a href="terms.html" style="color: #cbd5e1; text-decoration: none; font-size: 14px;">Terms of Service</a>
-        <span style="color: #64748b;">•</span>
-        <a href="contact.html" style="color: #cbd5e1; text-decoration: none; font-size: 14px;">Contact Us</a>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-brand">Pondok Pesantren Bahrul Ulum Singaparna</p>
+      <p class="footer-tagline">Ilmiyah Amaliyah • Amaliyah Ilmiyah</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="footer-separator">•</span>
+        <a href="terms.html">Terms of Service</a>
+        <span class="footer-separator">•</span>
+        <a href="contact.html">Contact Us</a>
       </div>
+      <small class="footer-copyright">&copy; 2026 Bahrul Ulum Singaparna. All Rights Reserved.</small>
     </div>
   </footer>
 
   <script src="script.js"></script>
-
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
-      authDomain: "bahrul-ulum-web.firebaseapp.com",
-      projectId: "bahrul-ulum-web",
-      storageBucket: "bahrul-ulum-web.firebasestorage.app",
-      messagingSenderId: "378515606416",
-      appId: "1:378515606416:web:95f56f222bd566aef6c115",
-      measurementId: "G-9G8T5RR5W6"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    import { db, escapeHTML } from './assets/js/firebase-init.js';
+    import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const defaultPengurus = [
       { nama: "Robi M. Aldi", jabatan: "BENDAHARA" },
       { nama: "M. Azka Luthfiansyah", jabatan: "SEKRETARIS" }
     ];
-
-    function escapeHTML(str) {
-      if(!str) return '';
-      return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
-    }
 
     async function loadPengurusTree() {
       try {
@@ -397,9 +171,10 @@
         groupedDivisi[key].push(item);
       });
 
+      const fragment = document.createDocumentFragment();
+
       Object.keys(groupedDivisi).forEach(divisiName => {
         const members = groupedDivisi[divisiName];
-        
         const CHUNK_SIZE = 10;
         
         for (let i = 0; i < members.length; i += CHUNK_SIZE) {
@@ -417,29 +192,30 @@
             `;
           });
 
-          const cardHTML = `
-            <div class="tree-leaf">
-              <div class="line-v"></div>
-              <div class="divisi-card">
-                <div class="divisi-header">
-                  <h4>${escapeHTML(ketua.nama)}</h4>
-                  <span>${escapeHTML(divisiName)} ${i > 0 ? `(Part ${Math.floor(i/CHUNK_SIZE)+1})` : ''}</span>
-                </div>
-                ${anggotaList.length > 0 ? `
-                  <div class="divisi-body">
-                    <ul>${anggotaHTML}</ul>
-                  </div>
-                ` : ''}
+          const leafDiv = document.createElement('div');
+          leafDiv.className = 'tree-leaf';
+          leafDiv.innerHTML = `
+            <div class="line-v"></div>
+            <div class="divisi-card">
+              <div class="divisi-header">
+                <h4>${escapeHTML(ketua.nama)}</h4>
+                <span>${escapeHTML(divisiName)} ${i > 0 ? `(Part ${Math.floor(i/CHUNK_SIZE)+1})` : ''}</span>
               </div>
+              ${anggotaList.length > 0 ? `
+                <div class="divisi-body">
+                  <ul>${anggotaHTML}</ul>
+                </div>
+              ` : ''}
             </div>
           `;
-          container.innerHTML += cardHTML;
+          fragment.appendChild(leafDiv);
         }
       });
 
-      setTimeout(() => {
-        updateBranchLine();
-      }, 50);
+      container.appendChild(fragment);
+
+      const resizeObserver = new ResizeObserver(() => updateBranchLine());
+      resizeObserver.observe(container);
     }
 
     function updateBranchLine() {
@@ -454,7 +230,6 @@
         if (firstRowLeaves.length > 1) {
           const firstLeaf = firstRowLeaves[0];
           const lastLeaf = firstRowLeaves[firstRowLeaves.length - 1];
-
           const firstCenter = firstLeaf.offsetLeft + (firstLeaf.offsetWidth / 2);
           const lastCenter = lastLeaf.offsetLeft + (lastLeaf.offsetWidth / 2);
 
@@ -470,7 +245,6 @@
     }
 
     document.addEventListener("DOMContentLoaded", loadPengurusTree);
-    window.addEventListener("resize", updateBranchLine);
   </script>
 </body>
 </html>

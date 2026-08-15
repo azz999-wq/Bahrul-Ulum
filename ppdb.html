@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PPDB - Pondok Pesantren Bahrul Ulum</title>
-
   <link rel="icon" type="image/png" href="assets/BU.png">
   <link rel="apple-touch-icon" href="assets/BU.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,149 +11,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
-
   <style>
-    .page-header-blue {
-      padding-top: 140px;
-      padding-bottom: 60px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: var(--white);
-    }
-
-    .page-header-blue .eyebrow {
-      color: var(--secondary);
-    }
-
-    .page-header-blue .eyebrow::before {
-      background: var(--secondary);
-    }
-
-    .page-header-blue h1 {
-      font-size: clamp(32px, 4.5vw, 56px);
-      color: var(--white);
-      margin: 12px 0;
-      font-weight: 800;
-    }
-
-    .page-header-blue p {
-      color: rgba(255, 255, 255, 0.85);
-      max-width: 680px;
-      font-size: clamp(14px, 1.2vw, 16px);
-    }
-
-    .btn-brosur-white {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--white);
-      color: var(--primary);
-      padding: 12px 24px;
-      border-radius: var(--radius-sm);
-      font-weight: 800;
-      font-size: 14px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-      transition: transform 0.25s ease, background 0.25s ease;
-    }
-
-    .btn-brosur-white:hover {
-      background: #f8fafc;
-      transform: translateY(-2px);
-    }
-
-    /* GRID TAHAPAN PPDB */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-      gap: clamp(18px, 2vw, 26px);
-    }
-
-    .step-card {
-      padding: clamp(25px, 3vw, 32px);
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .step-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(126, 164, 233, 0.55);
-      box-shadow: var(--shadow-md);
-    }
-
-    .step-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .step-icon {
-      width: 44px;
-      height: 44px;
-      background: var(--blue-soft);
-      color: var(--primary);
-      border-radius: var(--radius-sm);
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-    }
-
-    .step-num {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--secondary);
-    }
-
-    .step-card h3 {
-      font-size: 18px;
-      color: var(--primary);
-      margin: 0;
-    }
-
-    .ppdb-cta-banner {
-      background: var(--primary);
-      color: var(--white);
-      border-radius: var(--radius-lg);
-      padding: clamp(35px, 5vw, 60px) clamp(20px, 4vw, 40px);
-      text-align: center;
-      box-shadow: var(--shadow-md);
-    }
-
-    .ppdb-cta-banner h2 {
-      color: var(--white);
-      font-size: clamp(24px, 3.5vw, 38px);
-      margin-bottom: 12px;
-    }
-
-    .ppdb-cta-banner p {
-      color: rgba(255, 255, 255, 0.8);
-      max-width: 580px;
-      margin: 0 auto 30px;
-      font-size: 15px;
-    }
-
-    .btn-gform {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--secondary);
-      color: var(--white);
-      padding: 14px 32px;
-      border-radius: var(--radius-sm);
-      font-weight: 800;
-      font-size: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      transition: transform 0.25s ease, background 0.25s ease;
-    }
-
-    .btn-gform:hover {
-      background: #608cdb;
-      transform: translateY(-2px);
-    }
+    .page-header-blue { padding-top: 140px; padding-bottom: 60px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: var(--white); }
+    .page-header-blue .eyebrow { color: var(--secondary); }
+    .page-header-blue .eyebrow::before { background: var(--secondary); }
+    .page-header-blue h1 { font-size: clamp(32px, 4.5vw, 56px); color: var(--white); margin: 12px 0; font-weight: 800; }
+    .page-header-blue p { color: rgba(255, 255, 255, 0.85); max-width: 680px; font-size: clamp(14px, 1.2vw, 16px); }
+    .btn-brosur-white { display: inline-flex; align-items: center; gap: 10px; background: var(--white); color: var(--primary); padding: 12px 24px; border-radius: var(--radius-sm); font-weight: 800; font-size: 14px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); transition: transform 0.25s ease, background 0.25s ease; }
+    .btn-brosur-white:hover { background: #f8fafc; transform: translateY(-2px); }
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: clamp(18px, 2vw, 26px); }
+    .step-card { padding: clamp(25px, 3vw, 32px); background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; display: flex; flex-direction: column; }
+    .step-card:hover { transform: translateY(-5px); border-color: rgba(126, 164, 233, 0.55); box-shadow: var(--shadow-md); }
+    .step-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .step-icon { width: 44px; height: 44px; background: var(--blue-soft); color: var(--primary); border-radius: var(--radius-sm); display: grid; place-items: center; font-size: 18px; }
+    .step-num { font-size: 22px; font-weight: 800; color: var(--secondary); }
+    .step-card h3 { font-size: 18px; color: var(--primary); margin: 0; }
+    .ppdb-cta-banner { background: var(--primary); color: var(--white); border-radius: var(--radius-lg); padding: clamp(35px, 5vw, 60px) clamp(20px, 4vw, 40px); text-align: center; box-shadow: var(--shadow-md); }
+    .ppdb-cta-banner h2 { color: var(--white); font-size: clamp(24px, 3.5vw, 38px); margin-bottom: 12px; }
+    .ppdb-cta-banner p { color: rgba(255, 255, 255, 0.8); max-width: 580px; margin: 0 auto 30px; font-size: 15px; }
+    .btn-gform { display: inline-flex; align-items: center; gap: 10px; background: var(--secondary); color: var(--white); padding: 14px 32px; border-radius: var(--radius-sm); font-weight: 800; font-size: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); transition: transform 0.25s ease, background 0.25s ease; }
+    .btn-gform:hover { background: #608cdb; transform: translateY(-2px); }
   </style>
 </head>
 <body>
@@ -170,7 +46,7 @@
       </a>
       <button class="menu-btn" id="menuBtn" type="button" aria-label="Buka menu">☰</button>
       <nav class="nav-links" id="navLinks">
-        <a href="#beranda">Beranda</a>
+        <a href="index.html">Beranda</a>
         <a href="organisasi.html">Profil</a>
         <a href="berita.html">Berita</a>
       </nav>
@@ -182,7 +58,6 @@
       <span class="eyebrow">PPDB T.A. 2026/2027</span>
       <h1>Pendaftaran Santri Baru</h1>
       <p>Membentuk generasi berakhlak mulia, berwawasan luas, dan siap berkontribusi positif bagi masyarakat.</p>
-
       <div style="margin-top: 25px;">
         <a href="assets/Brosur Bahrul Ulum.pdf" target="_blank" class="btn-brosur-white">
           <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Unduh Brosur Resmi
@@ -193,7 +68,6 @@
 
   <main class="section">
     <div class="container">
-
       <div style="margin-bottom: 60px;">
         <div class="section-head" style="margin-bottom: 30px;">
           <div>
@@ -201,9 +75,7 @@
             <h2 style="margin-top: 5px;">Tahapan PPDB</h2>
           </div>
         </div>
-
         <div class="steps-grid">
-          <!-- Step 1 -->
           <div class="step-card">
             <div class="step-head">
               <div class="step-icon"><i class="fa-solid fa-pen-to-square"></i></div>
@@ -211,8 +83,6 @@
             </div>
             <h3>Isi Formulir</h3>
           </div>
-
-          <!-- Step 2 -->
           <div class="step-card">
             <div class="step-head">
               <div class="step-icon"><i class="fa-solid fa-bullhorn"></i></div>
@@ -220,8 +90,6 @@
             </div>
             <h3>Pengumuman</h3>
           </div>
-
-          <!-- Step 3 -->
           <div class="step-card">
             <div class="step-head">
               <div class="step-icon"><i class="fa-solid fa-campground"></i></div>
@@ -229,8 +97,6 @@
             </div>
             <h3>Kedatangan Santri ke Pesantren</h3>
           </div>
-
-          <!-- Step 4 -->
           <div class="step-card">
             <div class="step-head">
               <div class="step-icon"><i class="fa-solid fa-clipboard-check"></i></div>
@@ -244,38 +110,28 @@
       <div class="ppdb-cta-banner">
         <h2>Siap Mendaftar Hari Ini?</h2>
         <p>Klik tombol di bawah ini untuk pengisian formulir online secara langsung via Google Form.</p>
-
         <a href="https://s.id/pendaftaransantribahrululumsingaparna2627" target="_blank" class="btn-gform">
           <i class="fa-solid fa-paper-plane"></i> Daftar Sekarang
         </a>
       </div>
-
     </div>
   </main>
 
-
-<footer style="background: var(--primary-dark, #1b365d); color: #ffffff; padding: 40px 0 20px; margin-top: 60px;">
-  <div class="container" style="text-align: center;">
-    <p style="font-size: 18px; font-weight: 700; margin-bottom: 5px;">Pondok Pesantren Bahrul Ulum Singaparna</p>
-    <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">Ilmiyah Amaliyah • Amaliyah Ilmiyah</p>
-    
-    <div style="margin-bottom: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-      <a href="privacy.html" style="color: #cbd5e1; text-decoration: none; font-size: 14px; transition: color 0.2s;">Privacy Policy</a>
-      <span style="color: #64748b;">•</span>
-      <a href="terms.html" style="color: #cbd5e1; text-decoration: none; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
-      <span style="color: #64748b;">•</span>
-      <a href="contact.html" style="color: #cbd5e1; text-decoration: none; font-size: 14px; transition: color 0.2s;">Contact Us</a>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-brand">Pondok Pesantren Bahrul Ulum Singaparna</p>
+      <p class="footer-tagline">Ilmiyah Amaliyah • Amaliyah Ilmiyah</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="footer-separator">•</span>
+        <a href="terms.html">Terms of Service</a>
+        <span class="footer-separator">•</span>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <small class="footer-copyright">&copy; 2026 Bahrul Ulum Singaparna. All Rights Reserved.</small>
     </div>
+  </footer>
 
-  <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const navLinks = document.getElementById('navLinks');
-
-    if (menuBtn && navLinks) {
-      menuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-      });
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

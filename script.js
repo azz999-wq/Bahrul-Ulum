@@ -4,25 +4,38 @@ document.addEventListener("DOMContentLoaded", () => {
   const navLinks = document.querySelector(".nav-links");
 
   if (navbar) {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 20) {
-        navbar.classList.add("scrolled");
-      } else {
-        navbar.classList.remove("scrolled");
-      }
-    });
+    let ticking = false;
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            if (window.scrollY > 20) {
+              navbar.classList.add("scrolled");
+            } else {
+              navbar.classList.remove("scrolled");
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
   }
 
   if (menuBtn && navLinks) {
+    // Toggle menu navigasi mobile
     menuBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       navLinks.classList.toggle("active");
     });
 
-    document.querySelectorAll(".nav-links a").forEach((link) => {
-      link.addEventListener("click", () => {
+    navLinks.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") {
         navLinks.classList.remove("active");
-      });
+      }
     });
 
     document.addEventListener("click", (e) => {

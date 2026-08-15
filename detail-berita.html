@@ -11,92 +11,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    body {
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    main {
-      flex: 1;
-    }
-
-    .detail-wrapper {
-      max-width: 860px;
-      margin: 120px auto 60px;
-      padding: 0 20px;
-    }
-
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--primary);
-      transition: color 0.2s ease;
-    }
-
-    .back-btn:hover {
-      color: var(--secondary);
-    }
-
-    .article-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: clamp(24px, 4vw, 40px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-    }
-
-    .article-badge {
-      display: inline-block;
-      padding: 5px 12px;
-      background: var(--blue-soft);
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 11px;
-      letter-spacing: 0.8px;
-      border-radius: 6px;
-      margin-bottom: 14px;
-      text-transform: uppercase;
-    }
-
-    .article-title {
-      font-size: clamp(26px, 3.8vw, 38px);
-      color: var(--primary);
-      margin-bottom: 10px;
-      line-height: 1.25;
-      font-weight: 800;
-    }
-
-    .article-date {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 24px;
-      display: block;
-    }
-
-.article-cover {
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  border-radius: 12px;
-  margin-bottom: 28px;
-  display: block;
-}
-
-    .article-content {
-      font-size: 16px;
-      line-height: 1.8;
-      color: var(--text);
-      white-space: pre-line;
-      border-top: 1px solid var(--border);
-      padding-top: 24px;
-    }
+    body { background: var(--bg); display: flex; flex-direction: column; min-height: 100vh; }
+    main { flex: 1; }
+    .detail-wrapper { max-width: 860px; margin: 120px auto 60px; padding: 0 20px; }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: 700; font-size: 14px; color: var(--primary); transition: color 0.2s ease; }
+    .back-btn:hover { color: var(--secondary); }
+    .article-card { background: #ffffff; border: 1px solid var(--border); border-radius: 20px; padding: clamp(24px, 4vw, 40px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); }
+    .article-badge { display: inline-block; padding: 5px 12px; background: var(--blue-soft); color: var(--primary); font-weight: 800; font-size: 11px; letter-spacing: 0.8px; border-radius: 6px; margin-bottom: 14px; text-transform: uppercase; }
+    .article-title { font-size: clamp(26px, 3.8vw, 38px); color: var(--primary); margin-bottom: 10px; line-height: 1.25; font-weight: 800; }
+    .article-date { color: var(--muted); font-size: 13px; font-weight: 600; margin-bottom: 24px; display: block; }
+    .article-cover { width: 100%; height: auto; max-width: 100%; border-radius: 12px; margin-bottom: 28px; display: block; }
+    .article-content { font-size: 16px; line-height: 1.8; color: var(--text); white-space: pre-line; border-top: 1px solid var(--border); padding-top: 24px; }
   </style>
 </head>
 <body>
@@ -112,7 +37,7 @@
       </a>
       <button class="menu-btn" id="menuBtn" type="button" aria-label="Buka menu">☰</button>
       <nav class="nav-links" id="navLinks">
-        <a href="#beranda">Beranda</a>
+        <a href="index.html">Beranda</a>
         <a href="organisasi.html">Profil</a>
         <a href="ppdb.html" class="nav-cta">PPDB</a>
       </nav>
@@ -122,116 +47,85 @@
   <main>
     <div class="detail-wrapper">
       <a href="berita.html" class="back-btn">← Kembali ke Daftar Berita</a>
-      
       <div class="article-card" id="articleDetail">
         <p style="text-align: center; color: var(--muted);">Memuat isi berita...</p>
       </div>
-      <script async="async" data-cfasync="false" src="https://asperitymeg.com/fec6989f3de21434d94dcf2c259e8ccd/invoke.js"></script>
-      <div id="container-fec6989f3de21434d94dcf2c259e8ccd"></div>
     </div>
   </main>
 
-<footer style="background: var(--primary-dark, #1b365d); color: #ffffff; padding: 40px 0 20px; margin-top: 60px;">
-  <div class="container" style="text-align: center;">
-    <p style="font-size: 18px; font-weight: 700; margin-bottom: 5px;">Pondok Pesantren Bahrul Ulum Singaparna</p>
-    <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">Ilmiyah Amaliyah • Amaliyah Ilmiyah</p>
-    
-    <div style="margin-bottom: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-      <a href="privacy.html" style="color: #cbd5e1; text-decoration: none; font-size: 14px; transition: color 0.2s;">Privacy Policy</a>
-      <span style="color: #64748b;">•</span>
-      <a href="terms.html" style="color: #cbd5e1; text-decoration: none; font-size: 14px; transition: color 0.2s;">Terms of Service</a>
-      <span style="color: #64748b;">•</span>
-      <a href="contact.html" style="color: #cbd5e1; text-decoration: none; font-size: 14px; transition: color 0.2s;">Contact Us</a>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-brand">Pondok Pesantren Bahrul Ulum Singaparna</p>
+      <p class="footer-tagline">Ilmiyah Amaliyah • Amaliyah Ilmiyah</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="footer-separator">•</span>
+        <a href="terms.html">Terms of Service</a>
+        <span class="footer-separator">•</span>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <small class="footer-copyright">&copy; 2026 Bahrul Ulum Singaparna. All Rights Reserved.</small>
     </div>
+  </footer>
 
   <script src="script.js"></script>
+  <script type="module">
+    import { db, escapeHTML } from './assets/js/firebase-init.js';
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  <!-- FIREBASE READ DETAIL SCRIPT -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-  apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
-  authDomain: "bahrul-ulum-web.firebaseapp.com",
-  projectId: "bahrul-ulum-web",
-  storageBucket: "bahrul-ulum-web.firebasestorage.app",
-  messagingSenderId: "378515606416",
-  appId: "1:378515606416:web:95f56f222bd566aef6c115",
-  measurementId: "G-9G8T5RR5W6"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  function escapeHTML(str) {
-    if(!str) return '';
-    return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
-  }
-
-  // FUNGSI KONVERSI LINK YOUTUBE KE FORMAT EMBED PLAYER
-  function getYouTubeEmbedURL(url) {
-    if (!url) return '';
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : '';
-  }
-
-  async function loadDetail() {
-    const container = document.getElementById('articleDetail');
-    
-    const urlParams = new URLSearchParams(window.location.search);
-    const newsId = urlParams.get('id');
-
-    if (!newsId) {
-      container.innerHTML = "<p style='text-align:center;'>Berita tidak ditemukan.</p>";
-      return;
+    function getYouTubeEmbedURL(url) {
+      if (!url) return '';
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = String(url).match(regExp);
+      return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : '';
     }
 
-    try {
-      const docRef = doc(db, "berita", newsId);
-      const docSnap = await getDoc(docRef);
+    async function loadDetail() {
+      const container = document.getElementById('articleDetail');
+      const urlParams = new URLSearchParams(window.location.search);
+      const newsId = urlParams.get('id');
 
-      if (docSnap.exists()) {
-        const d = docSnap.data();
-        
-        // Deteksi Embed YouTube
-        const embedUrl = getYouTubeEmbedURL(d.video_url);
-
-        // Jika ada link Video YouTube, tampilkan Player Video
-        let mediaHTML = '';
-        if (embedUrl) {
-          mediaHTML = `
-            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin-bottom: 28px; background: #000;">
-              <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen></iframe>
-            </div>
-          `;
-        } else if (d.gambar_url) {
-          // Jika tidak ada video, tampilkan Foto Cover
-          mediaHTML = `<img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" class="article-cover" onerror="this.style.display='none'">`;
-        }
-
-        container.innerHTML = `
-          <span class="article-badge">${escapeHTML(d.kategori)}</span>
-          <h1 class="article-title">${escapeHTML(d.judul)}</h1>
-          <span class="article-date">Diterbitkan: ${escapeHTML(d.tanggal)}</span>
-          
-          ${mediaHTML}
-          
-          <div class="article-content">
-            ${escapeHTML(d.ringkasan)}
-          </div>
-        `;
-      } else {
-        container.innerHTML = "<p style='text-align:center;'>Berita tidak ditemukan atau telah dihapus.</p>";
+      if (!newsId) {
+        container.innerHTML = "<p style='text-align:center;'>Berita tidak ditemukan.</p>";
+        return;
       }
-    } catch (e) {
-      console.error("Error:", e);
-      container.innerHTML = "<p style='text-align:center;'>Gagal memuat isi berita.</p>";
-    }
-  }
 
-  document.addEventListener("DOMContentLoaded", loadDetail);
-</script>
+      try {
+        const docRef = doc(db, "berita", newsId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const d = docSnap.data();
+          const embedUrl = getYouTubeEmbedURL(d.video_url);
+
+          let mediaHTML = '';
+          if (embedUrl) {
+            mediaHTML = `
+              <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin-bottom: 28px; background: #000;">
+                <iframe src="${embedUrl}" loading="lazy" referrerpolicy="no-referrer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen></iframe>
+              </div>
+            `;
+          } else if (d.gambar_url) {
+            mediaHTML = `<img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" class="article-cover" onerror="this.style.display='none'">`;
+          }
+
+          container.innerHTML = `
+            <span class="article-badge">${escapeHTML(d.kategori)}</span>
+            <h1 class="article-title">${escapeHTML(d.judul)}</h1>
+            <span class="article-date">Diterbitkan: ${escapeHTML(d.tanggal)}</span>
+            ${mediaHTML}
+            <div class="article-content">${escapeHTML(d.ringkasan)}</div>
+          `;
+        } else {
+          container.innerHTML = "<p style='text-align:center;'>Berita tidak ditemukan atau telah dihapus.</p>";
+        }
+      } catch (e) {
+        console.error("Error loading detail:", e);
+        container.innerHTML = "<p style='text-align:center;'>Gagal memuat isi berita.</p>";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadDetail);
+  </script>
 </body>
 </html>
