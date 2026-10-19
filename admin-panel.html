@@ -340,6 +340,33 @@
     let globalNewsData = {};
     let globalPengurusData = {};
 
+    function sanitizeText(value, maxLength = 200) {
+      return String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, maxLength);
+    }
+
+    function sanitizeUrl(value, maxLength = 500) {
+      const raw = String(value ?? '').trim();
+      if (!raw) return '';
+
+      try {
+        const url = new URL(raw);
+        const host = url.hostname.toLowerCase();
+        if (!['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be', 'images.unsplash.com', 'images.pexels.com', 'firebasestorage.googleapis.com', 'storage.googleapis.com', 'drive.google.com'].includes(host)) {
+          return '';
+        }
+        return url.href.slice(0, maxLength);
+      } catch {
+        return '';
+      }
+    }
+
+    function sanitizeVideoUrl(value) {
+      const raw = String(value ?? '').trim();
+      if (!raw) return '';
+      const patterns = [/^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+/i, /^(https?:\/\/)?(www\.)?youtube\.com\/embed\/[\w-]+/i];
+      return patterns.some((pattern) => pattern.test(raw)) ? raw.slice(0, 500) : '';
+    }
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         loginBox.classList.add("hidden");
@@ -384,14 +411,27 @@
 
     document.getElementById("newsForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      const judul = sanitizeText(document.getElementById("judul").value, 120);
+      const kategori = sanitizeText(document.getElementById("kategori").value, 50);
+      const tanggal = sanitizeText(document.getElementById("tanggal").value, 20);
+      const gambarUrl = sanitizeUrl(document.getElementById("gambarUrl").value, 500);
+      const videoUrl = sanitizeVideoUrl(document.getElementById("videoUrl").value);
+      const ringkasan = sanitizeText(document.getElementById("ringkasan").value, 2000);
+
+      if (!judul || !kategori || !tanggal || !ringkasan) {
+        alert("Judul, kategori, tanggal, dan ringkasan wajib diisi.");
+        return;
+      }
+
       try {
         await addDoc(collection(db, "berita"), {
-          judul: document.getElementById("judul").value,
-          kategori: document.getElementById("kategori").value,
-          tanggal: document.getElementById("tanggal").value,
-          gambar_url: document.getElementById("gambarUrl").value,
-          video_url: document.getElementById("videoUrl").value || '',
-          ringkasan: document.getElementById("ringkasan").value,
+          judul,
+          kategori,
+          tanggal,
+          gambar_url: gambarUrl,
+          video_url: videoUrl,
+          ringkasan,
           tanggal_created: serverTimestamp()
         });
         alert("Berita Berhasil Di-publish!");
@@ -475,14 +515,26 @@
     document.getElementById("editNewsForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const docId = document.getElementById("editDocId").value;
+      const judul = sanitizeText(document.getElementById("editJudul").value, 120);
+      const kategori = sanitizeText(document.getElementById("editKategori").value, 50);
+      const tanggal = sanitizeText(document.getElementById("editTanggal").value, 20);
+      const gambarUrl = sanitizeUrl(document.getElementById("editGambarUrl").value, 500);
+      const videoUrl = sanitizeVideoUrl(document.getElementById("editVideoUrl").value);
+      const ringkasan = sanitizeText(document.getElementById("editRingkasan").value, 2000);
+
+      if (!judul || !kategori || !tanggal || !ringkasan) {
+        alert("Judul, kategori, tanggal, dan ringkasan wajib diisi.");
+        return;
+      }
+
       try {
         await updateDoc(doc(db, "berita", docId), {
-          judul: document.getElementById("editJudul").value,
-          kategori: document.getElementById("editKategori").value,
-          tanggal: document.getElementById("editTanggal").value,
-          gambar_url: document.getElementById("editGambarUrl").value,
-          video_url: document.getElementById("editVideoUrl").value || '',
-          ringkasan: document.getElementById("editRingkasan").value
+          judul,
+          kategori,
+          tanggal,
+          gambar_url: gambarUrl,
+          video_url: videoUrl,
+          ringkasan
         });
         alert("Perubahan berita berhasil disimpan!");
         editModal.classList.add("hidden");
@@ -496,11 +548,21 @@
 
     document.getElementById("pengurusForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      const nama = sanitizeText(document.getElementById("pengurusNama").value, 120);
+      const jabatan = sanitizeText(document.getElementById("pengurusJabatan").value, 120);
+      const urutan = Math.max(1, parseInt(document.getElementById("pengurusUrutan").value, 10) || 1);
+
+      if (!nama || !jabatan) {
+        alert("Nama dan jabatan pengurus wajib diisi.");
+        return;
+      }
+
       try {
         await addDoc(collection(db, "pengurus"), {
-          nama: document.getElementById("pengurusNama").value,
-          jabatan: document.getElementById("pengurusJabatan").value,
-          urutan: parseInt(document.getElementById("pengurusUrutan").value) || 1
+          nama,
+          jabatan,
+          urutan
         });
         alert("Data pengurus berhasil ditambahkan!");
         document.getElementById("pengurusForm").reset();
@@ -580,11 +642,20 @@
     document.getElementById("editPengurusForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const docId = document.getElementById("editPengurusDocId").value;
+      const nama = sanitizeText(document.getElementById("editPengurusNama").value, 120);
+      const jabatan = sanitizeText(document.getElementById("editPengurusJabatan").value, 120);
+      const urutan = Math.max(1, parseInt(document.getElementById("editPengurusUrutan").value, 10) || 1);
+
+      if (!nama || !jabatan) {
+        alert("Nama dan jabatan pengurus wajib diisi.");
+        return;
+      }
+
       try {
         await updateDoc(doc(db, "pengurus", docId), {
-          nama: document.getElementById("editPengurusNama").value,
-          jabatan: document.getElementById("editPengurusJabatan").value,
-          urutan: parseInt(document.getElementById("editPengurusUrutan").value) || 1
+          nama,
+          jabatan,
+          urutan
         });
         alert("Perubahan data pengurus berhasil disimpan!");
         editPengurusModal.classList.add("hidden");

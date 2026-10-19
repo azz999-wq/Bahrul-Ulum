@@ -198,7 +198,8 @@
 
   <script src="script.js"></script>
   <script type="module">
-    import { db, escapeHTML } from './firebase-init.js';
+    import { db } from './firebase-init.js';
+    import { createNewsCard } from './assets/js/news-utils.js';
     import { collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     async function loadHomeNews() {
@@ -213,22 +214,20 @@
         }
 
         const fragment = document.createDocumentFragment();
-        snapshot.forEach(docSnap => {
+        snapshot.forEach((docSnap) => {
           const d = docSnap.data();
           const article = document.createElement('article');
           article.className = 'news';
-          article.innerHTML = `
-            <div class="news-image">
-              <img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" onerror="this.style.display='none'">
-              <span>${escapeHTML(d.kategori)}</span>
-            </div>
-            <div class="news-body">
-              <small>${escapeHTML(d.tanggal)}</small>
-              <h3>${escapeHTML(d.judul)}</h3>
-              <p>${escapeHTML(d.ringkasan)}</p>
-              <a class="text-link" href="detail-berita.html?id=${docSnap.id}">Lihat Selengkapnya →</a>
-            </div>
-          `;
+          article.innerHTML = createNewsCard({
+            id: docSnap.id,
+            title: d.judul,
+            date: d.tanggal,
+            category: d.kategori,
+            summary: d.ringkasan,
+            imageUrl: d.gambar_url,
+            link: `detail-berita.html?id=${docSnap.id}`,
+            ctaText: 'Lihat Selengkapnya →'
+          });
           fragment.appendChild(article);
         });
 

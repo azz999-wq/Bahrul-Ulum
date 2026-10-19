@@ -50,8 +50,6 @@
       <div class="article-card" id="articleDetail">
         <p style="text-align: center; color: var(--muted);">Memuat isi berita...</p>
       </div>
-      <script async="async" data-cfasync="false" src="https://asperitymeg.com/fec6989f3de21434d94dcf2c259e8ccd/invoke.js"></script>
-      <div id="container-fec6989f3de21434d94dcf2c259e8ccd"></div>
     </div>
   </main>
 
@@ -72,15 +70,9 @@
 
   <script src="script.js"></script>
 <script type="module">
-  import { db, escapeHTML } from './firebase-init.js';
+  import { db } from './firebase-init.js';
+  import { createArticleMedia, escapeHTML } from './assets/js/news-utils.js';
   import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  function getYouTubeEmbedURL(url) {
-    if (!url) return '';
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = String(url).match(regExp);
-    return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : '';
-  }
 
   async function loadDetail() {
     const container = document.getElementById('articleDetail');
@@ -98,19 +90,11 @@
 
       if (docSnap.exists()) {
         const d = docSnap.data();
-        const embedUrl = getYouTubeEmbedURL(d.video_url);
-
-        let mediaHTML = '';
-        if (embedUrl) {
-          // Atribut referrerpolicy sudah diperbaiki agar tidak diblokir YouTube
-          mediaHTML = `
-            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin-bottom: 28px; background: #000;">
-              <iframe src="${embedUrl}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen></iframe>
-            </div>
-          `;
-        } else if (d.gambar_url) {
-          mediaHTML = `<img src="${escapeHTML(d.gambar_url)}" alt="${escapeHTML(d.judul)}" class="article-cover" onerror="this.style.display='none'">`;
-        }
+        const mediaHTML = createArticleMedia({
+          title: d.judul,
+          imageUrl: d.gambar_url,
+          videoUrl: d.video_url
+        });
 
         container.innerHTML = `
           <span class="article-badge">${escapeHTML(d.kategori)}</span>
