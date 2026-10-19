@@ -61,6 +61,131 @@
       .main-content { margin-left: 0; padding: 20px; }
       .form-grid-2 { grid-template-columns: 1fr; }
     }
+
+    :root {
+      --admin-bg: #f3f5f2;
+      --admin-accent: #c08b3e;
+      --admin-danger: #b8423d;
+    }
+
+    body { background: var(--admin-bg); }
+    .login-wrapper {
+      background: linear-gradient(135deg, #173e73 0 38%, #f3f5f2 38% 100%);
+    }
+    .login-card {
+      max-width: 440px;
+      padding: 36px;
+      border: 1px solid rgba(23, 62, 115, 0.1);
+      border-top: 4px solid var(--admin-accent);
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(16, 45, 85, 0.16);
+    }
+    .login-card .logo { margin-bottom: 30px; }
+    .login-actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+    .text-button {
+      padding: 4px 0;
+      color: var(--primary);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 700;
+      text-underline-offset: 3px;
+    }
+    .text-button:hover { text-decoration: underline; }
+    .text-button:focus-visible { outline: 2px solid var(--admin-accent); outline-offset: 3px; }
+    .auth-message { min-height: 20px; margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .auth-message.error { color: var(--admin-danger); }
+    .sidebar { background: #173e73; box-shadow: 6px 0 24px rgba(16, 45, 85, 0.08); }
+    .sidebar-brand { border-color: rgba(255, 255, 255, 0.16); }
+    .sidebar-link { border-radius: 8px; }
+    .sidebar-link.active { background: var(--admin-accent); color: #172033; }
+    .sidebar-link:hover:not(.active) { background: rgba(255, 255, 255, 0.1); }
+    .main-content { padding: 36px clamp(22px, 4vw, 56px); }
+    .top-header { align-items: flex-end; gap: 20px; }
+    .top-header h1 { letter-spacing: 0; }
+    .stats-grid { gap: 14px; }
+    .stat-card {
+      min-height: 112px;
+      padding: 20px 22px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(23, 62, 115, 0.04);
+    }
+    .stat-card:nth-child(1) { border-top: 3px solid #c08b3e; }
+    .stat-card:nth-child(2) { border-top: 3px solid #448b72; }
+    .stat-card:nth-child(3) { border-top: 3px solid #527caf; }
+    .stat-card h4 { letter-spacing: 0.04em; }
+    .stat-card > span {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: #f1f4f7;
+      font-size: 23px !important;
+    }
+    .admin-card {
+      padding: 26px;
+      border-radius: 12px;
+      box-shadow: 0 5px 22px rgba(23, 62, 115, 0.045);
+    }
+    .admin-card-header { margin-bottom: 22px; }
+    .form-group label { font-size: 12px; letter-spacing: 0.02em; }
+    .form-control {
+      min-height: 46px;
+      border-radius: 8px;
+      background: #fff;
+    }
+    textarea.form-control { min-height: 130px; resize: vertical; }
+    .admin-table { min-width: 620px; }
+    .admin-table th { letter-spacing: 0.04em; }
+    .admin-table tbody tr { transition: background 0.15s ease; }
+    .admin-table tbody tr:hover { background: #f8faf8; }
+    .admin-table td { line-height: 1.5; }
+    .btn-edit, .btn-delete { min-height: 34px; border-radius: 7px; cursor: pointer; }
+    .btn-edit { background: #edf2f8; color: var(--primary); }
+    .btn-edit:hover { background: #dce6f2; }
+    .btn-delete { background: #f8e9e7; color: var(--admin-danger); }
+    .btn-delete:hover { background: #f1d4d1; }
+    .modal-card { border-radius: 14px; }
+
+    @media (max-width: 900px) {
+      .dashboard-layout { display: block; }
+      .sidebar {
+        display: flex;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        width: 100%;
+        min-height: 0;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 20px;
+      }
+      .sidebar > div { display: flex; flex: 1; align-items: center; gap: 24px; min-width: 0; }
+      .sidebar-brand { flex: 0 0 auto; margin: 0; padding: 0; border: 0; }
+      .sidebar-menu { flex-direction: row; gap: 4px; min-width: 0; overflow-x: auto; }
+      .sidebar-link { flex: 0 0 auto; padding: 10px 12px; }
+      .sidebar > button { width: auto !important; flex: 0 0 auto; }
+      .main-content { padding: 28px 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .login-wrapper { background: linear-gradient(150deg, #173e73 0 28%, #f3f5f2 28% 100%); }
+      .login-card { padding: 28px 22px; }
+      .sidebar { align-items: stretch; flex-direction: column; gap: 10px; padding: 12px 14px; }
+      .sidebar > div { flex: 0 0 auto; flex-direction: column; align-items: stretch; gap: 10px; }
+      .sidebar-brand { padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.16); }
+      .sidebar-menu { width: 100%; }
+      .sidebar-link { padding: 9px 10px; font-size: 12px; }
+      .sidebar > button { width: 100% !important; min-height: 40px; }
+      .main-content { padding: 24px 16px; }
+      .top-header { align-items: flex-start; flex-direction: column; margin-bottom: 24px; }
+      .stats-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 24px; }
+      .stat-card { min-height: 94px; }
+      .admin-card { padding: 20px 16px; margin-bottom: 20px; }
+      .admin-card-header { align-items: flex-start; }
+      .modal-card { padding: 22px 16px; }
+    }
   </style>
 </head>
 <body>
@@ -84,6 +209,10 @@
           <input type="password" id="password" class="form-control" placeholder="••••••••" required>
         </div>
         <button type="submit" class="btn primary" style="width:100%; margin-top: 10px;">Masuk ke Dashboard</button>
+        <div class="login-actions">
+          <button type="button" id="forgotPasswordBtn" class="text-button">Lupa password?</button>
+        </div>
+        <p id="authMessage" class="auth-message" role="status" aria-live="polite"></p>
       </form>
     </div>
   </div>
@@ -326,12 +455,14 @@
 
   <script type="module">
     import { db, escapeHTML } from './firebase-init.js';
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const auth = getAuth();
     const loginBox = document.getElementById("loginBox");
     const dashboardBox = document.getElementById("dashboardBox");
+    const emailInput = document.getElementById("email");
+    const authMessage = document.getElementById("authMessage");
     const newsTableBody = document.getElementById("newsTableBody");
     const pengurusTableBody = document.getElementById("pengurusTableBody");
     const editModal = document.getElementById("editModal");
@@ -369,6 +500,7 @@
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        authMessage.textContent = "";
         loginBox.classList.add("hidden");
         dashboardBox.classList.remove("hidden");
         fetchAdminNews();
@@ -381,10 +513,42 @@
 
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+      authMessage.textContent = "";
+      authMessage.classList.remove("error");
       try {
-        await signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("password").value);
-      } catch (err) {
-        alert("Login Gagal: " + err.message);
+        await signInWithEmailAndPassword(auth, emailInput.value.trim(), document.getElementById("password").value);
+      } catch {
+        authMessage.textContent = "Email atau password tidak sesuai. Periksa kembali lalu coba lagi.";
+        authMessage.classList.add("error");
+      }
+    });
+
+    document.getElementById("forgotPasswordBtn").addEventListener("click", async () => {
+      if (!emailInput.value.trim()) {
+        emailInput.setCustomValidity("Masukkan email admin untuk menerima tautan reset.");
+        emailInput.reportValidity();
+        emailInput.addEventListener("input", () => emailInput.setCustomValidity(""), { once: true });
+        return;
+      }
+
+      if (!emailInput.checkValidity()) {
+        emailInput.reportValidity();
+        return;
+      }
+
+      const resetButton = document.getElementById("forgotPasswordBtn");
+      resetButton.disabled = true;
+      authMessage.textContent = "Mengirim tautan reset...";
+      authMessage.classList.remove("error");
+
+      try {
+        await sendPasswordResetEmail(auth, emailInput.value.trim());
+        authMessage.textContent = "Jika email terdaftar, tautan untuk mengatur ulang password akan dikirim.";
+      } catch {
+        authMessage.textContent = "Tautan reset belum dapat dikirim. Periksa koneksi atau coba lagi nanti.";
+        authMessage.classList.add("error");
+      } finally {
+        resetButton.disabled = false;
       }
     });
 

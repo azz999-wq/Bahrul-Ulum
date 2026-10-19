@@ -24,3 +24,9 @@ Platform web profil, informasi PPDB, berita, dan panel manajemen struktur kepeng
 
 - Terapkan Firestore Security Rules di Firebase Console agar koleksi publik hanya dapat dibaca sesuai kebutuhan dan operasi tulis dibatasi untuk admin terautentikasi. Konfigurasi Firebase di browser bukan rahasia; keamanan harus ditegakkan oleh rules.
 - Setelah mengubah rules, uji akses baca dan tulis menggunakan akun publik dan admin sebelum deploy.
+
+### Autentikasi Admin
+
+- Halaman `admin-panel.html` memakai Firebase Authentication dengan penyedia Email/Password. Tautan **Lupa password?** mengirim email reset melalui `sendPasswordResetEmail`; pastikan template reset password di Firebase Authentication sudah dikonfigurasi dan domain situs tercantum di Authorized domains.
+- Proteksi reCAPTCHA untuk login email/password tidak diaktifkan hanya dengan mengubah HTML. Aktifkan integrasi reCAPTCHA Enterprise untuk Identity Platform pada proyek Firebase agar Firebase Authentication memverifikasi permintaan login di sisi server. Firebase Web SDK yang digunakan halaman admin mendukung integrasi ini.
+- Mulai dengan enforcement mode `AUDIT`, daftarkan domain situs pada pengaturan keamanan Identity Platform, lalu pantau metrik reCAPTCHA. Setelah alur login terverifikasi, ubah enforcement ke `ENFORCE`. Ikuti [panduan resmi integrasi reCAPTCHA Identity Platform](https://docs.cloud.google.com/identity-platform/docs/recaptcha-enterprise); penggunaan reCAPTCHA Enterprise dapat menimbulkan biaya.
