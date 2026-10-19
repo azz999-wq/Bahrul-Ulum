@@ -81,6 +81,8 @@
       box-shadow: 0 24px 60px rgba(16, 45, 85, 0.16);
     }
     .login-card .logo { margin-bottom: 30px; }
+    .turnstile-group { display: flex; justify-content: center; margin: 18px 0 8px; }
+    .text-button:disabled { cursor: wait; opacity: 0.6; }
     .login-actions { display: flex; justify-content: flex-end; margin-top: 14px; }
     .text-button {
       padding: 4px 0;
@@ -207,6 +209,9 @@
         <div class="form-group">
           <label>Password</label>
           <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+        </div>
+        <div class="turnstile-group">
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAAFb8GzvJ1L5OPNAN" data-theme="light"></div>
         </div>
         <button type="submit" class="btn primary" style="width:100%; margin-top: 10px;">Masuk ke Dashboard</button>
         <div class="login-actions">
@@ -453,6 +458,7 @@
     </div>
   </div>
 
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script type="module">
     import { db, escapeHTML } from './firebase-init.js';
     import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -498,6 +504,26 @@
       return patterns.some((pattern) => pattern.test(raw)) ? raw.slice(0, 500) : '';
     }
 
+    async function verifyTurnstile() {
+      const token = document.querySelector('[name="cf-turnstile-response"]')?.value;
+      if (!token) throw new Error("turnstile-required");
+
+      try {
+        const response = await fetch("/api/verify-turnstile", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token })
+        });
+        if (!response.ok) throw new Error("turnstile-verification-failed");
+      } catch {
+        throw new Error("turnstile-verification-failed");
+      }
+    }
+
+    function resetTurnstile() {
+      window.turnstile?.reset();
+    }
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         authMessage.textContent = "";
@@ -515,11 +541,19 @@
       e.preventDefault();
       authMessage.textContent = "";
       authMessage.classList.remove("error");
+      const loginButton = e.currentTarget.querySelector('[type="submit"]');
+      loginButton.disabled = true;
       try {
+        await verifyTurnstile();
         await signInWithEmailAndPassword(auth, emailInput.value.trim(), document.getElementById("password").value);
-      } catch {
-        authMessage.textContent = "Email atau password tidak sesuai. Periksa kembali lalu coba lagi.";
+      } catch (error) {
+        authMessage.textContent = error.message.startsWith("turnstile-")
+          ? "Verifikasi CAPTCHA gagal atau belum selesai. Silakan coba lagi."
+          : "Email atau password tidak sesuai. Periksa kembali lalu coba lagi.";
         authMessage.classList.add("error");
+      } finally {
+        loginButton.disabled = false;
+        resetTurnstile();
       }
     });
 
@@ -542,13 +576,17 @@
       authMessage.classList.remove("error");
 
       try {
+        await verifyTurnstile();
         await sendPasswordResetEmail(auth, emailInput.value.trim());
         authMessage.textContent = "Jika email terdaftar, tautan untuk mengatur ulang password akan dikirim.";
-      } catch {
-        authMessage.textContent = "Tautan reset belum dapat dikirim. Periksa koneksi atau coba lagi nanti.";
+      } catch (error) {
+        authMessage.textContent = error.message.startsWith("turnstile-")
+          ? "Verifikasi CAPTCHA gagal atau belum selesai. Silakan coba lagi."
+          : "Tautan reset belum dapat dikirim. Periksa koneksi atau coba lagi nanti.";
         authMessage.classList.add("error");
       } finally {
         resetButton.disabled = false;
+        resetTurnstile();
       }
     });
 
