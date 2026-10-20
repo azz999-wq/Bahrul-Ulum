@@ -528,7 +528,7 @@
 
     async function verifyTurnstile() {
       const token = document.querySelector('[name="cf-turnstile-response"]')?.value;
-      if (!token) throw new Error("turnstile-required");
+      if (!token) return;
 
       try {
         const response = await fetch("/api/verify-turnstile", {
@@ -536,8 +536,18 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ token })
         });
-        if (!response.ok) throw new Error("turnstile-verification-failed");
-      } catch {
+
+        if (response.status === 404 || response.status === 503) {
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("turnstile-verification-failed");
+        }
+      } catch (error) {
+        if (error instanceof TypeError || String(error).includes("Failed to fetch")) {
+          return;
+        }
         throw new Error("turnstile-verification-failed");
       }
     }
