@@ -601,10 +601,25 @@
         await verifyTurnstile();
         await sendPasswordResetEmail(auth, emailInput.value.trim());
         authMessage.textContent = "Jika email terdaftar, tautan untuk mengatur ulang password akan dikirim.";
+        authMessage.classList.remove("error");
       } catch (error) {
-        authMessage.textContent = error.message.startsWith("turnstile-")
-          ? "Verifikasi CAPTCHA gagal atau belum selesai. Silakan coba lagi."
-          : "Tautan reset belum dapat dikirim. Periksa koneksi atau coba lagi nanti.";
+        const code = error?.code || "";
+        const message = error?.message || "";
+
+        if (message.startsWith("turnstile-")) {
+          authMessage.textContent = "Verifikasi CAPTCHA gagal atau belum selesai. Silakan coba lagi.";
+        } else if (code === "auth/user-not-found") {
+          authMessage.textContent = "Email admin tidak ditemukan di Firebase Authentication. Pastikan email yang Anda masukkan sudah terdaftar.";
+        } else if (code === "auth/invalid-email") {
+          authMessage.textContent = "Format email admin tidak valid. Periksa kembali alamat emailnya.";
+        } else if (code === "auth/network-request-failed") {
+          authMessage.textContent = "Koneksi internet bermasalah. Coba lagi setelah jaringan stabil.";
+        } else if (code === "auth/too-many-requests") {
+          authMessage.textContent = "Terlalu banyak permintaan reset. Tunggu beberapa saat lalu coba lagi.";
+        } else {
+          authMessage.textContent = "Tautan reset belum dapat dikirim. Periksa email admin atau coba lagi nanti.";
+        }
+
         authMessage.classList.add("error");
       } finally {
         resetButton.disabled = false;
