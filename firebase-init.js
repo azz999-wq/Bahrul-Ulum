@@ -3,7 +3,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase
 
 const firebaseConfig = {
   apiKey: "AIzaSyCpRE_tUyT1fjL88PN0bZ5emS3S4Hn64_s",
-  authDomain: "bahrul-ulum-web.firebaseapp.com",
+  authDomain: "bahrululumsingaparna.my.id",
   projectId: "bahrul-ulum-web",
   storageBucket: "bahrul-ulum-web.firebasestorage.app",
   messagingSenderId: "378515606416",
