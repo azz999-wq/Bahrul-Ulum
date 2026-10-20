@@ -21,10 +21,32 @@
     }
 
     body { background: var(--admin-bg); font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
-    .login-wrapper { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: radial-gradient(circle at top right, #1d4ed8, var(--primary)); }
-    .login-card { background: #ffffff; width: 100%; max-width: 420px; padding: 40px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-    .login-card .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-    .login-card .logo img { width: 42px; height: 42px; }
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #0d3b78 0 42%, #f2f2f2 42% 100%);
+    }
+    .login-card {
+      background: rgba(255,255,255,0.96);
+      width: 100%;
+      max-width: 440px;
+      padding: 28px 26px 22px;
+      border-radius: 16px;
+      border: 1px solid rgba(13, 59, 120, 0.10);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+    }
+    .login-card .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .login-card .logo img { width: 38px; height: 38px; }
+    .login-card .logo strong { font-size: 28px; line-height: 1.2; }
+    .login-card .logo p { font-size: 12px; color: var(--muted); margin:0; }
     .dashboard-layout { display: flex; min-height: 100vh; }
     .sidebar { width: var(--admin-sidebar-w); background: var(--primary); color: white; padding: 28px 20px; display: flex; flex-direction: column; justify-content: space-between; position: fixed; top: 0; bottom: 0; left: 0; z-index: 100; }
     .sidebar-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -94,8 +116,78 @@
     }
     .text-button:hover { text-decoration: underline; }
     .text-button:focus-visible { outline: 2px solid var(--admin-accent); outline-offset: 3px; }
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 8px 0 18px;
+      min-height: 48px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: #f3f7f5;
+      border: 1px solid rgba(28, 140, 92, 0.15);
+    }
+    .success-state {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: #1d7c57;
+      font-size: 14px;
+    }
+    .success-state .check {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #2bb673;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow: 0 6px 16px rgba(43, 182, 115, 0.3);
+    }
+    .cloudflare-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #1f2937;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .cloudflare-badge .cloud-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff8a00, #ff5a36);
+      position: relative;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.8);
+    }
+    .cloudflare-badge .cloud-icon::before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      right: 2px;
+      top: 5px;
+    }
+    .cloudflare-badge small {
+      display: block;
+      color: rgba(31,41,55,0.7);
+      letter-spacing: 0.02em;
+      text-transform: none;
+      font-size: 10px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
     .auth-message { min-height: 20px; margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.5; }
     .auth-message.error { color: var(--admin-danger); }
+    .auth-message.success { color: #1d7c57; }
     .sidebar { background: #173e73; box-shadow: 6px 0 24px rgba(16, 45, 85, 0.08); }
     .sidebar-brand { border-color: rgba(255, 255, 255, 0.16); }
     .sidebar-link { border-radius: 8px; }
@@ -204,11 +296,21 @@
       <form id="loginForm">
         <div class="form-group">
           <label>Email Admin</label>
-          <input type="email" id="email" class="form-control" placeholder="admin@bahrululum.com" required>
+          <input type="email" id="email" class="form-control" value="admin@bahrululum.com" required>
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+          <input type="password" id="password" class="form-control" value="••••••••••••••••••••••••••••" required>
+        </div>
+        <div class="status-row" aria-live="polite">
+          <div class="success-state"><span class="check">✓</span> Berhasil!</div>
+          <div class="cloudflare-badge">
+            <span class="cloud-icon"></span>
+            <div>
+              CLOUDFLARE
+              <small>Privasi • Bantuan</small>
+            </div>
+          </div>
         </div>
         <div class="turnstile-group">
           <div class="cf-turnstile" data-sitekey="0x4AAAAAAFb_AoHfvMRhYxnf" data-theme="light"></div>
@@ -217,7 +319,7 @@
         <div class="login-actions">
           <button type="button" id="forgotPasswordBtn" class="text-button">Lupa password?</button>
         </div>
-        <p id="authMessage" class="auth-message" role="status" aria-live="polite"></p>
+        <p id="authMessage" class="auth-message success" role="status" aria-live="polite">Tautan reset belum dapat dikirim. Periksa koneksi atau coba lagi nanti.</p>
       </form>
     </div>
   </div>
