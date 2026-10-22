@@ -158,6 +158,27 @@
       border-radius: 8px;
       background: #fff;
     }
+    .password-control { position: relative; }
+    .password-control .form-control { padding-right: 52px; }
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      transform: translateY(-50%);
+      border-radius: 7px;
+      color: var(--muted);
+      background: transparent;
+    }
+    .password-toggle:hover { color: var(--primary); background: #f1f4f7; }
+    .password-toggle:focus-visible { outline: 2px solid var(--admin-accent); outline-offset: 1px; }
+    .password-toggle svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .password-toggle .icon-eye-off,
+    .password-toggle[aria-pressed="true"] .icon-eye { display: none; }
+    .password-toggle[aria-pressed="true"] .icon-eye-off { display: block; }
     textarea.form-control { min-height: 130px; resize: vertical; }
     .admin-table { min-width: 620px; }
     .admin-table th { letter-spacing: 0.04em; }
@@ -223,14 +244,20 @@
           <p style="font-size: 12px; color: var(--muted); margin:0;">Admin Control Panel</p>
         </div>
       </div>
-      <form id="loginForm">
+      <form id="loginForm" autocomplete="off">
         <div class="form-group">
           <label>Email Admin</label>
-          <input type="email" id="email" class="form-control" value="admin@bahrululum.com" required>
+          <input type="email" id="email" class="form-control" autocomplete="off" required>
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="password" class="form-control" value="••••••••••••••••••••••••••••" required>
+          <div class="password-control">
+            <input type="password" id="password" class="form-control" autocomplete="off" required>
+            <button type="button" id="togglePassword" class="password-toggle" aria-label="Tampilkan password" aria-pressed="false" title="Tampilkan password">
+              <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="icon-eye-off" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a15.8 15.8 0 0 1-3 3.8M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.5 10.5 0 0 0 4-.8"/></svg>
+            </button>
+          </div>
         </div>
         <div class="turnstile-group">
           <div class="cf-turnstile" data-sitekey="0x4AAAAAAFb_AoHfvMRhYxnf" data-theme="light"></div>
@@ -490,6 +517,8 @@
     const loginBox = document.getElementById("loginBox");
     const dashboardBox = document.getElementById("dashboardBox");
     const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const togglePasswordButton = document.getElementById("togglePassword");
     const authMessage = document.getElementById("authMessage");
     const newsTableBody = document.getElementById("newsTableBody");
     const pengurusTableBody = document.getElementById("pengurusTableBody");
@@ -555,6 +584,14 @@
     function resetTurnstile() {
       window.turnstile?.reset();
     }
+
+    togglePasswordButton.addEventListener("click", () => {
+      const isVisible = passwordInput.type === "text";
+      passwordInput.type = isVisible ? "password" : "text";
+      togglePasswordButton.setAttribute("aria-pressed", String(!isVisible));
+      togglePasswordButton.setAttribute("aria-label", isVisible ? "Tampilkan password" : "Sembunyikan password");
+      togglePasswordButton.title = isVisible ? "Tampilkan password" : "Sembunyikan password";
+    });
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
