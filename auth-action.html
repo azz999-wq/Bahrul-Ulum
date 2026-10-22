@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Verifikasi Akun - Bahrul Ulum</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #f3f5f2; }
+    .action-card { width: min(100%, 480px); padding: 32px; background: #fff; border: 1px solid var(--border); border-top: 4px solid var(--gold); border-radius: 14px; box-shadow: var(--shadow-md); }
+    .action-card h1 { margin-bottom: 12px; color: var(--primary); font-size: 24px; }
+    .action-card p { color: var(--muted); }
+    .action-form { display: grid; gap: 16px; margin-top: 22px; }
+    .action-form[hidden] { display: none; }
+    .action-form label { display: grid; gap: 7px; color: var(--black); font-size: 13px; font-weight: 700; }
+    .action-form input { width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+    .action-form input:focus { outline: 2px solid var(--secondary); outline-offset: 2px; }
+    .action-message { min-height: 24px; margin-top: 16px; font-size: 14px; }
+    .action-message.error { color: #b8423d; }
+    .action-home { display: inline-block; margin-top: 20px; color: var(--primary); font-weight: 700; }
+    @media (max-width: 480px) { .action-card { padding: 24px 20px; } }
+  </style>
+</head>
+<body>
+  <main class="action-card">
+    <h1>Keamanan Akun Bahrul Ulum</h1>
+    <p id="actionDescription">Memeriksa tautan...</p>
+    <form id="resetPasswordForm" class="action-form" hidden>
+      <label for="newPassword">Password baru
+        <input id="newPassword" type="password" autocomplete="new-password" minlength="6" required>
+      </label>
+      <label for="confirmPassword">Ulangi password baru
+        <input id="confirmPassword" type="password" autocomplete="new-password" minlength="6" required>
+      </label>
+      <button class="btn primary" type="submit">Simpan password</button>
+    </form>
+    <p id="actionMessage" class="action-message" role="status" aria-live="polite"></p>
+    <a class="action-home" href="/">Kembali ke website</a>
+  </main>
+
+  <script type="module">
+    import { app } from "./firebase-init.js";
+    import {
+      getAuth,
+      applyActionCode,
+      checkActionCode,
+      verifyPasswordResetCode,
+      confirmPasswordReset
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const auth = getAuth(app);
+    const query = new URLSearchParams(window.location.search);
+    const mode = query.get("mode");
+    const actionCode = query.get("oobCode");
+    const description = document.getElementById("actionDescription");
+    const message = document.getElementById("actionMessage");
+    const resetForm = document.getElementById("resetPasswordForm");
+
+    function showError(text) {
+      message.textContent = text;
+      message.classList.add("error");
+    }
+
+    async function prepareAction() {
+      if (!actionCode) throw new Error("Tautan tidak lengkap atau sudah tidak berlaku.");
+
+      if (mode === "verifyEmail" || mode === "verifyAndChangeEmail") {
+        await applyActionCode(auth, actionCode);
+        description.textContent = "Alamat email berhasil diverifikasi.";
+        return;
+      }
+
+      if (mode === "recoverEmail") {
+        const action = await checkActionCode(auth, actionCode);
+        await applyActionCode(auth, actionCode);
+        description.textContent = `Perubahan email dibatalkan. Alamat ${action.data.email || "sebelumnya"} dipulihkan.`;
+        return;
+      }
+
+      if (mode === "resetPassword") {
+        await verifyPasswordResetCode(auth, actionCode);
+        description.textContent = "Buat password baru untuk akunmu.";
+        resetForm.hidden = false;
+        return;
+      }
+
+      throw new Error("Jenis tautan tidak dikenali atau tidak didukung.");
+    }
+
+    resetForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      message.textContent = "";
+      message.classList.remove("error");
+
+      const password = document.getElementById("newPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      if (password !== confirmPassword) {
+        showError("Konfirmasi password belum sama.");
+        return;
+      }
+
+      const submitButton = resetForm.querySelector("button[type='submit']");
+      submitButton.disabled = true;
+      try {
+        await confirmPasswordReset(auth, actionCode, password);
+        resetForm.hidden = true;
+        description.textContent = "Password berhasil diperbarui. Silakan masuk kembali.";
+      } catch {
+        showError("Password gagal diperbarui. Tautan mungkin sudah kedaluwarsa; minta tautan reset baru.");
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+
+    prepareAction().catch(() => {
+      description.textContent = "Tautan tidak dapat diproses.";
+      showError("Tautan mungkin sudah digunakan atau kedaluwarsa. Minta email baru lalu coba lagi.");
+    });
+  </script>
+</body>
+</html>

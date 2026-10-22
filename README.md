@@ -24,6 +24,13 @@ Website profil, informasi PPDB, berita, dan panel pengelolaan Pondok Pesantren B
 - Perubahan environment variable berlaku pada deployment berikutnya.
 - Email reset dikirim melalui Firebase Authentication. Domain situs perlu terdaftar di Authorized domains Firebase.
 
+## Firebase Email Action
+
+- `auth-action.html` memproses tautan verifikasi email, reset password, dan pemulihan email dengan Firebase Authentication.
+- Di Firebase Console, buka **Authentication → Templates**, edit template email, pilih **Customize action URL**, lalu isi `https://bahrululumsingaparna.my.id/auth-action.html`.
+- Firebase menambahkan parameter aksi seperti `mode` dan `oobCode` secara otomatis. Jangan menyalin URL aksi lengkap dari email sebagai nilai Custom action URL.
+- Domain `bahrululumsingaparna.my.id` harus terhubung ke Cloudflare Pages dan terdaftar di Firebase Authentication Authorized domains.
+
 ## Batasan
 
 Turnstile memverifikasi alur login dari halaman admin. Firebase Authentication tetap merupakan endpoint publik yang dapat dipanggil langsung oleh klien; verifikasi Turnstile di Pages Function tidak mengubah endpoint Firebase tersebut.
