@@ -532,6 +532,16 @@
       return String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, maxLength);
     }
 
+    function sanitizeMultilineText(value, maxLength = 2000) {
+      return String(value ?? '')
+        .replace(/\r\n?/g, '\n')
+        .split('\n')
+        .map((line) => line.replace(/\s+/g, ' ').trim())
+        .join('\n')
+        .trim()
+        .slice(0, maxLength);
+    }
+
     function sanitizeUrl(value, maxLength = 500) {
       const raw = String(value ?? '').trim();
       if (!raw) return '';
@@ -717,7 +727,7 @@
       const tanggal = sanitizeText(document.getElementById("tanggal").value, 20);
       const gambarUrl = sanitizeUrl(document.getElementById("gambarUrl").value, 500);
       const videoUrl = sanitizeVideoUrl(document.getElementById("videoUrl").value);
-      const ringkasan = sanitizeText(document.getElementById("ringkasan").value, 2000);
+      const ringkasan = sanitizeMultilineText(document.getElementById("ringkasan").value);
 
       if (!judul || !kategori || !tanggal || !ringkasan) {
         alert("Judul, kategori, tanggal, dan ringkasan wajib diisi.");
@@ -820,7 +830,7 @@
       const tanggal = sanitizeText(document.getElementById("editTanggal").value, 20);
       const gambarUrl = sanitizeUrl(document.getElementById("editGambarUrl").value, 500);
       const videoUrl = sanitizeVideoUrl(document.getElementById("editVideoUrl").value);
-      const ringkasan = sanitizeText(document.getElementById("editRingkasan").value, 2000);
+      const ringkasan = sanitizeMultilineText(document.getElementById("editRingkasan").value);
 
       if (!judul || !kategori || !tanggal || !ringkasan) {
         alert("Judul, kategori, tanggal, dan ringkasan wajib diisi.");
