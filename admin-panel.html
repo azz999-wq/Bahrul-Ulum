@@ -351,7 +351,7 @@
               </div>
               <div class="form-group full">
                 <label>Path / URL Foto Cover</label>
-                <input type="text" id="gambarUrl" class="form-control" placeholder="assets/berita-1.jpg" required>
+                <input type="text" id="gambarUrl" class="form-control" placeholder="assets/Berita/berita2.jpg" required>
               </div>
               <div class="form-group full">
                 <label>Link Video YouTube (Opsional)</label>
@@ -535,6 +535,20 @@
     function sanitizeUrl(value, maxLength = 500) {
       const raw = String(value ?? '').trim();
       if (!raw) return '';
+
+      if (!/^https?:\/\//i.test(raw)) {
+        if (!raw.startsWith('assets/')) return '';
+
+        try {
+          const url = new URL(raw, window.location.href);
+          const assetRoot = new URL('assets/', window.location.href).pathname;
+          return url.origin === window.location.origin && url.pathname.startsWith(assetRoot)
+            ? raw.slice(0, maxLength)
+            : '';
+        } catch {
+          return '';
+        }
+      }
 
       try {
         const url = new URL(raw);
